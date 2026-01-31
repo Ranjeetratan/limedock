@@ -13,4 +13,7 @@ out
 dist
 **/dist
 
+.sanity
+**/.sanity
+
 .env*
