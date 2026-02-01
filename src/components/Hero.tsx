@@ -29,7 +29,12 @@ export default function Hero() {
         </p>
 
         <div className="flex flex-col items-center gap-6">
-          <button className="flex items-center gap-3 group cursor-pointer mt-4">
+          <a
+            href="https://cal.com/limedock-admin-nb05ck/30min"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-3 group cursor-pointer mt-4"
+          >
             <span className="text-[14px] font-bold tracking-widest text-black uppercase">
               BOOK AN INTRO CALL
             </span>
@@ -49,7 +54,7 @@ export default function Hero() {
                   </svg>
                </div>
             </div>
-          </button>
+          </a>
         </div>
       </div>
     </section>

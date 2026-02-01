@@ -21,7 +21,7 @@ const products = [
     title: "Hireschema",
     description: "An ATS Resume Scanner and Roaster that optimizes your resume for job posts and prepares you for interviews end-to-end.",
     image: "/Hireschema.png",
-    link: "#",
+    link: "https://www.hireschema.com/",
     tags: ["Career Tool", "AI Resume Scanner"],
     colors: {
       text: "group-hover:text-orange-400",
@@ -33,7 +33,7 @@ const products = [
     title: "Kickofflist",
     description: "An extension of Limedock, a specialized system for SEO and GEO optimization for businesses.",
     image: "/Kickofflist.png",
-    link: "#",
+    link: "https://kickofflist.tech/",
     tags: ["SEO Tool", "Business Growth"],
     colors: {
       text: "group-hover:text-green-400",
@@ -45,7 +45,7 @@ const products = [
     title: "Cofounderbase.com",
     description: "A cult community of founders and co-founders building leading products in the tech industry. Includes a private WhatsApp group.",
     image: "/Cofounderbase.png",
-    link: "#",
+    link: "https://cofounderbase.com/",
     tags: ["Community", "Networking"],
     colors: {
       text: "group-hover:text-blue-400",
