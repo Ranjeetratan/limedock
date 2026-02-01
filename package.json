@@ -9,11 +9,8 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@sanity/client": "^7.14.1",
-    "@sanity/image-url": "^2.0.3",
     "clsx": "^2.1.1",
     "framer-motion": "^12.27.1",
-    "groq": "^5.7.0",
     "mona-sans": "^1.0.0",
     "next": "16.1.2",
     "react": "19.2.3",
