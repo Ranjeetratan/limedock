@@ -10,7 +10,7 @@ const steps = [
     description: "We start by aligning on your vision, goals, audience, and constraints to set clear priorities.",
     image: "/align1.png",
     icons: [
-      { src: "/google-meet.svg", alt: "Google Meet", className: "top-6 left-6 -rotate-12" },
+      { src: "/google-meet.svg", alt: "Google Meet", className: "top-6 left-6 -rotate-12", link: "https://cal.com/limedock-admin-nb05ck/30min" },
       { src: "/notion.svg", alt: "Notion", className: "bottom-6 left-6 rotate-6" },
       { src: "/slack.svg", alt: "Slack", className: "top-1/2 right-4 -translate-y-1/2 rotate-12" }
     ]
@@ -67,20 +67,28 @@ export default function HowWeWork() {
                         </div>
                         
                         {/* Floating Icons */}
-                        {item.icons.map((icon, i) => (
-                            <div 
-                                key={i} 
-                                className={`absolute w-10 h-10 bg-white rounded-lg shadow-lg flex items-center justify-center p-2 z-10 ${icon.className}`}
-                            >
-                                <Image
-                                    src={icon.src}
-                                    alt={icon.alt}
-                                    width={32}
-                                    height={32}
-                                    className="w-full h-full object-contain"
-                                />
-                            </div>
-                        ))}
+                        {item.icons.map((icon: any, i) => {
+                            const IconWrapper = icon.link ? 'a' : 'div';
+                            const wrapperProps = icon.link 
+                                ? { href: icon.link, target: "_blank", rel: "noopener noreferrer" } 
+                                : {};
+
+                            return (
+                                <IconWrapper 
+                                    key={i} 
+                                    {...wrapperProps}
+                                    className={`absolute w-10 h-10 bg-white rounded-lg shadow-lg flex items-center justify-center p-2 z-10 ${icon.className} ${icon.link ? 'cursor-pointer hover:scale-110 transition-transform' : ''}`}
+                                >
+                                    <Image
+                                        src={icon.src}
+                                        alt={icon.alt}
+                                        width={32}
+                                        height={32}
+                                        className="w-full h-full object-contain"
+                                    />
+                                </IconWrapper>
+                            );
+                        })}
                     </div>
 
                     <span className="text-[#FFC700] font-bold text-lg mb-2">{item.step}</span>

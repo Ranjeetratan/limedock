@@ -8,24 +8,24 @@ const PROBLEMS = [
     description: "In a crowded market, your messaging and positioning feel generic, making it hard for users to understand why they should choose you."
   },
   {
-    title: "Your brand doesn't clearly stand out",
-    description: "In a crowded market, your messaging and positioning feel generic, making it hard for users to understand why they should choose you."
+    title: "Your websites looks good but doesn't convert",
+    description: "Your website fails to convert interests into action. Without clear positioning, intuitive journeys, and conversion focused design, even high traffic doesn't translate into growth."
   },
   {
-    title: "Your brand doesn't clearly stand out",
-    description: "In a crowded market, your messaging and positioning feel generic, making it hard for users to understand why they should choose you."
+    title: "Design and development doesn't feel aligned",
+    description: "What gets built doesn't fully match what was designed, leading to compromises in quality, usability and overall product experience."
   },
   {
-    title: "Your brand doesn't clearly stand out",
-    description: "In a crowded market, your messaging and positioning feel generic, making it hard for users to understand why they should choose you."
+    title: "Users find your product hard to use",
+    description: "Features exist, but users struggle to use them effectively. Poor UX makes adoption slow and ultimately increase churn."
   },
   {
-    title: "Your brand doesn't clearly stand out",
-    description: "In a crowded market, your messaging and positioning feel generic, making it hard for users to understand why they should choose you."
+    title: "Your social presence is inconsistent & lacks growth",
+    description: "Without clear content system leads to inconsistent posting, scattered messaging, and content that isn't aligned with your brand or performance goals."
   },
   {
-    title: "Your brand doesn't clearly stand out",
-    description: "In a crowded market, your messaging and positioning feel generic, making it hard for users to understand why they should choose you."
+    title: "Your product is hard to explain quickly",
+    description: "Relying on text or static visuals makes it hard to communicate value clearly, causing users to lose interest before they fully understand what you offer."
   }
 ];
 

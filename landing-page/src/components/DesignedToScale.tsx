@@ -7,10 +7,10 @@ const services = [
   {
     id: '01',
     title: "Brand Identity",
-    description: "Get a differentiated and unique brand identity to stand out your product from competitor",
+    description: "Get a differentiated and unique brand identity to stand out your product from competitor.",
     images: [
-      'https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=1000&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=1000&auto=format&fit=crop'
+      '/services-images/Brand Identity.png',
+      '/Brand Identity 2.png'
     ]
   },
   {
@@ -18,8 +18,8 @@ const services = [
     title: "Website Design & Dev",
     description: "We design high-performing websites that balance aesthetics, usability, and conversion to support your business goals.",
     images: [
-      'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?q=80&w=1000&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?q=80&w=1000&auto=format&fit=crop'
+      '/services-images/Web Design & Dev.png',
+      '/services-images/Web Design & Dev-1.png'
     ]
   },
   {
@@ -27,35 +27,35 @@ const services = [
     title: "Product Design & Dev",
     description: "We design intuitive, user-centered products built for scale and long-term growth.",
     images: [
-      'https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?q=80&w=1000&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?q=80&w=1000&auto=format&fit=crop'
+      '/services-images/Product Design & Dev.png',
+      '/services-images/Product Design & Dev-1.png'
     ]
   },
   {
     id: '04',
     title: "Videos & Motion",
-    description: "We create engaging videos and motion graphics to tell your brand's story.",
+    description: "We craft product-focused videos and motion edits that help brands stand out and convert.",
     images: [
-      'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=1000&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=1000&auto=format&fit=crop'
+      '/services-images/Videos & Motion.png',
+      '/services-images/Videos & Motion-1.png'
     ]
   },
   {
     id: '05',
     title: "Social Media Marketing",
-    description: "From no-code to custom development, we build fast, reliable, and scalable digital products using modern technology.",
+    description: "We help brands grow through design-led social media, clear strategy, and consistent execution.",
     images: [
-      'https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1000&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1000&auto=format&fit=crop'
+      '/services-images/Social Media Management.png',
+      '/services-images/Social Media Management-1.png'
     ]
   },
   {
     id: '06',
     title: "Pitch Decks & Collateral",
-    description: "From no-code to custom development, we build fast, reliable, and scalable digital products using modern technology.",
+    description: "We design pitch decks and collateral built to persuade helping you present your story clearly, and drive decisions.",
     images: [
-      'https://images.unsplash.com/photo-1559136555-9303baea8ebd?q=80&w=1000&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1559136555-9303baea8ebd?q=80&w=1000&auto=format&fit=crop'
+      '/services-images/Pitch Decks.png',
+      '/Pitch Decks 2.png'
     ]
   }
 ];
@@ -83,21 +83,22 @@ export default function DesignedToScale() {
   }, [scrollYProgress]);
 
   return (
-    <section ref={containerRef} className="relative h-[300vh] bg-black">
-      <div className="sticky top-0 h-screen overflow-hidden flex flex-col items-center justify-center">
+    <section ref={containerRef} className="relative h-auto md:h-[300vh] bg-black">
+      <div className="relative md:sticky md:top-0 md:h-screen overflow-hidden flex flex-col items-center justify-center py-12 md:py-0">
         <div className="w-full max-w-[1440px] mx-auto px-4 md:px-8 xl:px-[124px] relative h-full flex flex-col">
           
           {/* Header */}
-          <div className="text-center pt-16 mb-8 relative z-10">
+          <div className="text-center md:pt-16 mb-12 md:mb-8 relative z-10">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Everything you need to scale
             </h2>
           </div>
 
-          <div className="flex-1 grid grid-cols-1 md:grid-cols-12 gap-12 items-center w-full">
+          {/* Desktop Layout */}
+          <div className="hidden md:grid flex-1 grid-cols-12 gap-12 items-center w-full">
             
             {/* Left: Radial Navigation */}
-            <div className="md:col-span-5 relative h-[600px] flex items-end">
+            <div className="col-span-5 relative h-[600px] flex items-end">
                <div className="absolute left-[-800px] -bottom-[650px] w-[1200px] h-[1200px] rounded-full border border-dashed border-white/20 flex items-center justify-center">
                   {/* Inner Rings */}
                   <div className="absolute inset-[15%] rounded-full border border-white/10" />
@@ -145,7 +146,7 @@ export default function DesignedToScale() {
             </div>
 
             {/* Right: Content */}
-            <div className="md:col-span-7 relative h-[400px]">
+            <div className="col-span-7 relative h-[400px]">
                {services.map((service, index) => {
                  const isActive = index === activeIndex;
                  return (
@@ -166,7 +167,7 @@ export default function DesignedToScale() {
                              <img 
                                src={img} 
                                alt={`${service.title} ${i + 1}`}
-                               className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" 
+                               className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500" 
                              />
                           </div>
                         ))}
@@ -177,6 +178,35 @@ export default function DesignedToScale() {
             </div>
 
           </div>
+
+          {/* Mobile Layout */}
+          <div className="md:hidden w-full flex flex-col gap-16 pb-12">
+            {services.map((service) => (
+              <div key={service.id} className="flex flex-col">
+                <div className="flex items-center gap-4 mb-4">
+                  <span className="text-[#FDF200] text-xl font-bold">{service.id}</span>
+                  <h3 className="text-2xl font-bold text-white">{service.title}</h3>
+                </div>
+                
+                <p className="text-white/60 text-base leading-relaxed mb-6">
+                  {service.description}
+                </p>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {service.images.map((img, i) => (
+                    <div key={i} className="rounded-xl overflow-hidden aspect-video bg-white/5 border border-white/10">
+                       <img 
+                         src={img} 
+                         alt={`${service.title} ${i + 1}`}
+                         className="w-full h-full object-cover" 
+                       />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
         </div>
       </div>
     </section>

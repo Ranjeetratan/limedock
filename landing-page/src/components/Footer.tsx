@@ -19,14 +19,19 @@ export default function Footer() {
                 Let&apos;s turn your idea into a world-class digital product.
             </p>
             
-            <button className="group relative inline-flex items-center gap-3 bg-[#E8E700] text-black px-8 py-4 rounded-full text-lg font-bold hover:bg-[#E8E700]/90 transition-all duration-300 hover:scale-105">
+            <a 
+                href="https://cal.com/limedock-admin-nb05ck/30min" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="group relative inline-flex items-center gap-3 bg-[#E8E700] text-black px-8 py-4 rounded-full text-lg font-bold hover:bg-[#E8E700]/90 transition-all duration-300 hover:scale-105"
+            >
                 <span>Book an intro call</span>
                 <div className="w-8 h-8 bg-black/10 rounded-full flex items-center justify-center text-black group-hover:bg-black/20 transition-colors">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                 </div>
-            </button>
+            </a>
         </div>
 
         {/* Footer Navigation */}
@@ -58,17 +63,17 @@ export default function Footer() {
             <div className="md:col-span-2">
                 <h4 className="font-bold text-white mb-6 text-lg">Socials</h4>
                 <ul className="space-y-4 text-gray-400">
-                    <li><a href="#" className="hover:text-[#E8E700] transition-colors">Twitter</a></li>
-                    <li><a href="#" className="hover:text-[#E8E700] transition-colors">LinkedIn</a></li>
-                    <li><a href="#" className="hover:text-[#E8E700] transition-colors">Instagram</a></li>
+                    <li><a href="https://x.com/limedock" target="_blank" rel="noopener noreferrer" className="hover:text-[#E8E700] transition-colors">Twitter</a></li>
+                    <li><a href="https://www.linkedin.com/company/limedock/" target="_blank" rel="noopener noreferrer" className="hover:text-[#E8E700] transition-colors">LinkedIn</a></li>
+                    <li><a href="https://www.instagram.com/limedock_agency/" target="_blank" rel="noopener noreferrer" className="hover:text-[#E8E700] transition-colors">Instagram</a></li>
                 </ul>
             </div>
              
              {/* Contact */}
             <div className="md:col-span-2">
                  <h4 className="font-bold text-white mb-6 text-lg">Contact</h4>
-                 <a href="mailto:hello@limedock.com" className="text-gray-400 hover:text-[#E8E700] transition-colors block mb-2">hello@limedock.com</a>
-                 <p className="text-gray-400">+1 (555) 123-4567</p>
+                 <a href="mailto:ranjeet@limedock.com" className="text-gray-400 hover:text-[#E8E700] transition-colors block mb-2">ranjeet@limedock.com</a>
+                 <a href="tel:+917903959739" className="text-gray-400 hover:text-[#E8E700] transition-colors block">+91 7903959739</a>
             </div>
         </div>
 

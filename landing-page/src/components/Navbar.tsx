@@ -7,6 +7,19 @@ import { motion } from "framer-motion";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    // Initial check
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,16 +42,16 @@ export default function Navbar() {
         animate={{
           width: isScrolled ? "auto" : "100%",
           maxWidth: isScrolled ? "100%" : "1440px",
-          marginTop: isScrolled ? "30px" : "0px",
+          marginTop: isScrolled ? (isMobile ? "16px" : "30px") : "0px",
           y: 0,
           backgroundColor: isScrolled ? "rgba(255, 255, 255, 0.7)" : "transparent",
           backdropFilter: isScrolled ? "blur(20px)" : "blur(0px)",
           borderRadius: isScrolled ? "12px" : "0px",
           border: isScrolled ? "1px solid rgba(255, 255, 255, 0.2)" : "1px solid transparent",
-          paddingLeft: "24px",
-          paddingRight: isScrolled ? "8px" : "24px",
-          paddingTop: isScrolled ? "8px" : "24px",
-          paddingBottom: isScrolled ? "8px" : "24px",
+          paddingLeft: isMobile ? "16px" : "24px",
+          paddingRight: isScrolled ? "8px" : (isMobile ? "16px" : "24px"),
+          paddingTop: isScrolled ? "8px" : (isMobile ? "16px" : "24px"),
+          paddingBottom: isScrolled ? "8px" : (isMobile ? "16px" : "24px"),
           boxShadow: isScrolled 
             ? "0 8px 32px 0 rgba(31, 38, 135, 0.07)" 
             : "none",
@@ -47,11 +60,11 @@ export default function Navbar() {
           duration: 0.5,
           ease: "easeInOut"
         }}
-        className="flex items-center justify-between mx-auto pointer-events-auto"
+        className="flex items-center justify-between gap-4 mx-auto pointer-events-auto"
       >
         <div className="flex items-center">
           <Link href="/" className="flex items-center gap-1.5">
-            <Logo className="h-6 w-36" />
+            <Logo className="h-5 w-28 md:h-6 md:w-36 transition-all duration-300" />
           </Link>
         </div>
 
@@ -68,7 +81,12 @@ export default function Navbar() {
         </div>
 
         <div>
-          <button className="flex items-center gap-2.5 bg-black text-white px-4 py-2 rounded-[10px] text-[14px] font-bold hover:bg-gray-900 transition-colors cursor-pointer">
+          <a 
+            href="https://cal.com/limedock-admin-nb05ck/30min" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center gap-2.5 bg-black text-white px-4 py-2 rounded-[10px] text-[14px] font-bold hover:bg-gray-900 transition-colors cursor-pointer"
+          >
             <div className="relative flex items-center justify-center w-4 h-4">
                <svg width="20" height="16" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-4 h-4">
                   <g clipPath="url(#clip0_829_268)">
@@ -87,7 +105,7 @@ export default function Navbar() {
                </svg>
             </div>
             <span className={isScrolled ? "hidden lg:inline" : "inline"}>Book a call</span>
-          </button>
+          </a>
         </div>
       </motion.nav>
     </div>

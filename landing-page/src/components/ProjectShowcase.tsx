@@ -13,7 +13,7 @@ const placeholderImages = Array.from({ length: 55 }, (_, index) => {
 });
 
 const rowA = [...placeholderImages, ...placeholderImages];
-const rowB = [...placeholderImages].reverse();
+const rowB = [...placeholderImages];
 const rowBLoop = [...rowB, ...rowB];
 
 const DURATION = 240;

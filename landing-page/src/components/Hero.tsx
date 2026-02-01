@@ -1,8 +1,8 @@
 export default function Hero() {
   return (
     <section className="relative flex flex-col items-center pt-36 pb-20 w-full bg-background overflow-hidden">
-      <div className="relative z-10 max-w-[1200px] mx-auto px-6 text-center">
-        <h1 className="text-5xl md:text-[86px] font-extrabold tracking-tight text-foreground leading-none mb-8 max-w-5xl mx-auto" style={{ fontFamily: "'Mona Sans', sans-serif" }}>
+      <div className="relative z-10 max-w-[1200px] mx-auto px-4 md:px-6 text-center">
+        <h1 className="text-4xl md:text-[86px] font-extrabold tracking-tight text-foreground leading-none mb-8 max-w-5xl mx-auto" style={{ fontFamily: "'Mona Sans', sans-serif" }}>
           <span 
             className="relative inline px-1"
             style={{
