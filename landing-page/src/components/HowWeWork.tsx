@@ -3,6 +3,13 @@
 import React from 'react';
 import Image from 'next/image';
 
+type FloatingIcon = {
+  src: string;
+  alt: string;
+  className: string;
+  link?: string;
+};
+
 const steps = [
   {
     step: "Step 1",
@@ -67,17 +74,14 @@ export default function HowWeWork() {
                         </div>
                         
                         {/* Floating Icons */}
-                        {item.icons.map((icon: any, i) => {
-                            const IconWrapper = icon.link ? 'a' : 'div';
-                            const wrapperProps = icon.link 
-                                ? { href: icon.link, target: "_blank", rel: "noopener noreferrer" } 
-                                : {};
-
-                            return (
-                                <IconWrapper 
-                                    key={i} 
-                                    {...wrapperProps}
-                                    className={`absolute w-10 h-10 bg-white rounded-lg shadow-lg flex items-center justify-center p-2 z-10 ${icon.className} ${icon.link ? 'cursor-pointer hover:scale-110 transition-transform' : ''}`}
+                        {item.icons.map((icon: FloatingIcon, i) =>
+                            icon.link ? (
+                                <a
+                                    key={i}
+                                    href={icon.link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className={`absolute w-10 h-10 bg-white rounded-lg shadow-lg flex items-center justify-center p-2 z-10 ${icon.className} cursor-pointer hover:scale-110 transition-transform`}
                                 >
                                     <Image
                                         src={icon.src}
@@ -86,9 +90,22 @@ export default function HowWeWork() {
                                         height={32}
                                         className="w-full h-full object-contain"
                                     />
-                                </IconWrapper>
-                            );
-                        })}
+                                </a>
+                            ) : (
+                                <div
+                                    key={i}
+                                    className={`absolute w-10 h-10 bg-white rounded-lg shadow-lg flex items-center justify-center p-2 z-10 ${icon.className}`}
+                                >
+                                    <Image
+                                        src={icon.src}
+                                        alt={icon.alt}
+                                        width={32}
+                                        height={32}
+                                        className="w-full h-full object-contain"
+                                    />
+                                </div>
+                            )
+                        )}
                     </div>
 
                     <span className="text-[#FFC700] font-bold text-lg mb-2">{item.step}</span>
