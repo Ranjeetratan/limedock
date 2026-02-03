@@ -13,7 +13,8 @@ export interface BlogPost {
 }
 
 const MASSBLOG_URL = process.env.MASSBLOG_URL ?? "https://www.massblogger.com";
-const MASSBLOG_API = process.env.MASSBLOG_API;
+const MASSBLOG_API =
+  process.env.MASSBLOG_API ?? process.env.NEXT_PUBLIC_MASSBLOG_API;
 
 export async function getPosts(): Promise<BlogPost[]> {
   if (!MASSBLOG_API) return [];

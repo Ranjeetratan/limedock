@@ -12,7 +12,9 @@ export const metadata = {
 };
 
 export default async function BlogPage() {
-  const isConfigured = Boolean(process.env.MASSBLOG_API);
+  const isConfigured = Boolean(
+    process.env.MASSBLOG_API ?? process.env.NEXT_PUBLIC_MASSBLOG_API
+  );
   const posts = await getPosts();
 
   return (
