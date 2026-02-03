@@ -12,14 +12,12 @@ export interface BlogPost {
   scheduleDate?: string;
 }
 
-const MASSBLOG_URL = process.env.MASSBLOG_URL;
+const MASSBLOG_URL = process.env.MASSBLOG_URL ?? "https://www.massblogger.com";
 const MASSBLOG_API = process.env.MASSBLOG_API;
 
-if (!MASSBLOG_URL || !MASSBLOG_API) {
-  console.warn("Missing Massblogger environment variables");
-}
-
 export async function getPosts(): Promise<BlogPost[]> {
+  if (!MASSBLOG_API) return [];
+
   try {
     const res = await fetch(`${MASSBLOG_URL}/api/blog?apiKey=${MASSBLOG_API}`, {
       next: { revalidate: 60 },
@@ -30,12 +28,14 @@ export async function getPosts(): Promise<BlogPost[]> {
     }
 
     const data = await res.json();
-    
-    // Filter out future scheduled posts
+    const posts: BlogPost[] = Array.isArray(data) ? data : [];
+
     const now = new Date();
-    return data.filter((post: BlogPost) => {
-      if (!post.scheduleDate) return true;
-      return new Date(post.scheduleDate) <= now;
+    return posts.filter((post) => {
+      if (!post?.scheduleDate) return true;
+      const schedule = new Date(post.scheduleDate);
+      if (Number.isNaN(schedule.getTime())) return true;
+      return schedule <= now;
     });
   } catch (error) {
     console.error("Error fetching blog posts:", error);
@@ -44,6 +44,8 @@ export async function getPosts(): Promise<BlogPost[]> {
 }
 
 export async function getPost(slug: string): Promise<BlogPost | null> {
+  if (!MASSBLOG_API) return null;
+
   try {
     const res = await fetch(
       `${MASSBLOG_URL}/api/blog?apiKey=${MASSBLOG_API}&slug=${slug}`,
