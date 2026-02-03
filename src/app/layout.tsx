@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
+import Script from "next/script";
 import "./globals.css";
 
 const siteName = "LimeDock";
@@ -74,6 +75,19 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${monaSans.variable} antialiased`}
         suppressHydrationWarning
       >
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-09SCWBGQLT"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-09SCWBGQLT');
+          `}
+        </Script>
         {children}
       </body>
     </html>
