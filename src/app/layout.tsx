@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import Script from "next/script";
 import "./globals.css";
@@ -9,9 +9,11 @@ const siteDescription =
   "A modern tech agency helping teams design, develop, and grow digital products — end to end or alongside in-house teams.";
 const siteUrl = "https://limedock.com";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
+  axes: ["opsz"],
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
@@ -70,9 +72,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${monaSans.variable} antialiased`}
+        className={`${inter.variable} ${geistMono.variable} ${monaSans.variable} antialiased bg-canvas text-ink`}
         suppressHydrationWarning
       >
         <Script

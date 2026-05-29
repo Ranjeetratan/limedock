@@ -18,62 +18,68 @@ export default async function BlogPage() {
   const posts = await getPosts();
 
   return (
-    <main className="min-h-screen bg-background flex flex-col">
+    <main className="min-h-screen bg-canvas flex flex-col">
       <Navbar />
-      
-      <div className="flex-grow pt-32 pb-24 px-6 md:px-8 xl:px-[124px] max-w-[1440px] mx-auto w-full">
-        <div className="text-center mb-16">
-          <h1 className="text-5xl md:text-[80px] font-bold mb-6 tracking-tight leading-none text-foreground">
-            Our <span className="text-gray-500">Blog</span>
+
+      <div className="flex-grow pt-40 md:pt-44 pb-24 px-6 max-w-[1200px] mx-auto w-full">
+        <div className="mb-16 max-w-3xl">
+          <span className="eyebrow mb-5">
+            <span className="dot" />
+            Writing
+          </span>
+          <h1 className="font-display text-display-xl text-ink mt-5">
+            Field notes
+            <br />
+            <span className="text-ink-muted">from the studio.</span>
           </h1>
-          <p className="text-gray-400 text-xl md:text-2xl mb-8 max-w-2xl mx-auto leading-relaxed">
-            Latest updates, thoughts, and insights from our team.
+          <p className="text-subhead text-ink-muted mt-5 max-w-2xl">
+            Updates, opinions, and lessons from inside the projects we ship.
           </p>
         </div>
 
         {posts.length === 0 ? (
-          <div className="text-center py-20">
-            <p className="text-xl text-gray-500">
+          <div className="py-20 rounded-[20px] bg-surface-1 border border-hairline text-center">
+            <p className="text-body-lg text-ink-muted">
               {isConfigured
-                ? "No posts found."
+                ? "No posts yet — check back soon."
                 : "Blog is not configured for this environment."}
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {posts.map((post: BlogPost) => (
-              <Link 
-                href={`/blog/${post.slug}`} 
+              <Link
+                href={`/blog/${post.slug}`}
                 key={post.slug || post.id}
-                className="group flex flex-col gap-4 p-6 rounded-[32px] border-2 border-dashed border-black/10 hover:border-black/20 transition-all duration-300 bg-transparent"
+                className="group flex flex-col rounded-[24px] bg-surface-1 border border-hairline overflow-hidden lift"
               >
                 {post.featuredImage && (
-                  <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden bg-gray-100">
+                  <div className="relative w-full aspect-[16/9] overflow-hidden bg-surface-2">
                     <Image
                       src={post.featuredImage}
                       alt={post.title}
                       fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="object-cover group-hover:scale-[1.04] transition-transform duration-500"
                     />
                   </div>
                 )}
-                
-                <div className="flex flex-col gap-2">
+
+                <div className="flex flex-col gap-3 p-6">
                   {post.category && (
-                    <span className="text-sm font-bold text-[#E8E700] bg-black w-fit px-3 py-1 rounded-full">
+                    <span className="text-caption text-ink-muted bg-surface-2 border border-hairline w-fit px-2.5 py-1 rounded-full">
                       {post.category}
                     </span>
                   )}
-                  
-                  <h2 className="text-2xl font-bold text-foreground leading-tight group-hover:text-gray-600 transition-colors">
+
+                  <h2 className="font-display text-[22px] tracking-[-0.025em] leading-tight text-ink">
                     {post.title}
                   </h2>
-                  
-                  <p className="text-foreground/60 leading-relaxed line-clamp-3">
+
+                  <p className="text-body text-ink-muted leading-relaxed line-clamp-3">
                     {post.metaDescription}
                   </p>
-                  
-                  <div className="text-sm text-gray-400 mt-2 font-medium">
+
+                  <div className="text-caption text-ink-muted mt-2">
                     {new Date(post.createdAt).toLocaleDateString("en-US", {
                       year: "numeric",
                       month: "long",

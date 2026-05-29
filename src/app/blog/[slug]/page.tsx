@@ -49,31 +49,31 @@ export default async function BlogPostPage({ params }: PageProps) {
   }
 
   return (
-    <main className="min-h-screen bg-background flex flex-col">
+    <main className="min-h-screen bg-canvas flex flex-col">
       <Navbar />
 
-      <article className="flex-grow pt-32 pb-24 px-6 md:px-8 xl:px-[124px] max-w-[1000px] mx-auto w-full">
+      <article className="flex-grow pt-40 md:pt-44 pb-24 px-6 max-w-[860px] mx-auto w-full">
         {/* Header */}
-        <div className="mb-12 text-center">
-          <div className="flex items-center justify-center gap-4 mb-6">
-             <Link href="/blog" className="text-gray-500 hover:text-black transition-colors text-sm font-bold uppercase tracking-wide">
-                ← Back to Blog
-             </Link>
-             {post.category && (
-               <>
-                 <span className="w-1 h-1 rounded-full bg-gray-300"></span>
-                 <span className="text-sm font-bold text-[#E8E700] bg-black px-3 py-1 rounded-full">
-                   {post.category}
-                 </span>
-               </>
-             )}
-          </div>
-          
-          <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
+        <div className="mb-12">
+          <Link href="/blog" className="inline-flex items-center gap-2 text-caption text-ink-muted hover:text-ink transition-colors mb-6">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+              <path d="M19 12H5M5 12L11 6M5 12L11 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            All writing
+          </Link>
+
+          {post.category && (
+            <span className="eyebrow mb-5">
+              <span className="dot" />
+              {post.category}
+            </span>
+          )}
+
+          <h1 className="font-display text-display-xl text-ink mt-5 leading-[1.05]">
             {post.title}
           </h1>
-          
-          <div className="text-gray-500 font-medium">
+
+          <div className="text-caption text-ink-muted mt-5">
             {new Date(post.createdAt).toLocaleDateString("en-US", {
               year: "numeric",
               month: "long",
@@ -84,7 +84,7 @@ export default async function BlogPostPage({ params }: PageProps) {
 
         {/* Featured Image */}
         {post.featuredImage && (
-          <div className="relative w-full aspect-[16/9] rounded-[32px] overflow-hidden mb-16 shadow-lg">
+          <div className="relative w-full aspect-[16/9] rounded-[24px] overflow-hidden mb-16 bg-surface-1 border border-hairline">
             <Image
               src={post.featuredImage}
               alt={post.title}
@@ -96,16 +96,17 @@ export default async function BlogPostPage({ params }: PageProps) {
         )}
 
         {/* Content */}
-        <div 
-          className="prose prose-lg md:prose-xl max-w-none 
-            prose-headings:font-bold prose-headings:text-foreground 
-            prose-p:text-foreground/80 prose-p:leading-relaxed
-            prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline
-            prose-strong:text-foreground
+        <div
+          className="prose prose-lg prose-invert max-w-none
+            prose-headings:font-semibold prose-headings:text-ink prose-headings:tracking-tight
+            prose-p:text-ink-muted prose-p:leading-relaxed
+            prose-a:text-accent-blue prose-a:no-underline hover:prose-a:underline
+            prose-strong:text-ink
             prose-ul:list-disc prose-ul:pl-6
             prose-ol:list-decimal prose-ol:pl-6
-            prose-blockquote:border-l-4 prose-blockquote:border-[#E8E700] prose-blockquote:pl-6 prose-blockquote:italic
-            prose-img:rounded-2xl prose-img:shadow-md"
+            prose-blockquote:border-l-2 prose-blockquote:border-accent-blue prose-blockquote:pl-6 prose-blockquote:text-ink
+            prose-code:text-accent-blue prose-code:bg-surface-1 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md
+            prose-img:rounded-2xl prose-img:border prose-img:border-hairline"
           dangerouslySetInnerHTML={{ __html: post.content || "" }}
         />
       </article>

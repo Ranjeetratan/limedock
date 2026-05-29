@@ -3,15 +3,13 @@ import Image from 'next/image';
 
 export const Logo = ({ className = "" }: { className?: string }) => {
   return (
-    <div className={`relative ${className}`}>
-      <Image 
-        src="/limedock-logo.svg" 
-        alt="LimeDock Logo" 
-        width={141} 
-        height={24} 
-        className="w-full h-full object-contain"
-        priority
-      />
-    </div>
+    <Image
+      src="/limedock-logo.svg"
+      alt="LimeDock"
+      width={141}
+      height={24}
+      className={`brightness-0 invert object-contain ${className}`}
+      priority
+    />
   );
 };

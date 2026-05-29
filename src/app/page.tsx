@@ -9,12 +9,14 @@ import DesignedToScale from "@/components/DesignedToScale";
 import Comparison from "@/components/Comparison";
 import FeaturedProducts from "@/components/FeaturedProducts";
 import Footer from "@/components/Footer";
+import TrustStrip from "@/components/TrustStrip";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-canvas text-ink">
       <Navbar />
       <Hero />
+      <TrustStrip />
       <ProjectShowcase />
       <WhatWeDo />
       <DesignedToScale />
