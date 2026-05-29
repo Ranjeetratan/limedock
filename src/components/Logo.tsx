@@ -1,5 +1,4 @@
-import React from 'react';
-import Image from 'next/image';
+import Image from "next/image";
 
 export const Logo = ({ className = "" }: { className?: string }) => {
   return (
@@ -8,7 +7,7 @@ export const Logo = ({ className = "" }: { className?: string }) => {
       alt="LimeDock"
       width={141}
       height={24}
-      className={`brightness-0 invert object-contain ${className}`}
+      className={`object-contain ${className}`}
       priority
     />
   );

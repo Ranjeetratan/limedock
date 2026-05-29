@@ -1,154 +1,138 @@
-'use client';
+"use client";
 
-import React from 'react';
-import Image from 'next/image';
-import { motion } from 'framer-motion';
+import Image from "next/image";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 
-type IconRef = { src: string; alt: string; className: string; link?: string };
-
-type Step = {
-  step: string;
-  title: string;
-  description: string;
-  image: string;
-  icons: IconRef[];
-  variant: 'surface-1' | 'spot-violet' | 'spot-orange';
-};
-
-const steps: Step[] = [
+const steps = [
   {
-    step: 'Step 01',
-    title: 'Align',
-    description:
-      'A focused kickoff to lock down the vision, audience, constraints and the first 30 days of priorities.',
-    image: '/align1.png',
-    icons: [
-      { src: '/google-meet.svg', alt: 'Google Meet', className: 'top-6 left-6 -rotate-12', link: 'https://cal.com/limedock-admin-nb05ck/30min' },
-      { src: '/notion.svg', alt: 'Notion', className: 'bottom-6 left-6 rotate-6' },
-      { src: '/slack.svg', alt: 'Slack', className: 'top-1/2 right-4 -translate-y-1/2 rotate-12' },
-    ],
-    variant: 'surface-1',
+    label: "Align",
+    title: "We turn the fuzzy brief into an execution map.",
+    copy:
+      "Goals, audience, constraints, launch window, and success metrics get compressed into a crisp first sprint.",
+    image: "/align1.png",
+    tone: "bg-signature-mint",
   },
   {
-    step: 'Step 02',
-    title: 'Create',
-    description:
-      'Design, build, ship — in tight weekly cycles. Brand, product, and growth move in lockstep.',
-    image: '/align-step2.png',
-    icons: [
-      { src: '/figma.svg', alt: 'Figma', className: 'bottom-6 left-6 -rotate-6' },
-      { src: '/after-effects.svg', alt: 'After Effects', className: 'top-4 left-1/2 -translate-x-1/2' },
-      { src: '/vs-code.png', alt: 'VS Code', className: 'top-6 right-6 rotate-12' },
-    ],
-    variant: 'spot-violet',
+    label: "Create",
+    title: "Design and build move in the same room.",
+    copy:
+      "Every week has visible output: screens, prototypes, shipped code, content, and the decisions behind them.",
+    image: "/align-step2.png",
+    tone: "bg-signature-peach",
   },
   {
-    step: 'Step 03',
-    title: 'Grow',
-    description:
-      'Launch with confidence, then keep iterating. We hand over docs, systems and momentum your team can run with.',
-    image: '/Align-step3.png',
-    icons: [
-      { src: '/rocket.svg', alt: 'Rocket', className: 'top-8 right-12 -rotate-12' },
-    ],
-    variant: 'surface-1',
+    label: "Grow",
+    title: "Launch becomes the start of the learning loop.",
+    copy:
+      "We refine the funnel, measure behavior, document systems, and leave your team with momentum.",
+    image: "/Align-step3.png",
+    tone: "bg-signature-yellow",
   },
 ];
 
-const variantClasses: Record<Step['variant'], string> = {
-  'surface-1': 'bg-surface-1 border border-hairline',
-  'spot-violet': 'bg-spot-violet border border-white/15',
-  'spot-orange': 'bg-spot-orange border border-white/15',
-};
-
-const isGradient = (v: Step['variant']) => v !== 'surface-1';
-
 export default function HowWeWork() {
-  return (
-    <section className="relative py-24 md:py-32 w-full bg-canvas" id="how-we-work">
-      <div className="max-w-[1200px] mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mb-14 md:mb-20 max-w-3xl"
-        >
-          <span className="eyebrow mb-5">
-            <span className="dot" />
-            How we work
-          </span>
-          <h2 className="font-display text-display-lg text-ink mt-5">
-            A simple loop.
-            <br />
-            <span className="text-ink-muted">Align. Create. Grow.</span>
-          </h2>
-          <p className="text-subhead text-ink-muted mt-5 max-w-2xl">
-            No agency theatre, no 8-week discovery decks. Three modes, run
-            in tight cycles, every week.
-          </p>
-        </motion.div>
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+  const progress = useTransform(scrollYProgress, [0.15, 0.85], ["0%", "100%"]);
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {steps.map((item, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.55, delay: index * 0.08 }}
-              className={`group relative overflow-hidden rounded-[24px] lift ${variantClasses[item.variant]}`}
-            >
-              {/* Visual */}
-              <div className={`relative w-full aspect-[16/11] flex items-center justify-center overflow-hidden ${
-                index === 2 ? 'items-end pt-6 px-6' : 'p-8'
-              }`}>
-                <div className="relative w-full h-full">
-                  <Image
-                    src={item.image}
-                    alt={item.title}
-                    fill
-                    sizes="(min-width: 768px) 33vw, 100vw"
-                    className={`object-contain ${isGradient(item.variant) ? 'opacity-95' : ''} ${index === 2 ? 'object-bottom' : ''}`}
+  return (
+    <section
+      ref={ref}
+      id="how-we-work"
+      className="section-air bg-canvas"
+    >
+      <div className="container-air">
+        <div className="rounded-lg bg-signature-cream p-6 md:p-12 overflow-hidden relative">
+          {/* slow drifting halo */}
+          <span
+            aria-hidden
+            className="pointer-events-none absolute -bottom-32 -left-32 h-[420px] w-[420px] rounded-full opacity-40 blur-3xl"
+            style={{
+              background:
+                "radial-gradient(circle, rgba(252,171,121,0.55), transparent 70%)",
+            }}
+          />
+
+          <div className="grid lg:grid-cols-[0.72fr_1.28fr] gap-10 lg:gap-16 relative">
+            <div className="lg:sticky lg:top-28 h-fit">
+              <span className="eyebrow">
+                <span className="dot" />
+                Process
+              </span>
+              <h2 className="text-display-md text-ink mt-7 max-w-md">
+                A three-step operating loop, tuned for speed without chaos.
+              </h2>
+              <p className="text-body-md text-body mt-5 leading-[1.55] max-w-sm">
+                The trick is not more meetings. It is making progress visible
+                enough that decisions arrive when they are needed.
+              </p>
+
+              {/* Scroll-coupled progress bar */}
+              <div className="mt-10 relative">
+                <div className="h-2 rounded-full bg-ink/10 overflow-hidden">
+                  <motion.div
+                    style={{ width: progress }}
+                    className="h-full rounded-full bg-ink"
                   />
                 </div>
+                <div className="mt-3 grid grid-cols-3 gap-2 text-caption text-muted">
+                  {steps.map((s) => (
+                    <span key={s.label} className="text-center">
+                      {s.label}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
 
-                {item.icons.map((icon, i) =>
-                  icon.link ? (
-                    <a
-                      key={i}
-                      href={icon.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`absolute w-10 h-10 bg-white rounded-xl shadow-lg flex items-center justify-center p-2 z-10 ${icon.className} cursor-pointer hover:scale-110 transition-transform`}
-                    >
-                      <Image src={icon.src} alt={icon.alt} width={32} height={32} className="w-full h-full object-contain" />
-                    </a>
-                  ) : (
-                    <div
-                      key={i}
-                      className={`absolute w-10 h-10 bg-white rounded-xl shadow-lg flex items-center justify-center p-2 z-10 ${icon.className}`}
-                    >
-                      <Image src={icon.src} alt={icon.alt} width={32} height={32} className="w-full h-full object-contain" />
+            <div className="space-y-5">
+              {steps.map((step, index) => (
+                <motion.article
+                  key={step.label}
+                  initial={{ opacity: 0, y: 26 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{ duration: 0.58, delay: index * 0.06 }}
+                  className="cream-callout-card rounded-md bg-canvas soft-hairline p-5 md:p-6 grid md:grid-cols-[220px_1fr] gap-6 items-center group hover:shadow-[0_18px_45px_rgba(24,29,38,0.08)] transition-shadow"
+                >
+                  <div
+                    className={`relative aspect-[4/3] rounded-md overflow-hidden ${step.tone} transition-transform duration-500 group-hover:scale-[1.02]`}
+                  >
+                    <Image
+                      src={step.image}
+                      alt={step.label}
+                      fill
+                      sizes="(min-width: 768px) 220px, 100vw"
+                      className={`object-contain p-5 ${
+                        index === 2 ? "object-bottom p-0 pt-4" : ""
+                      } transition-transform duration-700 group-hover:scale-[1.04]`}
+                    />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-3">
+                      <span className="text-caption text-muted tabular-nums">
+                        0{index + 1}
+                      </span>
+                      <span className="text-caption text-link inline-flex items-center gap-1.5">
+                        <span className="h-1.5 w-1.5 rounded-full bg-link" />
+                        {step.label}
+                      </span>
                     </div>
-                  )
-                )}
-              </div>
-
-              {/* Text */}
-              <div className="p-7 md:p-8">
-                <span className={`text-caption ${isGradient(item.variant) ? 'text-white/70' : 'text-ink-muted'}`}>
-                  {item.step}
-                </span>
-                <h3 className={`font-display text-display-md mt-3 ${isGradient(item.variant) ? 'text-white' : 'text-ink'}`}>
-                  {item.title}
-                </h3>
-                <p className={`text-body mt-3 max-w-md leading-relaxed ${isGradient(item.variant) ? 'text-white/85' : 'text-ink-muted'}`}>
-                  {item.description}
-                </p>
-              </div>
-            </motion.div>
-          ))}
+                    <h3 className="text-title-lg text-ink mt-4 max-w-xl">
+                      {step.title}
+                    </h3>
+                    <p className="text-body-md text-body mt-3 leading-[1.55] max-w-xl">
+                      {step.copy}
+                    </p>
+                  </div>
+                </motion.article>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>

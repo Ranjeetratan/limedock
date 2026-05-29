@@ -10,10 +10,14 @@ import Comparison from "@/components/Comparison";
 import FeaturedProducts from "@/components/FeaturedProducts";
 import Footer from "@/components/Footer";
 import TrustStrip from "@/components/TrustStrip";
+import ScrollProgress from "@/components/motion/ScrollProgress";
+import CursorBlob from "@/components/motion/CursorBlob";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-canvas text-ink">
+    <main className="min-h-screen bg-canvas text-body">
+      <ScrollProgress />
+      <CursorBlob />
       <Navbar />
       <Hero />
       <TrustStrip />

@@ -1,161 +1,154 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Logo } from './Logo';
+import { motion } from "framer-motion";
+import Magnetic from "./motion/Magnetic";
 
-const CheckIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
-    <path d="M20 6L9 17L4 12" stroke="#4CD964" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-const CrossIcon = ({ tone = "error" }: { tone?: "error" | "warning" }) => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
-    <path
-      d="M18 6L6 18M6 6L18 18"
-      stroke={tone === "warning" ? "#FFB020" : "#FF5C5C"}
-      strokeWidth="2.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
-
-type Tone = "success" | "error" | "warning";
-
-type Row = {
-  feature: string;
-  us: { text: string; tone: Tone };
-  fullTime: { text: string; tone: Tone };
-  other: { text: string; tone: Tone };
-};
-
-const rows: Row[] = [
-  {
-    feature: "Cost",
-    us: { text: "$ — predictable retainer", tone: "success" },
-    fullTime: { text: "$$$$ — high overhead", tone: "error" },
-    other: { text: "$$ — variable", tone: "warning" },
-  },
-  {
-    feature: "Senior-level expertise",
-    us: { text: "Guaranteed, on every project", tone: "success" },
-    fullTime: { text: "Hopefully — if you hire well", tone: "warning" },
-    other: { text: "Maybe — depends on staffing", tone: "warning" },
-  },
-  {
-    feature: "Turnaround time",
-    us: { text: "48 hours for most asks", tone: "success" },
-    fullTime: { text: "Weeks — competing priorities", tone: "error" },
-    other: { text: "Weeks — load dependent", tone: "error" },
-  },
-  {
-    feature: "Time to start",
-    us: { text: "Today", tone: "success" },
-    fullTime: { text: "Weeks to onboard", tone: "error" },
-    other: { text: "Days to paper", tone: "error" },
-  },
-  {
-    feature: "Unlimited revisions",
-    us: { text: "Yes — until it's perfect", tone: "success" },
-    fullTime: { text: "Bound by time on team", tone: "error" },
-    other: { text: "Limited per project", tone: "error" },
-  },
-  {
-    feature: "Client portal",
-    us: { text: "Live, with daily updates", tone: "success" },
-    fullTime: { text: "Internal tools — varies", tone: "warning" },
-    other: { text: "No consistent system", tone: "error" },
-  },
-  {
-    feature: "Scalability",
-    us: { text: "Scale up or down anytime", tone: "success" },
-    fullTime: { text: "Hire / fire cycle", tone: "warning" },
-    other: { text: "Capped by their team", tone: "error" },
-  },
-  {
-    feature: "Flexibility",
-    us: { text: "Pause or adjust anytime", tone: "success" },
-    fullTime: { text: "Locked into salary + benefits", tone: "error" },
-    other: { text: "Project-locked", tone: "error" },
-  },
+const rows = [
+  ["Time to start", "Same week", "Weeks of recruiting", "Days of sales calls"],
+  ["Team seniority", "Senior-only execution", "Depends on hire", "Depends on staffing"],
+  ["Design + dev quality", "Same system, same room", "Often siloed", "Often handoff-heavy"],
+  ["Cost profile", "Predictable sprint / retainer", "Salary + benefits", "Scope creep"],
+  ["Visibility", "Daily async updates", "Internal rituals", "Status calls"],
+  ["Flexibility", "Scale up or pause", "Hard to resize", "Locked by project"],
 ];
 
-const Cell = ({ text, tone }: { text: string; tone: Tone }) => (
-  <div className="flex items-start gap-2.5">
-    <span className="shrink-0 mt-[3px]">
-      {tone === "success" ? <CheckIcon /> : <CrossIcon tone={tone === "warning" ? "warning" : "error"} />}
-    </span>
-    <span className={`text-[13.5px] leading-snug ${tone === "success" ? "text-ink" : "text-ink-muted"}`}>
-      {text}
-    </span>
-  </div>
-);
+function Check() {
+  return (
+    <motion.span
+      initial={{ scale: 0.3, opacity: 0 }}
+      whileInView={{ scale: 1, opacity: 1 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ type: "spring", stiffness: 350, damping: 18 }}
+      className="inline-grid h-6 w-6 place-items-center rounded-full bg-success/10 text-success"
+    >
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
+        <path
+          d="M20 6L9 17L4 12"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </motion.span>
+  );
+}
 
 export default function Comparison() {
   return (
-    <section className="relative py-24 md:py-32 bg-canvas w-full">
-      <div className="max-w-[1200px] mx-auto px-6">
-        {/* Header */}
+    <section className="section-air bg-canvas">
+      <div className="container-air">
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mb-14 md:mb-16 max-w-3xl"
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.65 }}
+          className="hero-card-dark signature-card bg-surface-dark text-on-dark overflow-hidden relative"
         >
-          <span className="eyebrow mb-5">
-            <span className="dot" />
-            Why us
-          </span>
-          <h2 className="font-display text-display-lg text-ink mt-5">
-            The senior team you wish
-            <br />
-            <span className="text-ink-muted">you didn&apos;t have to hire.</span>
-          </h2>
-          <p className="text-subhead text-ink-muted mt-5 max-w-2xl">
-            The smart alternative to full-time hires and traditional agencies — at a
-            fraction of the cost, and a fraction of the friction.
-          </p>
-        </motion.div>
+          {/* slow drifting halo on dark card */}
+          <span
+            aria-hidden
+            className="pointer-events-none absolute -top-32 -right-32 h-[420px] w-[420px] rounded-full opacity-30 blur-3xl"
+            style={{
+              background:
+                "radial-gradient(circle, rgba(252,171,121,0.6), rgba(244,211,94,0.2) 60%, transparent 80%)",
+            }}
+          />
 
-        {/* Table card */}
-        <div className="rounded-[24px] bg-surface-1 border border-hairline p-3 md:p-4 overflow-x-auto">
-          <div className="min-w-[820px] rounded-[18px] bg-surface-2/60 border border-hairline-soft">
-            {/* Header */}
-            <div className="grid grid-cols-[1.4fr_1.4fr_1.4fr_1.4fr] gap-4 px-6 py-5 border-b border-hairline-soft items-end">
-              <div className="text-caption text-ink-muted">Feature</div>
-              <div className="flex items-center gap-2">
-                <Logo className="h-5 w-24" />
-                <span className="text-caption text-accent-blue ml-1">(That&apos;s us)</span>
+          <div className="grid lg:grid-cols-[0.76fr_1.24fr] gap-10 lg:gap-16 relative">
+            <div>
+              <span className="eyebrow !text-white/75">
+                <span className="dot !bg-white" />
+                Why LimeDock
+              </span>
+              <h2 className="text-display-md text-white mt-7 max-w-md">
+                The senior team you wish you did not have to hire.
+              </h2>
+              <p className="text-body-md text-white/75 leading-[1.55] mt-5 max-w-sm">
+                A focused alternative to full-time hires and slow agencies:
+                fewer handoffs, faster production, clearer ownership.
+              </p>
+              <Magnetic strength={10} className="inline-block">
+                <a
+                  href="https://cal.com/limedock-admin-nb05ck/30min"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-secondary-on-dark mt-8 group"
+                >
+                  Book demo
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="transition-transform duration-300 group-hover:translate-x-1">
+                    <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </a>
+              </Magnetic>
+
+              {/* extra trust pills under CTA */}
+              <div className="mt-10 flex flex-wrap gap-2 max-w-sm">
+                {["No long-term lock-in", "Pause anytime", "Senior-only ICs", "Daily updates"].map(
+                  (chip) => (
+                    <span
+                      key={chip}
+                      className="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-caption text-white/80"
+                    >
+                      {chip}
+                    </span>
+                  )
+                )}
               </div>
-              <div className="text-headline text-ink">Full-time hire</div>
-              <div className="text-headline text-ink">Other agencies</div>
             </div>
 
-            {/* Rows */}
-            <div>
-              {rows.map((row, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 8 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.3, delay: index * 0.03 }}
-                  className="grid grid-cols-[1.4fr_1.4fr_1.4fr_1.4fr] gap-4 px-6 py-4 border-b border-hairline-soft last:border-0 items-start"
-                >
-                  <div className="text-[13.5px] font-medium text-ink-muted leading-snug pt-[1px]">
-                    {row.feature}
-                  </div>
-                  <Cell text={row.us.text} tone={row.us.tone} />
-                  <Cell text={row.fullTime.text} tone={row.fullTime.tone} />
-                  <Cell text={row.other.text} tone={row.other.tone} />
-                </motion.div>
-              ))}
+            <div className="overflow-x-auto">
+              <div className="min-w-[720px] rounded-md bg-white text-ink overflow-hidden">
+                <div className="grid grid-cols-[1.1fr_1fr_1fr_1fr] border-b border-hairline bg-surface-soft">
+                  {[
+                    "Category",
+                    "LimeDock",
+                    "Full-time",
+                    "Traditional agency",
+                  ].map((head) => (
+                    <div
+                      key={head}
+                      className="px-4 py-4 text-caption text-muted"
+                    >
+                      {head}
+                    </div>
+                  ))}
+                </div>
+                {rows.map(([label, us, hire, agency], index) => (
+                  <motion.div
+                    key={label}
+                    initial={{ opacity: 0, x: 18 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: "-40px" }}
+                    transition={{
+                      duration: 0.35,
+                      delay: index * 0.05,
+                    }}
+                    className="grid grid-cols-[1.1fr_1fr_1fr_1fr] border-b border-hairline last:border-0 group hover:bg-surface-soft/70 transition-colors"
+                  >
+                    <div className="px-4 py-4 text-caption text-muted flex items-center gap-2">
+                      <span className="h-1 w-1 rounded-full bg-hairline group-hover:bg-ink transition-colors" />
+                      {label}
+                    </div>
+                    <div className="px-4 py-4 flex gap-3 text-body-md text-ink">
+                      <Check />
+                      <span className="relative">
+                        {us}
+                        <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-ink/40 transition-all duration-300 group-hover:w-full" />
+                      </span>
+                    </div>
+                    <div className="px-4 py-4 text-body-md text-body">
+                      {hire}
+                    </div>
+                    <div className="px-4 py-4 text-body-md text-body">
+                      {agency}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

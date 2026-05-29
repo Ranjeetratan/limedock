@@ -49,66 +49,63 @@ export default async function BlogPostPage({ params }: PageProps) {
   }
 
   return (
-    <main className="min-h-screen bg-canvas flex flex-col">
+    <main className="min-h-screen bg-canvas">
       <Navbar />
 
-      <article className="flex-grow pt-40 md:pt-44 pb-24 px-6 max-w-[860px] mx-auto w-full">
-        {/* Header */}
-        <div className="mb-12">
-          <Link href="/blog" className="inline-flex items-center gap-2 text-caption text-ink-muted hover:text-ink transition-colors mb-6">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+      <article className="pt-32 md:pt-40 pb-24">
+        <div className="container-air max-w-[920px]">
+          <Link href="/blog" className="inline-flex items-center gap-2 text-caption text-muted focus-ring rounded-sm mb-8">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
               <path d="M19 12H5M5 12L11 6M5 12L11 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
             All writing
           </Link>
 
           {post.category && (
-            <span className="eyebrow mb-5">
+            <span className="eyebrow">
               <span className="dot" />
               {post.category}
             </span>
           )}
 
-          <h1 className="font-display text-display-xl text-ink mt-5 leading-[1.05]">
+          <h1 className="text-display-xl text-ink mt-7 max-w-3xl">
             {post.title}
           </h1>
 
-          <div className="text-caption text-ink-muted mt-5">
+          <div className="text-caption text-muted mt-5">
             {new Date(post.createdAt).toLocaleDateString("en-US", {
               year: "numeric",
               month: "long",
               day: "numeric",
             })}
           </div>
+
+          {post.featuredImage && (
+            <div className="relative w-full aspect-[16/9] rounded-md overflow-hidden my-14 bg-surface-soft border border-hairline">
+              <Image
+                src={post.featuredImage}
+                alt={post.title}
+                fill
+                className="object-cover"
+                priority
+              />
+            </div>
+          )}
+
+          <div
+            className="prose prose-lg max-w-none
+              prose-headings:font-normal prose-headings:text-ink
+              prose-p:text-body prose-p:leading-relaxed
+              prose-a:text-link prose-a:no-underline
+              prose-strong:text-ink
+              prose-ul:list-disc prose-ul:pl-6
+              prose-ol:list-decimal prose-ol:pl-6
+              prose-blockquote:border-l-2 prose-blockquote:border-link prose-blockquote:pl-6 prose-blockquote:text-ink
+              prose-code:text-link prose-code:bg-surface-soft prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-sm
+              prose-img:rounded-md prose-img:border prose-img:border-hairline"
+            dangerouslySetInnerHTML={{ __html: post.content || "" }}
+          />
         </div>
-
-        {/* Featured Image */}
-        {post.featuredImage && (
-          <div className="relative w-full aspect-[16/9] rounded-[24px] overflow-hidden mb-16 bg-surface-1 border border-hairline">
-            <Image
-              src={post.featuredImage}
-              alt={post.title}
-              fill
-              className="object-cover"
-              priority
-            />
-          </div>
-        )}
-
-        {/* Content */}
-        <div
-          className="prose prose-lg prose-invert max-w-none
-            prose-headings:font-semibold prose-headings:text-ink prose-headings:tracking-tight
-            prose-p:text-ink-muted prose-p:leading-relaxed
-            prose-a:text-accent-blue prose-a:no-underline hover:prose-a:underline
-            prose-strong:text-ink
-            prose-ul:list-disc prose-ul:pl-6
-            prose-ol:list-decimal prose-ol:pl-6
-            prose-blockquote:border-l-2 prose-blockquote:border-accent-blue prose-blockquote:pl-6 prose-blockquote:text-ink
-            prose-code:text-accent-blue prose-code:bg-surface-1 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md
-            prose-img:rounded-2xl prose-img:border prose-img:border-hairline"
-          dangerouslySetInnerHTML={{ __html: post.content || "" }}
-        />
       </article>
 
       <Footer />

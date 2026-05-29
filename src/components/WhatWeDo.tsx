@@ -1,141 +1,237 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from "framer-motion";
+import { useState } from "react";
+import TiltCard from "./motion/TiltCard";
 
-const cards = [
+const modes = [
   {
     label: "End-to-end",
-    title: "We own it from zero to ship.",
-    description:
-      "For teams without an in-house product org. We take ownership of strategy, design, engineering and launch — and hand over a system your team can run with.",
-    bullets: ["Strategy + product", "Design systems", "Frontend + backend", "Launch & growth"],
-    variant: "surface" as const,
+    title: "A senior team owns the messy middle.",
+    copy:
+      "Strategy, positioning, product design, engineering, launch QA, and iteration live in one execution loop. You see the work without having to manage every handoff.",
+    stats: ["1 roadmap", "weekly demos", "launch-ready handoff"],
+    color: "bg-signature-peach",
   },
   {
     label: "Embedded",
-    title: "We plug into your team.",
-    description:
-      "For teams with existing capability who need senior firepower. We sit alongside your designers, PMs and engineers — closing skill gaps and shipping faster.",
-    bullets: ["Slack-first comms", "Sprint-paced", "Senior-only ICs", "Doc-driven"],
-    variant: "violet" as const,
+    title: "We plug into your team and raise the floor.",
+    copy:
+      "We join your Slack, Figma, Notion, and repo as senior ICs. Design and engineering move together, with decisions documented as they happen.",
+    stats: ["async-first", "senior ICs", "same-week start"],
+    color: "bg-signature-mint",
+  },
+  {
+    label: "Growth system",
+    title: "The website becomes an operating surface.",
+    copy:
+      "Landing pages, launch assets, SEO/GEO structure, social systems, pitch collateral, and conversion experiments get designed as one connected growth machine.",
+    stats: ["content ops", "analytics-ready", "conversion loops"],
+    color: "bg-signature-yellow",
   },
 ];
 
-const Bullet = ({ children, tone = "muted" }: { children: React.ReactNode; tone?: "muted" | "light" }) => (
-  <li className={`flex items-center gap-2 text-[14px] ${tone === "muted" ? "text-ink-muted" : "text-white/85"}`}>
-    <span className={`w-1.5 h-1.5 rounded-full ${tone === "muted" ? "bg-white/40" : "bg-white"}`} />
-    <span>{children}</span>
-  </li>
-);
-
-const WhatWeDo = () => {
+function MiniBoard({ color }: { color: string }) {
   return (
-    <section id="services" className="w-full bg-canvas py-24 md:py-32 relative">
-      <div className="max-w-[1200px] mx-auto px-6 relative">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mb-14 md:mb-20 max-w-3xl"
-        >
-          <span className="eyebrow mb-5">
-            <span className="dot" />
-            How we engage
-          </span>
-          <h2 className="font-display text-display-lg text-ink mt-5">
-            Two ways in.<br />
-            <span className="text-ink-muted">One outcome.</span>
-          </h2>
-          <p className="text-subhead text-ink-muted mt-5 max-w-2xl">
-            Whether we run the whole thing or sit inside your team, the goal is
-            the same — a product you&apos;re proud to ship.
-          </p>
-        </motion.div>
-
-        {/* Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-          {cards.map((card, i) => (
+    <div className="relative min-h-[330px] overflow-hidden rounded-md bg-canvas soft-hairline p-5">
+      <div className="grid grid-cols-[150px_1fr] gap-4 h-full">
+        <div className="rounded-md bg-surface-soft p-3 space-y-2">
+          {["Launch", "Design", "Build", "Ship"].map((item, index) => (
             <motion.div
-              key={card.label}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
-              className={`relative overflow-hidden rounded-[30px] p-8 md:p-10 lift ${
-                card.variant === "violet"
-                  ? "bg-spot-violet border border-white/10"
-                  : "bg-surface-1 border border-hairline"
+              key={item}
+              initial={{ opacity: 0, x: -8 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: index * 0.05 }}
+              className={`rounded-sm px-3 py-2 text-caption ${
+                index === 1
+                  ? `${color} text-ink`
+                  : "bg-canvas text-muted"
               }`}
-              style={{ minHeight: 440 }}
             >
-              {/* Soft shine for gradient card */}
-              {card.variant === "violet" && (
-                <div
-                  className="absolute inset-0 pointer-events-none opacity-60"
-                  style={{
-                    background:
-                      "radial-gradient(80% 50% at 50% 0%, rgba(255,255,255,0.25), transparent 60%)",
-                  }}
-                />
-              )}
-
-              <div className="relative z-10 h-full flex flex-col">
-                <div className="flex items-center justify-between">
-                  <span
-                    className={`text-caption px-2.5 py-1 rounded-full border ${
-                      card.variant === "violet"
-                        ? "bg-white/10 border-white/20 text-white"
-                        : "bg-surface-2 border-hairline text-ink-muted"
-                    }`}
-                  >
-                    {card.label}
-                  </span>
-                  <span className={`text-caption ${card.variant === "violet" ? "text-white/70" : "text-ink-muted"}`}>
-                    0{i + 1} / 02
-                  </span>
-                </div>
-
-                <h3 className={`font-display text-display-md mt-10 max-w-md ${card.variant === "violet" ? "text-white" : "text-ink"}`}>
-                  {card.title}
-                </h3>
-
-                <p className={`text-body-lg mt-5 max-w-md ${card.variant === "violet" ? "text-white/80" : "text-ink-muted"}`}>
-                  {card.description}
-                </p>
-
-                <ul className="mt-8 grid grid-cols-2 gap-x-6 gap-y-3 max-w-md">
-                  {card.bullets.map((b) => (
-                    <Bullet key={b} tone={card.variant === "violet" ? "light" : "muted"}>
-                      {b}
-                    </Bullet>
-                  ))}
-                </ul>
-
-                <div className="mt-auto pt-10">
-                  <a
-                    href="https://cal.com/limedock-admin-nb05ck/30min"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`inline-flex items-center gap-2 text-[14px] font-semibold ${
-                      card.variant === "violet" ? "text-white" : "text-ink"
-                    } group`}
-                  >
-                    Talk to us
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="transition-transform group-hover:translate-x-1">
-                      <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </a>
-                </div>
-              </div>
+              {item}
             </motion.div>
           ))}
+        </div>
+        <div className="space-y-4">
+          <div className={`${color} rounded-md p-4 min-h-[122px] relative overflow-hidden`}>
+            <div className="flex items-center justify-between text-caption text-ink/70">
+              <span>Project health</span>
+              <span className="inline-flex items-center gap-1.5">
+                <span className="relative inline-flex h-1.5 w-1.5">
+                  <span className="absolute inset-0 rounded-full bg-ink/60 animate-ping" />
+                  <span className="relative inline-block h-1.5 w-1.5 rounded-full bg-ink" />
+                </span>
+                Live
+              </span>
+            </div>
+            <div className="mt-8 h-3 rounded-full bg-ink/20 overflow-hidden">
+              <motion.div
+                initial={{ width: "18%" }}
+                animate={{ width: ["18%", "72%", "46%", "88%", "62%"] }}
+                transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+                className="h-full rounded-full bg-ink"
+              />
+            </div>
+            <div className="mt-3 text-caption text-ink/60 tabular-nums flex items-center justify-between">
+              <span>Sprint 04</span>
+              <motion.span
+                initial={{ opacity: 0.5 }}
+                animate={{ opacity: [0.5, 1, 0.5] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                72%
+              </motion.span>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="rounded-md bg-surface-soft p-4">
+              <div className="h-2 w-16 rounded-full bg-ink/20" />
+              <div className="mt-8 space-y-2">
+                <div className="h-2 rounded-full bg-ink/16" />
+                <div className="h-2 w-2/3 rounded-full bg-ink/12" />
+              </div>
+            </div>
+            <div className="rounded-md bg-surface-soft p-4">
+              <div className="flex -space-x-2">
+                {[
+                  "/ranjeet-profile-pic.jpeg",
+                  "/dipit-profile-pic.jpeg",
+                  "/aman-profile-pic.jpeg",
+                ].map((src) => (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img
+                    key={src}
+                    src={src}
+                    alt=""
+                    className="h-8 w-8 rounded-full border-2 border-canvas object-cover"
+                  />
+                ))}
+              </div>
+              <div className="mt-7 h-2 w-full rounded-full bg-ink/14" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function WhatWeDo() {
+  const [active, setActive] = useState(0);
+  const current = modes[active];
+
+  return (
+    <section id="services" className="section-air bg-canvas">
+      <div className="container-air">
+        <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-12 lg:gap-16 items-start">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="eyebrow">
+              <span className="dot" />
+              How we engage
+            </span>
+            <h2 className="text-display-md text-ink mt-7 max-w-lg">
+              A flexible studio model for teams that cannot afford slow handoffs.
+            </h2>
+            <p className="text-label-md text-body mt-6 max-w-md leading-[1.45]">
+              Pick the mode that matches where your team is today. The operating
+              rhythm stays the same: clear priorities, visible work, fast shipping.
+            </p>
+
+            {/* Step list under the headline */}
+            <ul className="mt-10 space-y-3 max-w-sm">
+              {modes.map((m, i) => (
+                <li key={m.label} className="flex items-center gap-3 text-body-md text-muted">
+                  <span className={`h-7 w-7 rounded-full grid place-items-center text-caption ${
+                    i === active
+                      ? "bg-ink text-canvas"
+                      : "bg-surface-soft text-muted border border-hairline"
+                  } transition-colors`}>
+                    {i + 1}
+                  </span>
+                  <span className={i === active ? "text-ink" : ""}>{m.label}</span>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.65 }}
+            className="feature-card-tabbed rounded-lg bg-surface-soft p-4 md:p-8"
+          >
+            <div className="grid md:grid-cols-[200px_1fr] gap-5">
+              {/* Tabs with sliding indicator using layoutId */}
+              <div className="relative flex md:flex-col gap-1 overflow-x-auto md:overflow-visible pb-1 md:pb-0">
+                {modes.map((mode, index) => (
+                  <button
+                    key={mode.label}
+                    type="button"
+                    onClick={() => setActive(index)}
+                    className="relative shrink-0 rounded-md px-4 py-3 text-left text-title-md transition-colors z-10"
+                  >
+                    {active === index && (
+                      <motion.span
+                        layoutId="tab-indicator"
+                        className="absolute inset-0 -z-10 rounded-md bg-canvas soft-hairline"
+                        transition={{ type: "spring", stiffness: 360, damping: 32 }}
+                      />
+                    )}
+                    <span
+                      className={
+                        active === index ? "text-ink" : "text-muted"
+                      }
+                    >
+                      {mode.label}
+                    </span>
+                  </button>
+                ))}
+              </div>
+
+              <TiltCard className="rounded-md" max={4} spotlight={false}>
+                <div className="rounded-md bg-canvas p-4 md:p-6 soft-hairline">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={current.label}
+                      initial={{ opacity: 0, y: 14 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -14 }}
+                      transition={{ duration: 0.32, ease: [0.2, 0.8, 0.2, 1] }}
+                    >
+                      <MiniBoard color={current.color} />
+                      <h3 className="text-title-lg text-ink mt-7">
+                        {current.title}
+                      </h3>
+                      <p className="text-body-md text-body mt-3 max-w-xl leading-[1.55]">
+                        {current.copy}
+                      </p>
+                      <div className="mt-6 flex flex-wrap gap-2">
+                        {current.stats.map((stat, idx) => (
+                          <motion.span
+                            key={stat}
+                            initial={{ opacity: 0, y: 8 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.15 + idx * 0.05 }}
+                            className="rounded-full border border-hairline px-3 py-1.5 text-caption text-muted hover:text-ink hover:border-ink/30 transition-colors"
+                          >
+                            {stat}
+                          </motion.span>
+                        ))}
+                      </div>
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+              </TiltCard>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>
   );
-};
-
-export default WhatWeDo;
+}

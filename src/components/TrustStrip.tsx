@@ -1,69 +1,81 @@
 "use client";
 
 import { motion } from "framer-motion";
+import CountUp from "./motion/CountUp";
 
-const stats = [
-  { value: "40+", label: "Founders served" },
-  { value: "100+", label: "Products shipped" },
-  { value: "4.9", label: "Avg. CSAT" },
-  { value: "5 yrs", label: "Avg. team seniority" },
-];
-
-// Pure typographic logo strip — simple, fast, no asset wrangling.
-const wordmarks = [
+const logos = [
   "Cofounderbase",
   "Hireschema",
-  "Kingdom of Kumar",
   "Kickofflist",
+  "Kingdom of Kumar",
   "LimeDock Labs",
   "Northstar AI",
   "Heron",
   "Anvil",
 ];
 
+const stats: Array<{
+  value: number;
+  suffix: string;
+  label: string;
+}> = [
+  { value: 40, suffix: "+", label: "founders served" },
+  { value: 100, suffix: "+", label: "production releases" },
+  { value: 48, suffix: "h", label: "avg. first turnaround" },
+];
+
 export default function TrustStrip() {
   return (
-    <section className="relative w-full bg-canvas pt-8 pb-20">
-      <div className="max-w-[1200px] mx-auto px-6">
-        {/* Stats row */}
+    <section className="bg-canvas pb-24">
+      <div className="container-air">
+        {/* Logo marquee */}
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-px rounded-[20px] overflow-hidden border border-hairline bg-hairline-soft"
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.55 }}
+          className="border-y border-hairline py-7 overflow-hidden mask-fade-x relative"
         >
-          {stats.map((s) => (
-            <div
-              key={s.label}
-              className="bg-canvas px-6 py-8 md:py-10 flex flex-col items-start gap-2"
-            >
-              <span className="font-display text-[40px] md:text-[56px] leading-none tracking-[-0.04em] text-ink">
-                {s.value}
+          {/* Subtle drift loop */}
+          <div className="flex gap-14 md:gap-20 whitespace-nowrap animate-scroll-left will-change-transform" style={{ width: "max-content" }}>
+            {[...logos, ...logos].map((logo, i) => (
+              <span
+                key={`${logo}-${i}`}
+                className="group inline-flex items-center gap-2 text-caption text-muted hover:text-ink transition-colors"
+              >
+                <span className="inline-block h-1.5 w-1.5 rounded-full bg-hairline group-hover:bg-signature-coral transition-colors" />
+                {logo}
               </span>
-              <span className="text-caption text-ink-muted">{s.label}</span>
-            </div>
-          ))}
+            ))}
+          </div>
         </motion.div>
 
-        {/* Wordmark strip */}
-        <div className="mt-14 flex flex-col items-center gap-5">
-          <span className="text-caption text-ink-muted uppercase tracking-[0.18em]">
-            Built for & with
-          </span>
-          <div className="w-full overflow-hidden mask-fade-x">
-            <div className="flex gap-12 md:gap-16 animate-scroll-left whitespace-nowrap will-change-transform" style={{ width: "max-content" }}>
-              {[...wordmarks, ...wordmarks].map((w, i) => (
-                <span
-                  key={`${w}-${i}`}
-                  className="font-display text-[22px] md:text-[26px] tracking-[-0.04em] text-ink-muted/70 hover:text-ink transition-colors"
-                >
-                  {w}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
+        {/* Stats with count-up */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.55, delay: 0.08 }}
+          className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6"
+        >
+          {stats.map((s, i) => (
+            <motion.div
+              key={s.label}
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.5, delay: 0.1 + i * 0.08 }}
+              className="group flex items-end gap-4 relative"
+            >
+              <span className="text-display-md text-ink tabular-nums">
+                <CountUp to={s.value} suffix={s.suffix} />
+              </span>
+              <span className="text-body-md text-muted pb-2">{s.label}</span>
+              {/* Animated underline accent */}
+              <span className="absolute -bottom-2 left-0 h-px w-0 bg-ink/30 transition-all duration-700 group-hover:w-full" />
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
     </section>
   );
