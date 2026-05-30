@@ -45,7 +45,7 @@ export default function ProblemsWeSolve() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.45, delay: index * 0.04 }}
-                  className={`rounded-md p-5 text-ink ${
+                  className={`card-luminous rounded-md p-5 text-ink relative ${
                     index % 3 === 0
                       ? "bg-signature-cream"
                       : index % 3 === 1

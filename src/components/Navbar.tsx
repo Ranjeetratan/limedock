@@ -58,28 +58,14 @@ export default function Navbar() {
             </Link>
           </div>
 
-          <div className="hidden md:flex items-center gap-3">
-            <a
-              href="https://cal.com/limedock-admin-nb05ck/30min"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-secondary !min-h-10 !px-4 !py-2 !text-body-md"
-            >
-              Book demo
-            </a>
+          <div className="hidden md:flex items-center">
             <a
               href="https://cal.com/limedock-admin-nb05ck/30min"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary !min-h-10 !px-4 !py-2 !text-body-md"
             >
-              Start project
-            </a>
-            <a
-              href="mailto:ranjeet@limedock.com"
-              className="text-body-md text-ink focus-ring rounded-sm"
-            >
-              Log In
+              Book demo
             </a>
           </div>
 
@@ -88,7 +74,7 @@ export default function Navbar() {
             aria-label="Open menu"
             aria-expanded={isMobileOpen}
             onClick={() => setIsMobileOpen((value) => !value)}
-            className="md:hidden button-icon-circular focus-ring"
+            className="md:!hidden button-icon-circular focus-ring"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
               {isMobileOpen ? (
@@ -137,13 +123,7 @@ export default function Navbar() {
                   rel="noopener noreferrer"
                   className="btn-primary"
                 >
-                  Start project
-                </a>
-                <a
-                  href="mailto:ranjeet@limedock.com"
-                  className="btn-secondary"
-                >
-                  Email the studio
+                  Book demo
                 </a>
               </div>
             </motion.div>

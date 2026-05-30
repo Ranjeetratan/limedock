@@ -98,7 +98,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
       <TiltCard className="rounded-[10px]" max={4} spotlight>
         <div
           ref={ref}
-          className={`demo-card soft-hairline ${service.surface} ${service.height} flex flex-col overflow-hidden relative`}
+          className={`demo-card card-luminous soft-hairline ${service.surface} ${service.height} flex flex-col relative`}
         >
           {/* hover scan-line */}
           <span

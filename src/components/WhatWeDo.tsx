@@ -53,7 +53,7 @@ function MiniBoard({ color }: { color: string }) {
           ))}
         </div>
         <div className="space-y-4">
-          <div className={`${color} rounded-md p-4 min-h-[122px] relative overflow-hidden`}>
+          <div className={`${color} card-luminous rounded-md p-4 min-h-[122px] relative overflow-hidden`}>
             <div className="flex items-center justify-between text-caption text-ink/70">
               <span>Project health</span>
               <span className="inline-flex items-center gap-1.5">

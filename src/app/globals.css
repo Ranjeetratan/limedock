@@ -395,6 +395,59 @@ body {
   border-bottom: 1px solid rgba(24, 29, 38, 0.08);
 }
 
+/* ---------------------------------------------------------------- */
+/*  Luminous surface — granular noise + diagonal light wash          */
+/* ---------------------------------------------------------------- */
+
+.card-luminous {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+/* Diagonal light wash: bright top-left, soft shadow bottom-right.   */
+.card-luminous::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(70% 75% at 18% 12%, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 60%),
+    radial-gradient(60% 65% at 85% 92%, rgba(24, 29, 38, 0.18) 0%, rgba(24, 29, 38, 0) 65%),
+    linear-gradient(155deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 35%, rgba(0, 0, 0, 0.08) 100%);
+  mix-blend-mode: soft-light;
+  opacity: 0.95;
+}
+
+/* Granular fractal noise on top, just enough to break the surface.  */
+.card-luminous::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.32;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='2' seed='9' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.95 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 220px 220px;
+}
+
+.card-luminous > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* A brighter variant — used on darker / saturated grounds where the */
+/* overlay needs to read more like an actual light source.           */
+.card-luminous-bright::before {
+  background:
+    radial-gradient(75% 80% at 15% 10%, rgba(255, 255, 255, 0.65) 0%, rgba(255, 255, 255, 0) 62%),
+    radial-gradient(60% 60% at 88% 92%, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0) 70%);
+  mix-blend-mode: screen;
+  opacity: 0.9;
+}
+
 .rainbow-stripes {
   background:
     linear-gradient(90deg,

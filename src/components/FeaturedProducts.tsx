@@ -91,7 +91,7 @@ export default function FeaturedProducts() {
                   href={product.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`demo-card soft-hairline ${product.surface} group min-h-[430px] flex flex-col relative overflow-hidden`}
+                  className={`demo-card card-luminous soft-hairline ${product.surface} group min-h-[430px] flex flex-col relative`}
                 >
                   {/* corner arrow tag */}
                   <div className="absolute top-4 right-4 z-20 flex items-center gap-2 rounded-full bg-canvas/90 backdrop-blur px-3 py-1.5 text-caption text-ink translate-y-0 opacity-100 transition-all duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">

@@ -100,7 +100,7 @@ export default function HowWeWork() {
                   className="cream-callout-card rounded-md bg-canvas soft-hairline p-5 md:p-6 grid md:grid-cols-[220px_1fr] gap-6 items-center group hover:shadow-[0_18px_45px_rgba(24,29,38,0.08)] transition-shadow"
                 >
                   <div
-                    className={`relative aspect-[4/3] rounded-md overflow-hidden ${step.tone} transition-transform duration-500 group-hover:scale-[1.02]`}
+                    className={`relative aspect-[4/3] rounded-md overflow-hidden card-luminous ${step.tone} transition-transform duration-500 group-hover:scale-[1.02]`}
                   >
                     <Image
                       src={step.image}

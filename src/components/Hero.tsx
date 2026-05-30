@@ -211,21 +211,21 @@ export default function Hero() {
               spotlight
             >
               <div
-                className={`demo-card min-h-[170px] md:min-h-[200px] overflow-hidden relative ${item.color}`}
+                className={`demo-card card-luminous min-h-[170px] md:min-h-[200px] relative ${item.color}`}
               >
                 {/* Scan-line sweep on hover */}
                 <span
                   aria-hidden
-                  className="pointer-events-none absolute inset-y-0 left-0 w-[40%] bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-scan"
+                  className="pointer-events-none absolute inset-y-0 left-0 w-[40%] bg-gradient-to-r from-transparent via-white/40 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-scan z-[2]"
                 />
-                <div className="flex items-center justify-between text-caption text-ink/70 relative z-10">
+                <div className="flex items-center justify-between text-caption text-ink/70">
                   <span>0{index + 1}</span>
                   <span className="h-2 w-2 rounded-full bg-ink/45 transition-transform duration-300 group-hover:scale-150 group-hover:bg-ink" />
                 </div>
-                <div className="mt-7 md:mt-10 text-title-md text-ink max-w-[14ch] relative z-10">
+                <div className="mt-7 md:mt-10 text-title-md text-ink max-w-[14ch]">
                   {item.label}
                 </div>
-                <div className="mt-4 flex items-end justify-between gap-3 relative z-10">
+                <div className="mt-4 flex items-end justify-between gap-3">
                   <span className="text-display-md text-ink">{item.metric}</span>
                   <span className="text-caption text-ink/70 pb-2 text-right max-w-[14ch]">
                     {item.desc}
