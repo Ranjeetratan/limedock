@@ -131,9 +131,9 @@ export default function ParallaxMasonry() {
           className="absolute inset-0 p-3 md:p-5"
           style={{
             WebkitMaskImage:
-              "linear-gradient(to bottom, transparent 0%, #000 6%, #000 94%, transparent 100%)",
+              "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.05) 6%, rgba(0,0,0,0.35) 12%, #000 22%, #000 78%, rgba(0,0,0,0.35) 88%, rgba(0,0,0,0.05) 94%, transparent 100%)",
             maskImage:
-              "linear-gradient(to bottom, transparent 0%, #000 6%, #000 94%, transparent 100%)",
+              "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.05) 6%, rgba(0,0,0,0.35) 12%, #000 22%, #000 78%, rgba(0,0,0,0.35) 88%, rgba(0,0,0,0.05) 94%, transparent 100%)",
           }}
         >
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-[1fr_1.4fr_1.4fr_1fr_1.4fr] gap-3 md:gap-4 items-start">
