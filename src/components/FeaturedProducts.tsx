@@ -93,14 +93,7 @@ export default function FeaturedProducts() {
                   rel="noopener noreferrer"
                   className={`demo-card card-luminous soft-hairline ${product.surface} group min-h-[430px] flex flex-col relative`}
                 >
-                  {/* corner arrow tag */}
-                  <div className="absolute top-4 right-4 z-20 flex items-center gap-2 rounded-full bg-canvas/90 backdrop-blur px-3 py-1.5 text-caption text-ink translate-y-0 opacity-100 transition-all duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
-                    Visit
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
-                      <path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </div>
-
+                  {/* Image */}
                   <div className="relative flex-1 min-h-[240px] rounded-md bg-canvas/70 soft-hairline overflow-hidden">
                     <Image
                       src={product.image}
@@ -109,18 +102,12 @@ export default function FeaturedProducts() {
                       sizes="(min-width: 1024px) 620px, 100vw"
                       className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                     />
-                    {/* overlay reveal */}
-                    <div
-                      aria-hidden
-                      className="absolute inset-0 bg-gradient-to-t from-ink/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                    />
                   </div>
 
-                  <div className="pt-6 grid md:grid-cols-[0.55fr_1fr] gap-4">
-                    <div>
-                      <h3 className="text-title-lg text-ink">
-                        {product.title}
-                      </h3>
+                  {/* Content */}
+                  <div className="pt-6 flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+                    <div className="flex-1">
+                      <h3 className="text-title-lg text-ink">{product.title}</h3>
                       <div className="mt-3 flex flex-wrap gap-2">
                         {product.tags.map((tag) => (
                           <span
@@ -131,10 +118,18 @@ export default function FeaturedProducts() {
                           </span>
                         ))}
                       </div>
+                      <p className="text-body-md text-body leading-[1.55] mt-3 max-w-md">
+                        {product.description}
+                      </p>
                     </div>
-                    <p className="text-body-md text-body leading-[1.55]">
-                      {product.description}
-                    </p>
+
+                    {/* Visit button — clean, in the content area */}
+                    <span className="shrink-0 self-end inline-flex items-center gap-1.5 rounded-full border border-ink/20 bg-canvas/80 px-4 py-2 text-caption text-ink transition-all duration-300 group-hover:bg-ink group-hover:text-canvas group-hover:border-ink">
+                      Visit site
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none">
+                        <path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </span>
                   </div>
                 </a>
               </TiltCard>
