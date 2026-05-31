@@ -6,32 +6,39 @@ import { useRef, useMemo } from "react";
 
 /**
  * Five-column scroll-driven masonry rendered inside a fixed-height
- * window so the staggered column edges fold into a single viewport
- * instead of poking out unevenly at top + bottom.
+ * window. Mobile screens occupy the portrait columns (1, 4); the
+ * landscape placeholder library fills cols 2, 3, 5.
  *
  * Layout
- * ─────────────────────────────────────────────────────────────
- * Desktop (lg+)
- *   col 1 — portrait  (9:16),  parallax UP     ← drifts up
- *   col 2 — landscape (16:9),  static
- *   col 3 — landscape (16:9),  parallax UP     ← drifts up
- *   col 4 — portrait  (9:16),  static
- *   col 5 — landscape (16:9),  parallax UP     ← drifts up
- *
- * Tablet (md)
- *   3 columns. Drop both portrait columns (1, 4).
- *
- * Mobile (< md)
- *   2 columns of landscape. col 5 hidden.
- *
- * Inside, the grid lives in an absolutely-positioned layer with a
- * top/bottom mask so column overflow softly fades into the window.
+ *   col 1 — portrait  (mobile screens), parallax UP
+ *   col 2 — landscape (placeholders),   static
+ *   col 3 — landscape (placeholders),   parallax UP
+ *   col 4 — portrait  (mobile screens), static
+ *   col 5 — landscape (placeholders),   parallax UP
  */
 
-const ALL_IMAGES = Array.from({ length: 55 }, (_, i) => {
+type ImageDescriptor = { id: string; src: string; alt: string };
+
+const MOBILE_IMAGES: ImageDescriptor[] = Array.from({ length: 9 }, (_, i) => {
   const id = String(i + 1).padStart(2, "0");
-  return { id, src: `/placeholder-images/${id}.png`, alt: `LimeDock project ${id}` };
+  return {
+    id: `mob-${id}`,
+    src: `/works-mobile/mobile-${id}.png`,
+    alt: `LimeDock mobile work ${id}`,
+  };
 });
+
+const LANDSCAPE_IMAGES: ImageDescriptor[] = Array.from(
+  { length: 55 },
+  (_, i) => {
+    const id = String(i + 1).padStart(2, "0");
+    return {
+      id: `ls-${id}`,
+      src: `/placeholder-images/${id}.png`,
+      alt: `LimeDock project ${id}`,
+    };
+  }
+);
 
 type AspectKey = "portrait" | "landscape";
 
@@ -39,19 +46,23 @@ type ColumnSpec = {
   aspect: AspectKey;
   parallax: boolean;
   show: "always" | "lg-only" | "md-up";
+  source: "mobile" | "landscape";
   tiles: number;
+  /** Starting index inside the source pool (so columns don't share images) */
+  offset: number;
 };
 
 const SPECS: ColumnSpec[] = [
-  { aspect: "portrait",  parallax: true,  show: "lg-only", tiles: 5 },  // 1
-  { aspect: "landscape", parallax: false, show: "always",  tiles: 10 }, // 2
-  { aspect: "landscape", parallax: true,  show: "always",  tiles: 10 }, // 3
-  { aspect: "portrait",  parallax: false, show: "lg-only", tiles: 5 },  // 4
-  { aspect: "landscape", parallax: true,  show: "md-up",   tiles: 10 }, // 5
+  { aspect: "portrait",  parallax: true,  show: "lg-only", source: "mobile",    tiles: 5,  offset: 0 },  // 1
+  { aspect: "landscape", parallax: false, show: "always",  source: "landscape", tiles: 10, offset: 0 },  // 2
+  { aspect: "landscape", parallax: true,  show: "always",  source: "landscape", tiles: 10, offset: 10 }, // 3
+  { aspect: "portrait",  parallax: false, show: "lg-only", source: "mobile",    tiles: 4,  offset: 5 },  // 4
+  { aspect: "landscape", parallax: true,  show: "md-up",   source: "landscape", tiles: 10, offset: 20 }, // 5
 ];
 
 const ASPECT_CLASS: Record<AspectKey, string> = {
-  portrait: "aspect-[9/16]",
+  // Mobile screens are 780x1688 → ~9:19.5; portrait box approximates that.
+  portrait: "aspect-[9/18]",
   landscape: "aspect-[16/9]",
 };
 
@@ -67,9 +78,10 @@ function ParallaxColumn({
   yUp,
 }: {
   spec: ColumnSpec;
-  images: typeof ALL_IMAGES;
+  images: ImageDescriptor[];
   yUp: MotionValue<string>;
 }) {
+  const isMobile = spec.source === "mobile";
   return (
     <motion.div
       style={{ y: spec.parallax ? yUp : 0 }}
@@ -78,15 +90,19 @@ function ParallaxColumn({
       {images.map((img) => (
         <div
           key={img.id}
-          className={`card-luminous relative w-full overflow-hidden rounded-md bg-surface-soft soft-hairline ${ASPECT_CLASS[spec.aspect]}`}
+          className={`card-luminous relative w-full overflow-hidden rounded-md soft-hairline ${
+            isMobile ? "bg-ink/95" : "bg-surface-soft"
+          } ${ASPECT_CLASS[spec.aspect]}`}
         >
           <Image
             src={img.src}
             alt={img.alt}
             fill
             sizes="(min-width: 1280px) 240px, (min-width: 768px) 33vw, 50vw"
-            className="object-cover transition-transform duration-700 hover:scale-[1.03]"
-            unoptimized
+            className={`transition-transform duration-700 hover:scale-[1.03] ${
+              isMobile ? "object-contain p-2" : "object-cover"
+            }`}
+            unoptimized={!isMobile}
           />
         </div>
       ))}
@@ -102,31 +118,25 @@ export default function ParallaxMasonry() {
     offset: ["start end", "end start"],
   });
 
-  // 25% range of vertical drift inside the window. Cols 1/3/5 ride this.
   const yUp = useTransform(scrollYProgress, [0, 1], ["10%", "-15%"]);
 
-  // Stable image distribution across columns.
   const columns = useMemo(() => {
-    const result = SPECS.map(
-      (spec) => ({ spec, images: [] as typeof ALL_IMAGES })
-    );
-    let cursor = 0;
-    SPECS.forEach((spec, idx) => {
-      result[idx].images = ALL_IMAGES.slice(cursor, cursor + spec.tiles);
-      cursor += spec.tiles;
+    return SPECS.map((spec) => {
+      const pool = spec.source === "mobile" ? MOBILE_IMAGES : LANDSCAPE_IMAGES;
+      const images: ImageDescriptor[] = [];
+      for (let i = 0; i < spec.tiles; i++) {
+        images.push(pool[(spec.offset + i) % pool.length]);
+      }
+      return { spec, images };
     });
-    return result;
   }, []);
 
   return (
     <div ref={sectionRef} className="container-air mt-12 md:mt-16">
-      {/* Window: fixed height, rounded, clips column overflow */}
       <div
         className="relative overflow-hidden rounded-lg border border-hairline bg-canvas"
         style={{ height: "clamp(680px, 88vh, 1100px)" }}
       >
-        {/* Masked content layer — soft fade at top + bottom edges so the
-            parallax feels like it flows through a window. */}
         <div
           className="absolute inset-0 p-3 md:p-5"
           style={{

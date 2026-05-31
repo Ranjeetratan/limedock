@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Magnetic from "./motion/Magnetic";
 import ParallaxMasonry from "./ParallaxMasonry";
+import StartExperienceButton from "./StartExperienceButton";
 
 const projectRows = [
   { name: "Launch site", screens: "36 screens", chip: "Live", tone: "bg-signature-mint" },
@@ -136,6 +137,18 @@ export default function ProjectShowcase() {
           problem by laying out many more works across 5 differently-paced
           columns. */}
       <ParallaxMasonry />
+
+      {/* Launch pad for the fullscreen pan-anywhere canvas */}
+      <div className="container-air mt-10 md:mt-12 flex flex-col items-center gap-4 text-center">
+        <p className="text-label-md text-muted max-w-md">
+          Sixty-four works in one space. Drag, pan, and zoom — see every project
+          we&apos;ve shipped.
+        </p>
+        <StartExperienceButton
+          variant="primary"
+          label="View all works · Start experience"
+        />
+      </div>
     </section>
   );
 }

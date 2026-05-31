@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Logo } from "./Logo";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import StartExperienceButton from "./StartExperienceButton";
 
 const NAV_LINKS = [
   { href: "#work", label: "Work" },
@@ -58,7 +59,8 @@ export default function Navbar() {
             </Link>
           </div>
 
-          <div className="hidden md:flex items-center">
+          <div className="hidden md:flex items-center gap-3">
+            <StartExperienceButton variant="ghost" label="View all works" />
             <a
               href="https://cal.com/limedock-admin-nb05ck/30min"
               target="_blank"
@@ -117,11 +119,17 @@ export default function Navbar() {
                 </Link>
               ))}
               <div className="pt-8 grid gap-3">
+                <StartExperienceButton
+                  variant="ghost"
+                  label="View all works"
+                  className="w-full justify-center"
+                />
                 <a
                   href="https://cal.com/limedock-admin-nb05ck/30min"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-primary"
+                  onClick={() => setIsMobileOpen(false)}
                 >
                   Book demo
                 </a>

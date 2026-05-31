@@ -12,6 +12,7 @@ import Footer from "@/components/Footer";
 import TrustStrip from "@/components/TrustStrip";
 import ScrollProgress from "@/components/motion/ScrollProgress";
 import CursorBlob from "@/components/motion/CursorBlob";
+import ExperienceMount from "@/components/ExperienceMount";
 
 export default function Home() {
   return (
@@ -30,6 +31,7 @@ export default function Home() {
       <FeaturedProducts />
       <FAQ />
       <Footer />
+      <ExperienceMount />
     </main>
   );
 }
