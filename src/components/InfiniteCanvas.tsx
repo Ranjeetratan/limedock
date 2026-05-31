@@ -1,117 +1,130 @@
 "use client";
 
+import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import {
-  AnimatePresence,
-  motion,
-  useMotionValue,
-  useSpring,
-} from "framer-motion";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 /**
- * Fullscreen pan-anywhere image canvas. Inspired by the Codrops
- * infinite-canvas reference — a single draggable surface holds every
- * work tile at a fixed coord in a large virtual space. The user pans
- * the surface; momentum carries the throw.
+ * Infinite Canvas — pan-anywhere, wrap-forever image space.
  *
- * Behaviour
- *   • Drag to pan with momentum
- *   • Mouse-wheel + trackpad pinch to zoom (clamped 0.4 → 1.8)
- *   • Cursor: grab when idle, grabbing during drag
- *   • Esc closes; clicks on tiles do nothing (no nested links here)
+ * Architecture (inspired by edoardolunardi/infinite-canvas):
+ *
+ *  1. A base "world" of WORLD_W × WORLD_H holds every tile at a
+ *     fixed position. We render a 3×3 grid of copies of that world
+ *     so the visible viewport always has neighbours in every
+ *     direction.
+ *  2. Pan position wraps with modulo whenever it exceeds ±WORLD/2.
+ *     Because every copy is identical, the wrap is invisible.
+ *  3. Motion uses a velocity model on requestAnimationFrame:
+ *       targetVel  ← decayed each frame
+ *       vel        ← lerps toward targetVel
+ *       pan        += vel
+ *     Drag injects pointer deltas into targetVel — releasing gives
+ *     natural momentum.
+ *  4. Wheel scrolls the zoom (no modifier needed). Scroll down zooms
+ *     out, scroll up zooms in. Pinch (ctrl/⌘-wheel) does the same.
+ *     Zoom is cursor-anchored: the world point under the cursor
+ *     stays put.
+ *  5. A radial vignette fades content toward the edges so the canvas
+ *     reads as a focused, breathing field rather than a wallpaper.
  */
 
-type AspectKey = "portrait" | "landscape";
+// ── World geometry ───────────────────────────────────────────────
+const WORLD_W = 4400;
+const WORLD_H = 3200;
+
+const MOBILE_W = 230;
+const MOBILE_H = 500;
+const LAND_W = 440;
+const LAND_H = 248;
+
+const COLS = 10;
+const ROWS = 7;
+
+// Scattered grid cells reserved for the 9 mobile screens — they
+// punctuate the landscape board rather than clustering.
+const MOBILE_CELLS: ReadonlyArray<readonly [number, number]> = [
+  [1, 1],
+  [4, 0],
+  [8, 2],
+  [2, 3],
+  [6, 4],
+  [0, 5],
+  [9, 5],
+  [3, 6],
+  [7, 6],
+];
+
 type Tile = {
   id: string;
   src: string;
   alt: string;
-  aspect: AspectKey;
-  x: number; // virtual position, viewport centre = (0,0)
+  x: number; // world coords (0..WORLD_W, 0..WORLD_H)
   y: number;
   w: number;
   h: number;
+  portrait: boolean;
 };
 
-const MOBILE_W = 260;
-const MOBILE_H = 560;
-const LAND_W = 460;
-const LAND_H = 258;
-
-// Build a deterministic, gently-jittered grid that scatters all works
-// across a large virtual surface. Even-numbered grid rows are bricked
-// half a cell to the right so the canvas does not feel like a spreadsheet.
-function buildTiles(): Tile[] {
-  const mobileSrc = (i: number) =>
-    `/works-mobile/mobile-${String(i + 1).padStart(2, "0")}.png`;
-  const landSrc = (i: number) =>
-    `/placeholder-images/${String(i + 1).padStart(2, "0")}.png`;
-
-  // Reserve grid positions (col,row) for the 9 mobile tiles — scattered
-  // so they punctuate the landscape board instead of clustering.
-  const mobileCells = [
-    [0, 1],
-    [3, 0],
-    [6, 1],
-    [2, 3],
-    [5, 4],
-    [8, 2],
-    [1, 5],
-    [4, 6],
-    [7, 5],
-  ] as const;
+function buildWorld(): Tile[] {
+  const cellW = WORLD_W / COLS;
+  const cellH = WORLD_H / ROWS;
   const mobileLookup = new Map<string, number>();
-  mobileCells.forEach(([c, r], i) => mobileLookup.set(`${c},${r}`, i));
-
-  const COLS = 10;
-  const ROWS = 8;
-  const CELL_W = 540;
-  const CELL_H = 360;
+  MOBILE_CELLS.forEach(([c, r], i) => mobileLookup.set(`${c},${r}`, i));
 
   const tiles: Tile[] = [];
   let landIdx = 0;
 
   for (let r = 0; r < ROWS; r++) {
     for (let c = 0; c < COLS; c++) {
-      const brick = r % 2 === 0 ? -CELL_W / 4 : CELL_W / 4;
-      const baseX = (c - COLS / 2) * CELL_W + brick;
-      const baseY = (r - ROWS / 2) * CELL_H;
+      // Brick-shift even rows for organic rhythm.
+      const brick = r % 2 === 0 ? 0 : cellW * 0.3;
+      const baseX = c * cellW + cellW / 2 + brick;
+      const baseY = r * cellH + cellH / 2;
 
-      // gentle deterministic jitter so the grid breathes
-      const jx = ((c * 73 + r * 19) % 90) - 45;
-      const jy = ((r * 47 + c * 29) % 70) - 35;
+      // Deterministic jitter so the grid breathes.
+      const jx = ((c * 73 + r * 31) % 110) - 55;
+      const jy = ((r * 47 + c * 29) % 90) - 45;
+
+      // Size variation in 0.7 – 1.35 range — adds the moodboard feel.
+      const sizeMul = 0.7 + ((c * 17 + r * 13) % 65) / 100;
 
       const mobileIdx = mobileLookup.get(`${c},${r}`);
       if (mobileIdx !== undefined) {
         tiles.push({
-          id: `m-${mobileIdx}`,
-          src: mobileSrc(mobileIdx),
+          id: `m-${c}-${r}`,
+          src: `/works-mobile/mobile-${String(mobileIdx + 1).padStart(2, "0")}.png`,
           alt: `Mobile work ${mobileIdx + 1}`,
-          aspect: "portrait",
           x: baseX + jx,
           y: baseY + jy,
-          w: MOBILE_W,
-          h: MOBILE_H,
+          w: MOBILE_W * sizeMul,
+          h: MOBILE_H * sizeMul,
+          portrait: true,
         });
       } else if (landIdx < 55) {
         tiles.push({
-          id: `l-${landIdx}`,
-          src: landSrc(landIdx),
+          id: `l-${c}-${r}`,
+          src: `/placeholder-images/${String(landIdx + 1).padStart(2, "0")}.png`,
           alt: `Project ${landIdx + 1}`,
-          aspect: "landscape",
           x: baseX + jx,
           y: baseY + jy,
-          w: LAND_W,
-          h: LAND_H,
+          w: LAND_W * sizeMul,
+          h: LAND_H * sizeMul,
+          portrait: false,
         });
         landIdx++;
       }
     }
   }
-
   return tiles;
 }
+
+const COPY_OFFSETS: ReadonlyArray<readonly [number, number]> = (() => {
+  const out: Array<[number, number]> = [];
+  for (let dy = 0; dy < 3; dy++)
+    for (let dx = 0; dx < 3; dx++) out.push([dx, dy]);
+  return out;
+})();
 
 export default function InfiniteCanvas({
   open,
@@ -120,61 +133,174 @@ export default function InfiniteCanvas({
   open: boolean;
   onClose: () => void;
 }) {
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const scale = useMotionValue(1);
-  const scaleSpring = useSpring(scale, { stiffness: 220, damping: 28 });
+  const tiles = useMemo(() => buildWorld(), []);
 
-  const dragLayerRef = useRef<HTMLDivElement>(null);
-  const [draggingNow, setDraggingNow] = useState(false);
-  const tiles = useMemo(() => buildTiles(), []);
+  const surfaceRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [dragging, setDragging] = useState(false);
 
-  // Lock body scroll while open, re-center on open, listen for Esc.
+  // All hot-path state lives in a ref — RAF mutates it without
+  // triggering re-renders.
+  const stateRef = useRef({
+    panX: 0,
+    panY: 0,
+    velX: 0,
+    velY: 0,
+    targetVelX: 0,
+    targetVelY: 0,
+    scale: 1,
+    targetScale: 1,
+    isDragging: false,
+    lastX: 0,
+    lastY: 0,
+  });
+
+  // RAF velocity + scale loop — runs while the canvas is open.
   useEffect(() => {
     if (!open) return;
+
+    const s = stateRef.current;
+    s.panX = 0;
+    s.panY = 0;
+    s.velX = 0;
+    s.velY = 0;
+    s.targetVelX = 0;
+    s.targetVelY = 0;
+    s.scale = 1;
+    s.targetScale = 1;
+
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    x.set(0);
-    y.set(0);
-    scale.set(1);
 
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
     window.addEventListener("keydown", onKey);
 
-    return () => {
-      document.body.style.overflow = prevOverflow;
-      window.removeEventListener("keydown", onKey);
-    };
-  }, [open, onClose, scale, x, y]);
+    const VEL_LERP = 0.16;
+    const VEL_DECAY = 0.91;
+    const SCALE_LERP = 0.12;
 
-  // Pinch / ctrl-wheel zoom only. Drag is the canonical pan gesture so
-  // we deliberately skip wheel-pan (it makes the canvas unpredictable
-  // when a trackpad emits horizontal scroll).
+    let raf = 0;
+    const tick = () => {
+      // Lerp current velocity toward target.
+      s.velX += (s.targetVelX - s.velX) * VEL_LERP;
+      s.velY += (s.targetVelY - s.velY) * VEL_LERP;
+
+      // Integrate.
+      s.panX += s.velX;
+      s.panY += s.velY;
+
+      // Wrap the pan so it stays in [-WORLD/2, WORLD/2]. Because every
+      // copy of the world is identical, this wrap is visually
+      // continuous — the heart of the "infinite" effect.
+      if (s.panX > WORLD_W / 2) s.panX -= WORLD_W;
+      else if (s.panX < -WORLD_W / 2) s.panX += WORLD_W;
+      if (s.panY > WORLD_H / 2) s.panY -= WORLD_H;
+      else if (s.panY < -WORLD_H / 2) s.panY += WORLD_H;
+
+      // Decay target velocity — no input means motion glides to a stop.
+      s.targetVelX *= VEL_DECAY;
+      s.targetVelY *= VEL_DECAY;
+      if (Math.abs(s.targetVelX) < 0.005) s.targetVelX = 0;
+      if (Math.abs(s.targetVelY) < 0.005) s.targetVelY = 0;
+
+      // Smooth zoom.
+      s.scale += (s.targetScale - s.scale) * SCALE_LERP;
+
+      if (surfaceRef.current) {
+        surfaceRef.current.style.transform = `translate3d(${-s.panX}px, ${-s.panY}px, 0) scale(${s.scale})`;
+      }
+
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [open, onClose]);
+
+  // Wheel + pinch: zoom (cursor-anchored). Scroll down zooms out.
   useEffect(() => {
     if (!open) return;
-    const el = dragLayerRef.current;
+    const el = containerRef.current;
     if (!el) return;
-    const handleWheel = (e: WheelEvent) => {
-      if (!(e.ctrlKey || e.metaKey)) return;
-      e.preventDefault();
-      // Clamp the per-event delta so a single aggressive pinch can't fling
-      // the canvas to the min/max zoom in one frame.
-      const delta = Math.max(-0.08, Math.min(0.08, -e.deltaY * 0.005));
-      const next = Math.max(0.5, Math.min(1.8, scale.get() + delta));
-      scale.set(next);
-    };
-    el.addEventListener("wheel", handleWheel, { passive: false });
-    return () => el.removeEventListener("wheel", handleWheel);
-  }, [open, scale]);
 
-  // Double-click anywhere on the surface recenters and resets zoom.
-  const recenter = useCallback(() => {
-    x.set(0);
-    y.set(0);
-    scale.set(1);
-  }, [scale, x, y]);
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      const s = stateRef.current;
+
+      // Same formula handles both vertical scroll and pinch-zoom
+      // (pinch arrives as ctrlKey+wheel on macOS).
+      const sensitivity = e.ctrlKey || e.metaKey ? 0.012 : 0.0022;
+      const delta = -e.deltaY * sensitivity;
+
+      const oldScale = s.targetScale;
+      const newScale = Math.max(0.35, Math.min(2.6, oldScale + delta));
+      if (newScale === oldScale) return;
+
+      // Cursor-anchored zoom: keep the world point under the cursor
+      // pinned in place across the zoom.
+      const rect = el.getBoundingClientRect();
+      const cx = e.clientX - rect.left - rect.width / 2;
+      const cy = e.clientY - rect.top - rect.height / 2;
+
+      const ratio = newScale / oldScale;
+      s.panX = cx + (s.panX - cx) * ratio;
+      s.panY = cy + (s.panY - cy) * ratio;
+
+      s.targetScale = newScale;
+    };
+
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => el.removeEventListener("wheel", onWheel);
+  }, [open]);
+
+  // Pointer drag injects velocity. Pointer capture keeps drag alive
+  // when the cursor crosses child tiles.
+  const onPointerDown: React.PointerEventHandler<HTMLDivElement> = (e) => {
+    if (e.button !== 0 && e.pointerType !== "touch") return;
+    const s = stateRef.current;
+    s.isDragging = true;
+    s.lastX = e.clientX;
+    s.lastY = e.clientY;
+    setDragging(true);
+    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+  };
+
+  const onPointerMove: React.PointerEventHandler<HTMLDivElement> = (e) => {
+    const s = stateRef.current;
+    if (!s.isDragging) return;
+    const dx = e.clientX - s.lastX;
+    const dy = e.clientY - s.lastY;
+    s.lastX = e.clientX;
+    s.lastY = e.clientY;
+    // Inject into targetVel — drag feels weighty + throws fling.
+    s.targetVelX -= dx * 0.55;
+    s.targetVelY -= dy * 0.55;
+  };
+
+  const endDrag: React.PointerEventHandler<HTMLDivElement> = (e) => {
+    const s = stateRef.current;
+    if (!s.isDragging) return;
+    s.isDragging = false;
+    setDragging(false);
+    try {
+      (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
+    } catch {
+      /* pointer already released */
+    }
+  };
+
+  const recenter = () => {
+    const s = stateRef.current;
+    s.targetVelX = -s.panX * 0.15;
+    s.targetVelY = -s.panY * 0.15;
+    s.targetScale = 1;
+  };
 
   return (
     <AnimatePresence>
@@ -185,69 +311,88 @@ export default function InfiniteCanvas({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.35, ease: [0.2, 0.8, 0.2, 1] }}
-          className="fixed inset-0 z-[200] bg-canvas"
-          ref={dragLayerRef}
+          ref={containerRef}
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={endDrag}
+          onPointerCancel={endDrag}
+          onPointerLeave={endDrag}
+          onDoubleClick={recenter}
+          className="fixed inset-0 z-[200] bg-canvas overflow-hidden"
+          style={{
+            cursor: dragging ? "grabbing" : "grab",
+            touchAction: "none",
+          }}
         >
-          {/* The pan surface. Anchored at the viewport centre so virtual
-              coords (0,0) sit dead-centre when the canvas opens. */}
-          <motion.div
-            drag
-            dragMomentum
-            dragTransition={{ power: 0.35, timeConstant: 280 }}
-            dragConstraints={{
-              left: -3200,
-              right: 3200,
-              top: -2200,
-              bottom: 2200,
-            }}
-            dragElastic={0.18}
-            onDragStart={() => setDraggingNow(true)}
-            onDragEnd={() => setDraggingNow(false)}
-            onDoubleClick={recenter}
+          {/* The pan surface lives at the viewport centre; its top-left
+              corner is offset so the middle copy of the world sits at
+              (0,0) viewport-space. JS rewrites the transform every
+              animation frame. */}
+          <div
+            ref={surfaceRef}
+            className="absolute will-change-transform pointer-events-none"
             style={{
-              x,
-              y,
-              scale: scaleSpring,
-              cursor: draggingNow ? "grabbing" : "grab",
-              touchAction: "none",
+              left: "50%",
+              top: "50%",
+              width: WORLD_W * 3,
+              height: WORLD_H * 3,
+              marginLeft: -WORLD_W * 1.5,
+              marginTop: -WORLD_H * 1.5,
+              transformOrigin: "center center",
             }}
-            className="absolute left-1/2 top-1/2 w-0 h-0 select-none will-change-transform"
           >
-            {tiles.map((tile) => (
+            {COPY_OFFSETS.map(([dx, dy]) => (
               <div
-                key={tile.id}
-                className="absolute card-luminous rounded-md overflow-hidden soft-hairline bg-surface-soft"
+                key={`${dx}-${dy}`}
+                className="absolute"
                 style={{
-                  left: tile.x,
-                  top: tile.y,
-                  width: tile.w,
-                  height: tile.h,
-                  transform: "translate(-50%, -50%)",
+                  left: dx * WORLD_W,
+                  top: dy * WORLD_H,
+                  width: WORLD_W,
+                  height: WORLD_H,
                 }}
               >
-                <Image
-                  src={tile.src}
-                  alt={tile.alt}
-                  fill
-                  sizes={tile.aspect === "portrait" ? "260px" : "460px"}
-                  className={
-                    tile.aspect === "portrait"
-                      ? "object-contain p-2 bg-ink/95"
-                      : "object-cover"
-                  }
-                  unoptimized={tile.aspect === "landscape"}
-                />
+                {tiles.map((tile) => (
+                  <div
+                    key={`${dx}-${dy}-${tile.id}`}
+                    className="absolute rounded-md overflow-hidden card-luminous soft-hairline"
+                    style={{
+                      left: tile.x,
+                      top: tile.y,
+                      width: tile.w,
+                      height: tile.h,
+                      transform: "translate(-50%, -50%)",
+                      background: tile.portrait
+                        ? "rgb(24,29,38)"
+                        : "rgb(248,250,252)",
+                    }}
+                  >
+                    <Image
+                      src={tile.src}
+                      alt={tile.alt}
+                      fill
+                      sizes={tile.portrait ? "230px" : "440px"}
+                      unoptimized={!tile.portrait}
+                      className={
+                        tile.portrait
+                          ? "object-contain p-2"
+                          : "object-cover"
+                      }
+                    />
+                  </div>
+                ))}
               </div>
             ))}
-          </motion.div>
+          </div>
 
-          {/* Soft vignette so the centre reads as a focal point. */}
+          {/* Radial vignette — focuses attention on the centre and
+              dampens the visual repeat of the wrap. */}
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-0 z-[201]"
+            className="pointer-events-none absolute inset-0 z-10"
             style={{
               background:
-                "radial-gradient(ellipse at center, transparent 35%, rgba(255,255,255,0.55) 95%)",
+                "radial-gradient(ellipse 60% 70% at center, transparent 0%, rgba(255,255,255,0.25) 55%, rgba(255,255,255,0.75) 88%, rgba(255,255,255,1) 100%)",
             }}
           />
 
@@ -255,24 +400,24 @@ export default function InfiniteCanvas({
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.4 }}
-            className="fixed top-6 left-1/2 -translate-x-1/2 z-[210] flex items-center gap-2 rounded-full bg-canvas/85 backdrop-blur border border-hairline px-4 py-2 text-caption text-muted"
+            transition={{ delay: 0.35, duration: 0.4 }}
+            className="fixed top-6 left-1/2 -translate-x-1/2 z-[210] flex items-center gap-2 rounded-full bg-canvas/90 backdrop-blur border border-hairline px-4 py-2 text-caption text-muted shadow-sm"
           >
             <span className="relative inline-flex h-1.5 w-1.5">
               <span className="absolute inset-0 rounded-full bg-signature-coral animate-ping" />
               <span className="relative inline-block h-1.5 w-1.5 rounded-full bg-signature-coral" />
             </span>
-            Drag to pan · Pinch / ⌘+scroll to zoom · Double-click to recenter · {tiles.length} works
+            Drag to pan · Scroll to zoom · {tiles.length} works · Infinite
           </motion.div>
 
-          {/* Exit pill — fixed at bottom centre */}
+          {/* Exit pill */}
           <motion.button
             type="button"
             onClick={onClose}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.4 }}
-            className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[210] inline-flex items-center gap-2 rounded-full bg-ink text-canvas px-5 py-3 text-body-md font-medium hover:scale-105 active:scale-100 transition-transform"
+            transition={{ delay: 0.35, duration: 0.4 }}
+            className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[210] inline-flex items-center gap-2 rounded-full bg-ink text-canvas px-5 py-3 text-body-md font-medium hover:scale-[1.04] active:scale-100 transition-transform shadow-lg"
             aria-label="Exit experience"
           >
             Exit experience
