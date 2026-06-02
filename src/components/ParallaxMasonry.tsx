@@ -87,25 +87,38 @@ function ParallaxColumn({
       style={{ y: spec.parallax ? yUp : 0 }}
       className={`flex-col gap-3 md:gap-4 will-change-transform ${SHOW_CLASS[spec.show]}`}
     >
-      {images.map((img) => (
-        <div
-          key={img.id}
-          className={`card-luminous relative w-full overflow-hidden rounded-md soft-hairline ${
-            isMobile ? "bg-ink/95" : "bg-surface-soft"
-          } ${ASPECT_CLASS[spec.aspect]}`}
-        >
-          <Image
-            src={img.src}
-            alt={img.alt}
-            fill
-            sizes="(min-width: 1280px) 240px, (min-width: 768px) 33vw, 50vw"
-            className={`transition-transform duration-700 hover:scale-[1.03] ${
-              isMobile ? "object-contain p-2" : "object-cover"
-            }`}
-            unoptimized={!isMobile}
-          />
-        </div>
-      ))}
+      {images.map((img) =>
+        isMobile ? (
+          // Mobile mocks are transparent PNGs — drop the card chrome
+          // entirely so the phone silhouette floats on the page canvas.
+          <div
+            key={img.id}
+            className={`relative w-full ${ASPECT_CLASS[spec.aspect]}`}
+          >
+            <Image
+              src={img.src}
+              alt={img.alt}
+              fill
+              sizes="(min-width: 1280px) 240px, (min-width: 768px) 33vw, 50vw"
+              className="object-contain transition-transform duration-700 hover:scale-[1.03]"
+            />
+          </div>
+        ) : (
+          <div
+            key={img.id}
+            className={`card-luminous relative w-full overflow-hidden rounded-md soft-hairline bg-surface-soft ${ASPECT_CLASS[spec.aspect]}`}
+          >
+            <Image
+              src={img.src}
+              alt={img.alt}
+              fill
+              sizes="(min-width: 1280px) 240px, (min-width: 768px) 33vw, 50vw"
+              className="object-cover transition-transform duration-700 hover:scale-[1.03]"
+              unoptimized
+            />
+          </div>
+        )
+      )}
     </motion.div>
   );
 }
