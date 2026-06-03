@@ -94,24 +94,15 @@ export default function FeaturedProducts() {
                   rel="noopener noreferrer"
                   className={`demo-card card-luminous soft-hairline ${product.surface} group min-h-[430px] flex flex-col relative`}
                 >
-                  {/* Live screenshot — Microlink fetches each homepage
-                      on demand and serves a cached image of the actual
-                      site. Falls back to the static PNG on error. */}
+                  {/* Live homepage screenshot via mshots — refreshes
+                      automatically as each site evolves. Static PNG
+                      fallback if the service fails. */}
                   <div className="relative flex-1 min-h-[240px] rounded-md bg-canvas/70 soft-hairline overflow-hidden">
                     <LiveScreenshot
                       url={product.link}
                       alt={product.title}
                       fallback={product.fallback}
                     />
-
-                    {/* Tiny live indicator */}
-                    <span className="absolute top-3 left-3 z-10 inline-flex items-center gap-1.5 rounded-full bg-canvas/85 backdrop-blur border border-hairline px-2.5 py-1 text-caption text-muted">
-                      <span className="relative inline-flex h-1.5 w-1.5">
-                        <span className="absolute inset-0 rounded-full bg-signature-coral animate-ping" />
-                        <span className="relative inline-block h-1.5 w-1.5 rounded-full bg-signature-coral" />
-                      </span>
-                      Live
-                    </span>
                   </div>
 
                   {/* Content */}
