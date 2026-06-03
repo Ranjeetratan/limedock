@@ -6,7 +6,7 @@ import CountUp from "./motion/CountUp";
 const logos = [
   "Cofounderbase",
   "Hireschema",
-  "Kickofflist",
+  "Xleadforge",
   "Kingdom of Kumar",
   "LimeDock Labs",
   "Northstar AI",

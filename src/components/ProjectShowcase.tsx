@@ -141,8 +141,8 @@ export default function ProjectShowcase() {
       {/* Launch pad for the fullscreen pan-anywhere canvas */}
       <div className="container-air mt-10 md:mt-12 flex flex-col items-center gap-4 text-center">
         <p className="text-label-md text-muted max-w-md">
-          Sixty-four works in one space. Drag, pan, and zoom — see every project
-          we&apos;ve shipped.
+          Every project, one infinite space. Drag, pan, and zoom your way
+          through the work.
         </p>
         <StartExperienceButton
           variant="primary"

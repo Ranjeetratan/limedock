@@ -1,15 +1,15 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
 import TiltCard from "./motion/TiltCard";
+import LiveScreenshot from "./LiveScreenshot";
 
 const products = [
   {
     title: "Kingdom of Kumar",
     description:
       "A playful directory of useful AI micro-products and everyday experiments.",
-    image: "/kingdomofkumar.png",
+    fallback: "/kingdomofkumar.png",
     link: "https://kingdomofkumar.com/",
     tags: ["AI directory", "community"],
     surface: "bg-signature-peach",
@@ -19,19 +19,19 @@ const products = [
     title: "Hireschema",
     description:
       "Resume scanning and interview prep that turns messy job posts into clear next steps.",
-    image: "/Hireschema.png",
+    fallback: "/Hireschema.png",
     link: "https://www.hireschema.com/",
     tags: ["career tool", "AI"],
     surface: "bg-signature-mint",
     span: "lg:col-span-5",
   },
   {
-    title: "Kickofflist",
+    title: "Xleadforge",
     description:
-      "SEO and GEO optimization workflows for teams that need discoverability to compound.",
-    image: "/Kickofflist.png",
-    link: "https://kickofflist.tech/",
-    tags: ["growth", "SEO"],
+      "Outbound lead generation and enrichment platform that helps revenue teams find qualified prospects at scale.",
+    fallback: "/Hireschema.png", // placeholder — Microlink will replace
+    link: "https://www.xleadforge.com/",
+    tags: ["lead gen", "B2B"],
     surface: "bg-signature-cream",
     span: "lg:col-span-5",
   },
@@ -39,7 +39,7 @@ const products = [
     title: "Cofounderbase",
     description:
       "A founder and co-founder community with a private operator network behind it.",
-    image: "/Cofounderbase.png",
+    fallback: "/Cofounderbase.png",
     link: "https://cofounderbase.com/",
     tags: ["community", "network"],
     surface: "bg-signature-yellow",
@@ -73,6 +73,7 @@ export default function FeaturedProducts() {
           <p className="text-label-md text-body leading-[1.45] max-w-md lg:justify-self-end">
             These are live products and communities from the LimeDock orbit,
             built with the same production muscle we bring to client work.
+            Previews refresh straight from each homepage.
           </p>
         </motion.div>
 
@@ -93,15 +94,24 @@ export default function FeaturedProducts() {
                   rel="noopener noreferrer"
                   className={`demo-card card-luminous soft-hairline ${product.surface} group min-h-[430px] flex flex-col relative`}
                 >
-                  {/* Image */}
+                  {/* Live screenshot — Microlink fetches each homepage
+                      on demand and serves a cached image of the actual
+                      site. Falls back to the static PNG on error. */}
                   <div className="relative flex-1 min-h-[240px] rounded-md bg-canvas/70 soft-hairline overflow-hidden">
-                    <Image
-                      src={product.image}
+                    <LiveScreenshot
+                      url={product.link}
                       alt={product.title}
-                      fill
-                      sizes="(min-width: 1024px) 620px, 100vw"
-                      className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                      fallback={product.fallback}
                     />
+
+                    {/* Tiny live indicator */}
+                    <span className="absolute top-3 left-3 z-10 inline-flex items-center gap-1.5 rounded-full bg-canvas/85 backdrop-blur border border-hairline px-2.5 py-1 text-caption text-muted">
+                      <span className="relative inline-flex h-1.5 w-1.5">
+                        <span className="absolute inset-0 rounded-full bg-signature-coral animate-ping" />
+                        <span className="relative inline-block h-1.5 w-1.5 rounded-full bg-signature-coral" />
+                      </span>
+                      Live
+                    </span>
                   </div>
 
                   {/* Content */}
