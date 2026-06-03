@@ -65,14 +65,14 @@ export default function TrustStrip() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.5, delay: 0.1 + i * 0.08 }}
-              className="group flex items-end gap-4 relative"
+              className="group flex items-end justify-center gap-4 relative"
             >
               <span className="text-display-md text-ink tabular-nums">
                 <CountUp to={s.value} suffix={s.suffix} />
               </span>
               <span className="text-body-md text-muted pb-2">{s.label}</span>
               {/* Animated underline accent */}
-              <span className="absolute -bottom-2 left-0 h-px w-0 bg-ink/30 transition-all duration-700 group-hover:w-full" />
+              <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 h-px w-0 bg-ink/30 transition-all duration-700 group-hover:w-full" />
             </motion.div>
           ))}
         </motion.div>
