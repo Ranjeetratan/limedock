@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 type Props = {
   /** The site whose homepage we want to screenshot. */
@@ -16,20 +16,13 @@ type Props = {
 };
 
 /**
- * WordPress.com mshots returns a homepage screenshot as a PNG with
- * no API key required. URL format:
- *   s.wordpress.com/mshots/v1/<encoded-url>?w=<w>&h=<h>
- *
- * First request may return a loading placeholder while the screenshot
- * warms up — usually ready in ~10s. After that the image is cached on
- * their CDN for every visitor. We poll the image once if the first
- * load returns the placeholder.
+ * Live homepage screenshot. Hits our own server-side proxy at
+ *   /api/screenshot?url=…
+ * which fetches the screenshot from Microlink (with mshots fallback)
+ * and caches the result on Vercel's edge for 24h. From the client's
+ * perspective this is just an <img> with a stable URL — the proxy
+ * absorbs all the upstream complexity and CORS/redirect quirks.
  */
-function mshots(target: string, w = 1440, h = 900, cacheBust = 0) {
-  const base = `https://s.wordpress.com/mshots/v1/${encodeURIComponent(target)}?w=${w}&h=${h}`;
-  return cacheBust ? `${base}&v=${cacheBust}` : base;
-}
-
 export default function LiveScreenshot({
   url,
   alt,
@@ -38,17 +31,8 @@ export default function LiveScreenshot({
 }: Props) {
   const [loaded, setLoaded] = useState(false);
   const [errored, setErrored] = useState(false);
-  const [retry, setRetry] = useState(0);
 
-  // mshots returns a tiny placeholder image while it's warming up the
-  // capture. The placeholder is consistently ~400 bytes, while a real
-  // screenshot is much larger. We re-request after 4s if the first
-  // load comes back so quickly it can't have been a real shot.
-  useEffect(() => {
-    if (loaded || errored) return;
-    const t = setTimeout(() => setRetry((n) => n + 1), 4500);
-    return () => clearTimeout(t);
-  }, [loaded, errored, retry]);
+  const src = `/api/screenshot?url=${encodeURIComponent(url)}`;
 
   return (
     <div className={`relative w-full h-full overflow-hidden ${className ?? ""}`}>
@@ -67,32 +51,16 @@ export default function LiveScreenshot({
       />
 
       {!errored ? (
-        // Plain <img> sidesteps Next/Image remote-pattern config.
         // eslint-disable-next-line @next/next/no-img-element
         <img
-          key={retry}
-          src={mshots(url, 1440, 900, retry)}
+          src={src}
           alt={alt}
-          onLoad={(e) => {
-            const img = e.currentTarget;
-            // The mshots warming placeholder is < 50KB and tiny;
-            // a real screenshot is much larger. If we suspect we got
-            // the placeholder, try again.
-            if (img.naturalWidth < 400 && retry < 5) {
-              setRetry((n) => n + 1);
-              return;
-            }
-            setLoaded(true);
-          }}
-          onError={() => {
-            if (retry < 3) setRetry((n) => n + 1);
-            else setErrored(true);
-          }}
-          className={`absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04] ${
+          onLoad={() => setLoaded(true)}
+          onError={() => setErrored(true)}
+          className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-[1.04] ${
             loaded ? "opacity-100" : "opacity-0"
           }`}
           loading="lazy"
-          referrerPolicy="no-referrer"
         />
       ) : (
         <Image
