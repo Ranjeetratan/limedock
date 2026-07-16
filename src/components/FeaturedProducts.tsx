@@ -1,10 +1,32 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import TiltCard from "./motion/TiltCard";
 import LiveScreenshot from "./LiveScreenshot";
 
-const products = [
+type BrandMark = {
+  /** Transparent PNG or SVG. Displayed centered on a solid backdrop. */
+  src: string;
+  /** Backdrop color behind the mark (any valid CSS color). */
+  background: string;
+};
+
+type Product = {
+  title: string;
+  description: string;
+  fallback: string;
+  link: string;
+  tags: string[];
+  surface: string;
+  span: string;
+  /** If set, the preview area renders a brand-mark composition
+   *  (transparent logo on solid backdrop) instead of a live screenshot.
+   *  Use for products whose homepage is behind auth. */
+  brandMark?: BrandMark;
+};
+
+const products: Product[] = [
   {
     title: "Kingdom of Kumar",
     description:
@@ -26,14 +48,18 @@ const products = [
     span: "lg:col-span-5",
   },
   {
-    title: "Xleadforge",
+    title: "xLeadForge",
     description:
       "Outbound lead generation and enrichment platform that helps revenue teams find qualified prospects at scale.",
-    fallback: "/Hireschema.png", // placeholder — Microlink will replace
+    fallback: "/xleadforge-logo.svg",
     link: "https://www.xleadforge.com/",
     tags: ["lead gen", "B2B"],
     surface: "bg-signature-cream",
     span: "lg:col-span-5",
+    brandMark: {
+      src: "/xleadforge-logo.svg",
+      background: "#000000",
+    },
   },
   {
     title: "Cofounderbase",
@@ -94,15 +120,35 @@ export default function FeaturedProducts() {
                   rel="noopener noreferrer"
                   className={`demo-card card-luminous soft-hairline ${product.surface} group min-h-[430px] flex flex-col relative`}
                 >
-                  {/* Live homepage screenshot via mshots — refreshes
-                      automatically as each site evolves. Static PNG
-                      fallback if the service fails. */}
-                  <div className="relative flex-1 min-h-[240px] rounded-md bg-canvas/70 soft-hairline overflow-hidden">
-                    <LiveScreenshot
-                      url={product.link}
-                      alt={product.title}
-                      fallback={product.fallback}
-                    />
+                  {/* Preview: brand-mark composition for products whose
+                      homepage isn't a good preview target (auth-gated
+                      apps, etc.), or a live homepage screenshot for
+                      everyone else. */}
+                  <div
+                    className="relative flex-1 min-h-[240px] rounded-md soft-hairline overflow-hidden"
+                    style={
+                      product.brandMark
+                        ? { background: product.brandMark.background }
+                        : undefined
+                    }
+                  >
+                    {product.brandMark ? (
+                      <div className="absolute inset-0 grid place-items-center p-10">
+                        <Image
+                          src={product.brandMark.src}
+                          alt={product.title}
+                          width={220}
+                          height={220}
+                          className="w-auto h-[46%] max-h-40 object-contain transition-transform duration-700 group-hover:scale-[1.06]"
+                        />
+                      </div>
+                    ) : (
+                      <LiveScreenshot
+                        url={product.link}
+                        alt={product.title}
+                        fallback={product.fallback}
+                      />
+                    )}
                   </div>
 
                   {/* Content */}
