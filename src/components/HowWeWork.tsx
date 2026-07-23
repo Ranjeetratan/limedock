@@ -1,32 +1,98 @@
 "use client";
 
-import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useRef, ReactNode } from "react";
+import {
+  FlowCanvas,
+  FlowChip,
+  FlowEdge,
+  FlowLabel,
+  FlowNode,
+} from "./flow/FlowPrimitives";
 
-const steps = [
+function AuditFlow() {
+  return (
+    <FlowCanvas width={360} height={220}>
+      <FlowLabel x={16} y={22} text="phase 01 · audit" />
+      <FlowChip x={16} y={56} w={100} h={24} label="Interviews" />
+      <FlowChip x={16} y={90} w={100} h={24} label="Stack export" />
+      <FlowChip x={16} y={124} w={100} h={24} label="Docs & tickets" />
+      <FlowNode x={155} y={70} w={130} h={70} label="Workflow map" sub="what to keep / kill / build" tone="highlight" badge="LD" />
+      <FlowEdge from={[116, 68]} to={[155, 95]} shape="curve" />
+      <FlowEdge from={[116, 102]} to={[155, 105]} shape="curve" />
+      <FlowEdge from={[116, 136]} to={[155, 115]} shape="curve" />
+      <FlowNode x={155} y={162} w={130} h={38} label="Sprint 0 brief" tone="accent" />
+      <FlowEdge from={[220, 140]} to={[220, 162]} shape="straight" />
+    </FlowCanvas>
+  );
+}
+
+function BuildFlow() {
+  return (
+    <FlowCanvas width={360} height={220}>
+      <FlowLabel x={16} y={22} text="phase 02 · build" />
+      <FlowNode x={16} y={58} w={90} h={50} label="Design" sub="in figma" />
+      <FlowNode x={130} y={58} w={90} h={50} label="Engineer" sub="in repo" tone="highlight" />
+      <FlowNode x={244} y={58} w={100} h={50} label="AI wiring" sub="prompts + evals" />
+      <FlowEdge from={[106, 83]} to={[130, 83]} shape="straight" />
+      <FlowEdge from={[220, 83]} to={[244, 83]} shape="straight" />
+      <FlowNode x={90} y={140} w={180} h={44} label="Weekly demo" sub="one link, visible progress" tone="accent" />
+      <FlowEdge from={[62, 108]} to={[140, 140]} shape="curve" muted arrow={false} />
+      <FlowEdge from={[175, 108]} to={[180, 140]} shape="curve" muted arrow={false} />
+      <FlowEdge from={[293, 108]} to={[220, 140]} shape="curve" muted arrow={false} />
+    </FlowCanvas>
+  );
+}
+
+function OwnFlow() {
+  return (
+    <FlowCanvas width={360} height={220}>
+      <FlowLabel x={16} y={22} text="phase 03 · own" />
+      <FlowNode x={16} y={56} w={110} h={44} label="Handover" sub="code + docs" tone="accent" />
+      <FlowNode x={150} y={56} w={90} h={44} label="Metrics" sub="live" />
+      <FlowNode x={260} y={56} w={86} h={44} label="Tune" sub="weekly" tone="highlight" />
+      <FlowEdge from={[126, 78]} to={[150, 78]} shape="straight" />
+      <FlowEdge from={[240, 78]} to={[260, 78]} shape="straight" />
+      <FlowEdge from={[303, 100]} to={[71, 100]} shape="curve" muted dashed label="new module" arrow={false} />
+      <FlowChip x={16} y={148} w={100} h={22} label="Prompts v3" />
+      <FlowChip x={130} y={148} w={100} h={22} label="Model swap" />
+      <FlowChip x={244} y={148} w={100} h={22} label="New surface" />
+      <FlowLabel x={16} y={198} text="platform keeps improving after we leave" />
+    </FlowCanvas>
+  );
+}
+
+type Step = {
+  label: string;
+  title: string;
+  copy: string;
+  diagram: ReactNode;
+  tone: string;
+};
+
+const steps: Step[] = [
   {
-    label: "Align",
-    title: "We turn the fuzzy brief into an execution map.",
+    label: "Audit",
+    title: "We turn a messy workflow into an execution map.",
     copy:
-      "Goals, audience, constraints, launch window, and success metrics get compressed into a crisp first sprint.",
-    image: "/align1.png",
+      "Every subscription, spreadsheet, and manual step in your marketing or sales workflow gets on the same canvas. What to keep, what to kill, and what to build lands in one crisp brief.",
+    diagram: <AuditFlow />,
     tone: "bg-signature-mint",
   },
   {
-    label: "Create",
-    title: "Design and build move in the same room.",
+    label: "Build",
+    title: "Design, engineering, and AI move in the same room.",
     copy:
-      "Every week has visible output: screens, prototypes, shipped code, content, and the decisions behind them.",
-    image: "/align-step2.png",
+      "Every week has visible output: internal screens, working prototypes, integrated APIs, and the prompts, evals, and infrastructure behind them.",
+    diagram: <BuildFlow />,
     tone: "bg-signature-peach",
   },
   {
-    label: "Grow",
-    title: "Launch becomes the start of the learning loop.",
+    label: "Own",
+    title: "Launch is where the tuning loop begins.",
     copy:
-      "We refine the funnel, measure behavior, document systems, and leave your team with momentum.",
-    image: "/Align-step3.png",
+      "We hand over code, prompts, and docs, then stay on for the tuning that keeps the platform sharp — new modules, model swaps, and workflow tweaks as the team learns.",
+    diagram: <OwnFlow />,
     tone: "bg-signature-yellow",
   },
 ];
@@ -47,7 +113,6 @@ export default function HowWeWork() {
     >
       <div className="container-air">
         <div className="rounded-lg bg-signature-cream p-6 md:p-12 overflow-hidden relative">
-          {/* slow drifting halo */}
           <span
             aria-hidden
             className="pointer-events-none absolute -bottom-32 -left-32 h-[420px] w-[420px] rounded-full opacity-40 blur-3xl"
@@ -64,14 +129,14 @@ export default function HowWeWork() {
                 Process
               </span>
               <h2 className="text-display-md text-ink mt-7 max-w-md">
-                A three-step operating loop, tuned for speed without chaos.
+                A three-step loop that turns your workflow into software you own.
               </h2>
               <p className="text-body-md text-body mt-5 leading-[1.55] max-w-sm">
-                The trick is not more meetings. It is making progress visible
-                enough that decisions arrive when they are needed.
+                The trick is not more meetings. It is spending real time with
+                your team, then shipping fast enough that the next decision
+                arrives before the last one goes stale.
               </p>
 
-              {/* Scroll-coupled progress bar */}
               <div className="mt-10 relative">
                 <div className="h-2 rounded-full bg-ink/10 overflow-hidden">
                   <motion.div
@@ -97,20 +162,15 @@ export default function HowWeWork() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-80px" }}
                   transition={{ duration: 0.58, delay: index * 0.06 }}
-                  className="cream-callout-card rounded-md bg-canvas soft-hairline p-5 md:p-6 grid md:grid-cols-[220px_1fr] gap-6 items-center group hover:shadow-[0_18px_45px_rgba(24,29,38,0.08)] transition-shadow"
+                  className="cream-callout-card rounded-md bg-canvas soft-hairline p-5 md:p-6 grid md:grid-cols-[300px_1fr] gap-6 items-center group hover:shadow-[0_18px_45px_rgba(24,29,38,0.08)] transition-shadow"
                 >
+                  {/* Mini flowchart replaces the previous phase illustration */}
                   <div
-                    className={`relative aspect-[4/3] rounded-md overflow-hidden card-luminous ${step.tone} transition-transform duration-500 group-hover:scale-[1.02]`}
+                    className={`relative rounded-md overflow-hidden card-luminous ${step.tone} p-3 transition-transform duration-500 group-hover:scale-[1.01]`}
                   >
-                    <Image
-                      src={step.image}
-                      alt={step.label}
-                      fill
-                      sizes="(min-width: 768px) 220px, 100vw"
-                      className={`object-contain p-5 ${
-                        index === 2 ? "object-bottom p-0 pt-4" : ""
-                      } transition-transform duration-700 group-hover:scale-[1.04]`}
-                    />
+                    <div className="rounded-md bg-canvas soft-hairline p-2">
+                      {step.diagram}
+                    </div>
                   </div>
                   <div>
                     <div className="flex items-center gap-3">

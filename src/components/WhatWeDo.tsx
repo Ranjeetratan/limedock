@@ -6,27 +6,27 @@ import TiltCard from "./motion/TiltCard";
 
 const modes = [
   {
-    label: "End-to-end",
-    title: "A senior team owns the messy middle.",
+    label: "Workflow audit",
+    title: "We map the manual work your team runs every week.",
     copy:
-      "Strategy, positioning, product design, engineering, launch QA, and iteration live in one execution loop. You see the work without having to manage every handoff.",
-    stats: ["1 roadmap", "weekly demos", "launch-ready handoff"],
+      "Before writing a line of code, we sit with your marketing, sales, and management leads and document how work actually moves. Every hand-off, spreadsheet, and \"someone pings someone\" goes on the same canvas.",
+    stats: ["1 workflow map", "manual-work inventory", "automation shortlist"],
     color: "bg-signature-peach",
   },
   {
-    label: "Embedded",
-    title: "We plug into your team and raise the floor.",
+    label: "Ship automations",
+    title: "We build the workflows and wire them into your team's tools.",
     copy:
-      "We join your Slack, Figma, Notion, and repo as senior ICs. Design and engineering move together, with decisions documented as they happen.",
-    stats: ["async-first", "senior ICs", "same-week start"],
+      "Each automation is a small internal workflow that plugs into your Slack, CRM, and internal platform — running on your infrastructure. AI shows up where it earns its keep: drafting, ranking, summarizing, routing.",
+    stats: ["ships in weeks", "on your infra", "in your Slack + CRM"],
     color: "bg-signature-mint",
   },
   {
-    label: "Growth system",
-    title: "The website becomes an operating surface.",
+    label: "Own & operate",
+    title: "You keep the code. We keep tuning it with you.",
     copy:
-      "Landing pages, launch assets, SEO/GEO structure, social systems, pitch collateral, and conversion experiments get designed as one connected growth machine.",
-    stats: ["content ops", "analytics-ready", "conversion loops"],
+      "We hand over source, prompts, integrations, and documentation. Then we stay on as a lightweight ops partner — new workflows, prompt tuning, model swaps — so your automations keep improving alongside the team.",
+    stats: ["full code ownership", "weekly tune-ups", "new workflow every Friday"],
     color: "bg-signature-yellow",
   },
 ];
@@ -36,7 +36,7 @@ function MiniBoard({ color }: { color: string }) {
     <div className="relative min-h-[330px] overflow-hidden rounded-md bg-canvas soft-hairline p-5">
       <div className="grid grid-cols-[150px_1fr] gap-4 h-full">
         <div className="rounded-md bg-surface-soft p-3 space-y-2">
-          {["Launch", "Design", "Build", "Ship"].map((item, index) => (
+          {["Audit", "Design", "Build", "Ship"].map((item, index) => (
             <motion.div
               key={item}
               initial={{ opacity: 0, x: -8 }}
@@ -73,7 +73,7 @@ function MiniBoard({ color }: { color: string }) {
               />
             </div>
             <div className="mt-3 text-caption text-ink/60 tabular-nums flex items-center justify-between">
-              <span>Sprint 04</span>
+              <span>Build cycle 04</span>
               <motion.span
                 initial={{ opacity: 0.5 }}
                 animate={{ opacity: [0.5, 1, 0.5] }}
@@ -92,22 +92,20 @@ function MiniBoard({ color }: { color: string }) {
               </div>
             </div>
             <div className="rounded-md bg-surface-soft p-4">
-              <div className="flex -space-x-2">
-                {[
-                  "/ranjeet-profile-pic.jpeg",
-                  "/dipit-profile-pic.jpeg",
-                  "/aman-profile-pic.jpeg",
-                ].map((src) => (
-                  /* eslint-disable-next-line @next/next/no-img-element */
-                  <img
-                    key={src}
-                    src={src}
-                    alt=""
-                    className="h-8 w-8 rounded-full border-2 border-canvas object-cover"
-                  />
+              <div className="flex items-center gap-2 text-caption text-muted">
+                <span className="h-1.5 w-1.5 rounded-full bg-signature-coral" />
+                Sync channel
+              </div>
+              <div className="mt-4 space-y-1.5">
+                {["#growth", "#ops", "#build"].map((tag) => (
+                  <div
+                    key={tag}
+                    className="rounded-sm bg-canvas soft-hairline px-2 py-1 text-caption text-ink font-mono"
+                  >
+                    {tag}
+                  </div>
                 ))}
               </div>
-              <div className="mt-7 h-2 w-full rounded-full bg-ink/14" />
             </div>
           </div>
         </div>
@@ -132,14 +130,15 @@ export default function WhatWeDo() {
           >
             <span className="eyebrow">
               <span className="dot" />
-              How we engage
+              How we build with you
             </span>
             <h2 className="text-display-md text-ink mt-7 max-w-lg">
-              A flexible studio model for teams that cannot afford slow handoffs.
+              One team, three phases — from manual workflow to a live automation.
             </h2>
             <p className="text-label-md text-body mt-6 max-w-md leading-[1.45]">
-              Pick the mode that matches where your team is today. The operating
-              rhythm stays the same: clear priorities, visible work, fast shipping.
+              We don&apos;t start with a demo. We start with the jobs your
+              team does by hand every week. Then we design and ship the
+              workflows that run those jobs for them.
             </p>
 
             {/* Step list under the headline */}

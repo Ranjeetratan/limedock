@@ -7,11 +7,11 @@ import { AnimatePresence, motion } from "framer-motion";
 import StartExperienceButton from "./StartExperienceButton";
 
 const NAV_LINKS = [
-  { href: "#work", label: "Work" },
-  { href: "#services", label: "Services" },
+  { href: "#collapse", label: "The math" },
+  { href: "#services", label: "Approach" },
   { href: "#capabilities", label: "Capabilities" },
+  { href: "#system", label: "System" },
   { href: "#how-we-work", label: "Process" },
-  { href: "#products", label: "Products" },
 ];
 
 export default function Navbar() {

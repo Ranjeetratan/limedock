@@ -19,9 +19,9 @@ const stats: Array<{
   suffix: string;
   label: string;
 }> = [
-  { value: 40, suffix: "+", label: "founders served" },
-  { value: 100, suffix: "+", label: "production releases" },
-  { value: 48, suffix: "h", label: "avg. first turnaround" },
+  { value: 20, suffix: "+", label: "SaaS teams served" },
+  { value: 60, suffix: "+", label: "workflows shipped" },
+  { value: 48, suffix: "h", label: "to first working prototype" },
 ];
 
 export default function TrustStrip() {

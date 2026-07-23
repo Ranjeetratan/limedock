@@ -6,12 +6,12 @@ import ParallaxMasonry from "./ParallaxMasonry";
 import StartExperienceButton from "./StartExperienceButton";
 
 const projectRows = [
-  { name: "Launch site", screens: "36 screens", chip: "Live", tone: "bg-signature-mint" },
-  { name: "SaaS dashboard", screens: "8 flows", chip: "In dev", tone: "bg-signature-peach" },
-  { name: "Brand system", screens: "14 assets", chip: "Shipped", tone: "bg-signature-yellow" },
-  { name: "Growth engine", screens: "4 channels", chip: "Optimizing", tone: "bg-signature-cream" },
-  { name: "Founder deck", screens: "22 slides", chip: "Drafted", tone: "bg-signature-mustard" },
-  { name: "Onboarding flow", screens: "6 screens", chip: "Iterating", tone: "bg-signature-mint" },
+  { name: "Marketing workspace", screens: "12 modules", chip: "Live", tone: "bg-signature-mint" },
+  { name: "SDR outreach engine", screens: "8 flows", chip: "In dev", tone: "bg-signature-peach" },
+  { name: "Lead scoring model", screens: "custom", chip: "Shipped", tone: "bg-signature-yellow" },
+  { name: "Content pipeline", screens: "4 sources", chip: "Optimizing", tone: "bg-signature-cream" },
+  { name: "Campaign attribution", screens: "22 signals", chip: "Drafted", tone: "bg-signature-mustard" },
+  { name: "Sales assistant", screens: "6 skills", chip: "Iterating", tone: "bg-signature-mint" },
 ];
 
 export default function ProjectShowcase() {
@@ -38,11 +38,12 @@ export default function ProjectShowcase() {
                 Selected work
               </span>
               <h2 className="text-display-md mt-7 max-w-xl text-white">
-                Production apps in prototype speed.
+                Custom platforms shipped in weeks, not quarters.
               </h2>
               <p className="text-body-md text-white/84 mt-5 max-w-md leading-[1.55]">
-                We turn loose ideas into launchable systems: brand, website,
-                interface, content, and the connective tissue between them.
+                We turn your marketing or sales workflow into internal
+                software your team actually uses — AI-native, integrated,
+                and living on infrastructure you own.
               </p>
               <Magnetic strength={10} className="inline-block">
                 <a href="#products" className="btn-secondary-on-dark mt-8 group">
@@ -67,9 +68,9 @@ export default function ProjectShowcase() {
 
               <div className="mt-10 grid grid-cols-3 gap-3 max-w-sm">
                 {[
-                  ["50+", "active projects"],
-                  ["12", "frameworks"],
-                  ["4", "time zones"],
+                  ["20+", "SaaS teams"],
+                  ["60+", "workflows automated"],
+                  ["0", "vendor lock-in"],
                 ].map(([n, l]) => (
                   <div
                     key={l}

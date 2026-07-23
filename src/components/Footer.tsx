@@ -4,24 +4,26 @@ import Link from "next/link";
 import { Logo } from "./Logo";
 import Magnetic from "./motion/Magnetic";
 import MarqueeBig from "./motion/MarqueeBig";
+import PlatformStack from "./illustrations/PlatformStack";
 
 const footerGroups = [
   {
     title: "Platform",
     links: [
-      ["Work", "#work"],
-      ["Services", "#services"],
+      ["The math", "#collapse"],
+      ["Approach", "#services"],
       ["Capabilities", "#capabilities"],
+      ["System", "#system"],
       ["Process", "#how-we-work"],
     ],
   },
   {
     title: "Solutions",
     links: [
-      ["Startup websites", "#capabilities"],
-      ["Product design", "#capabilities"],
-      ["Brand systems", "#capabilities"],
-      ["Pitch decks", "#capabilities"],
+      ["Sales workflows", "#capabilities"],
+      ["Marketing workflows", "#capabilities"],
+      ["Team copilots", "#capabilities"],
+      ["Management workflows", "#capabilities"],
     ],
   },
   {
@@ -29,8 +31,7 @@ const footerGroups = [
     links: [
       ["Blog", "/blog"],
       ["FAQs", "#faqs"],
-      ["Products", "#products"],
-      ["Book demo", "https://cal.com/limedock-admin-nb05ck/30min"],
+      ["Book a call", "https://cal.com/limedock-admin-nb05ck/30min"],
     ],
   },
   {
@@ -54,20 +55,29 @@ export default function Footer() {
             aria-hidden
             className="pointer-events-none absolute -inset-y-10 -left-1/3 w-1/3 bg-gradient-to-r from-transparent via-white/40 to-transparent blur-2xl animate-scan"
           />
-          <div className="grid lg:grid-cols-[1fr_auto] gap-8 items-center relative">
+          <div className="grid lg:grid-cols-[1fr_auto_auto] gap-8 lg:gap-10 items-center relative">
             <div>
               <span className="eyebrow">
                 <span className="dot" />
                 Start the conversation
               </span>
               <h2 className="text-display-md text-ink mt-5 max-w-xl">
-                Start building with a studio that thinks like an operator.
+                Start building a platform your SaaS team actually owns.
               </h2>
               <p className="text-body-md text-body mt-4 max-w-lg leading-[1.55]">
-                Bring a messy idea, half-built product, or growth bottleneck.
-                We will map the fastest useful next step.
+                Bring the workflows your team runs by hand every week —
+                marketing, sales, or management. We&apos;ll map the fastest
+                path to a live automation you own.
               </p>
             </div>
+
+            {/* 3D-line illustration — isometric stack of the three
+                platforms we ship, on a dotted grid. Hidden on small
+                screens to keep the CTA readable. */}
+            <div className="hidden lg:block shrink-0" aria-hidden>
+              <PlatformStack size={260} />
+            </div>
+
             <Magnetic strength={14} className="inline-block">
               <a
                 href="https://cal.com/limedock-admin-nb05ck/30min"
@@ -75,7 +85,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className="btn-primary group"
               >
-                Sign up for free
+                Book a workflow call
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
                   <path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
@@ -94,8 +104,9 @@ export default function Footer() {
           <div className="col-span-2 md:col-span-4">
             <Logo className="h-6 w-[141px]" />
             <p className="text-body-md text-body mt-6 max-w-xs leading-[1.55]">
-              A modern tech agency helping teams design, develop, and grow
-              digital products end-to-end.
+              LimeDock automates the marketing, sales, and management
+              workflows your team is still running by hand — plugged
+              into the Slack, CRM, and internal platform you already use.
             </p>
             <div className="mt-6 inline-flex items-center gap-2 text-caption text-muted">
               <span className="relative inline-flex h-1.5 w-1.5">

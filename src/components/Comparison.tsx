@@ -4,12 +4,12 @@ import { motion } from "framer-motion";
 import Magnetic from "./motion/Magnetic";
 
 const rows = [
-  ["Time to start", "Same week", "Weeks of recruiting", "Days of sales calls"],
-  ["Team seniority", "Senior-only execution", "Depends on hire", "Depends on staffing"],
-  ["Design + dev quality", "Same system, same room", "Often siloed", "Often handoff-heavy"],
-  ["Cost profile", "Predictable sprint / retainer", "Salary + benefits", "Scope creep"],
-  ["Visibility", "Daily async updates", "Internal rituals", "Status calls"],
-  ["Flexibility", "Scale up or pause", "Hard to resize", "Locked by project"],
+  ["Time to first live workflow", "48 hours", "Days of setup + gaps", "Months of hiring"],
+  ["Fit to your process", "Built to your workflow", "Rigid trigger templates", "Depends on the hire"],
+  ["Where the data lives", "Fully yours, on your infra", "Across vendor systems", "Depends on setup"],
+  ["Cost profile", "Build fee + API keys", "Per-task / per-seat MRR", "Salary + benefits"],
+  ["Iteration speed", "New workflow every week", "Vendor roadmap", "Sprint-limited"],
+  ["AI-native by default", "Yes, from day one", "Bolted on late", "Depends on skillset"],
 ];
 
 function Check() {
@@ -62,11 +62,12 @@ export default function Comparison() {
                 Why LimeDock
               </span>
               <h2 className="text-display-md text-white mt-7 max-w-md">
-                The senior team you wish you did not have to hire.
+                The workflow-automation team your SaaS company wishes it already had.
               </h2>
               <p className="text-body-md text-white/75 leading-[1.55] mt-5 max-w-sm">
-                A focused alternative to full-time hires and slow agencies:
-                fewer handoffs, faster production, clearer ownership.
+                A focused alternative to Zapier-taped workflows, off-the-shelf
+                automation templates, or waiting on an in-house hire to
+                catch up.
               </p>
               <Magnetic strength={10} className="inline-block">
                 <a
@@ -84,7 +85,7 @@ export default function Comparison() {
 
               {/* extra trust pills under CTA */}
               <div className="mt-10 flex flex-wrap gap-2 max-w-sm">
-                {["No long-term lock-in", "Pause anytime", "Senior-only ICs", "Daily updates"].map(
+                {["You own the code", "Plugs into your Slack + CRM", "API-key economics", "Weekly releases"].map(
                   (chip) => (
                     <span
                       key={chip}
@@ -103,8 +104,8 @@ export default function Comparison() {
                   {[
                     "Category",
                     "LimeDock",
-                    "Full-time",
-                    "Traditional agency",
+                    "Off-the-shelf workflow tools",
+                    "In-house AI hire",
                   ].map((head) => (
                     <div
                       key={head}

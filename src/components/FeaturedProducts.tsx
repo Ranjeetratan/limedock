@@ -93,13 +93,13 @@ export default function FeaturedProducts() {
               Products
             </span>
             <h2 className="text-display-md text-ink mt-7 max-w-xl">
-              We ship our own things too. Taste is better when it has shipped.
+              We ship our own AI products too. Taste is sharper when it&apos;s in production.
             </h2>
           </div>
           <p className="text-label-md text-body leading-[1.45] max-w-md lg:justify-self-end">
-            These are live products and communities from the LimeDock orbit,
-            built with the same production muscle we bring to client work.
-            Previews refresh straight from each homepage.
+            These are live products from the LimeDock orbit — outbound
+            engines, career copilots, and founder communities. Same production
+            muscle, same AI-first stack we bring to client platforms.
           </p>
         </motion.div>
 

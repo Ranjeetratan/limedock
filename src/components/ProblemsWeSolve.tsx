@@ -3,12 +3,30 @@
 import { motion } from "framer-motion";
 
 const problems = [
-  ["Positioning feels generic", "People land on the site and still cannot repeat what makes you different."],
-  ["The website does not convert", "Traffic is real. The path to demo, sign-up, or sales is not doing enough work."],
-  ["Design and dev drift apart", "The final build loses polish because handoffs turn into compromise."],
-  ["The product feels hard to use", "Users can see the value but cannot reach it quickly enough to adopt."],
-  ["Content lacks a system", "Social, decks, website, and product messaging sound like different companies."],
-  ["The story takes too long", "If it needs a 20-minute walkthrough, the first screen is already losing people."],
+  [
+    "Repeating work eating the week",
+    "Follow-ups, content scheduling, ticket triage, weekly reporting — same jobs, every week, always by hand.",
+  ],
+  [
+    "Great product, quiet market",
+    "You shipped the thing. Marketing runs on tribal knowledge and sales runs on a generic CRM built for someone else.",
+  ],
+  [
+    "Founder pulling the Sunday report",
+    "You spend the weekend stitching numbers from six dashboards just to see how the business actually moved.",
+  ],
+  [
+    "AI experiments live in browser tabs",
+    "ChatGPT windows, prompt docs, Notion pages — none of it is stitched into the way your team actually works.",
+  ],
+  [
+    "Tools were built for someone else's process",
+    "Off-the-shelf workflow apps force your team to bend around a template you didn't design.",
+  ],
+  [
+    "Roadmaps you can't move",
+    "You're waiting on a vendor's Q3 release for the one automation that would unblock your growth this month.",
+  ],
 ];
 
 export default function ProblemsWeSolve() {
@@ -26,14 +44,16 @@ export default function ProblemsWeSolve() {
             <div>
               <span className="eyebrow !text-white/80">
                 <span className="dot !bg-white" />
-                What founders bring us
+                What SaaS teams bring us
               </span>
               <h2 className="text-display-md text-white mt-7">
-                The symptoms are familiar. The fix is usually a better system.
+                You built a great product. Selling and marketing it still runs on duct tape.
               </h2>
               <p className="text-body-md text-white/78 mt-5 leading-[1.55] max-w-md">
-                We look for the stuck point across story, interface, build quality,
-                and distribution — then design the shortest path out.
+                We look at what your marketing, sales, and management
+                teams actually do every day — then build the workflows
+                that run those jobs for them, plugged into the Slack,
+                CRM, and internal platform they already use.
               </p>
             </div>
 

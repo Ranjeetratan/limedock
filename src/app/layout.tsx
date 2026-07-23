@@ -5,7 +5,7 @@ import "./globals.css";
 
 const siteName = "LimeDock";
 const siteDescription =
-  "A modern tech agency helping teams design, develop, and grow digital products — end to end or alongside in-house teams.";
+  "LimeDock automates the marketing, sales, and management workflows your SaaS team is still running by hand. Live automations that plug into your Slack, CRM, and internal platform — you own the code.";
 const siteUrl = "https://limedock.com";
 
 const monaSans = localFont({

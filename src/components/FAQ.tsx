@@ -5,29 +5,34 @@ import { useState } from "react";
 
 const faqs = [
   {
-    question: "What happens if scope changes mid-project?",
+    question: "What counts as a \"workflow automation\"?",
     answer:
-      "We expect scope to evolve. Fixed projects get a lightweight SOW adjustment. Retainer work rolls changes into the sprint backlog so priorities stay visible.",
+      "A repeating job your team does every week that can run on its own. Sales follow-ups after a lead opens an email. Content drafts sent from a product update. A weekly digest composed from CRM, Stripe, and product data. Ticket triage, meeting scheduling, standup summaries. We build each one as a small internal workflow that plugs into the tools your team already uses.",
   },
   {
-    question: "Can you work with our in-house team?",
+    question: "Do you replace our Slack, CRM, or internal platform?",
     answer:
-      "Yes. We join your Slack, Figma, Notion, Linear, and Git workflow. We can lead the work or behave like senior embedded ICs.",
+      "No. The workflows plug into whatever you already use. Slack stays your Slack. HubSpot stays your HubSpot. Notion stays Notion. We build the automations that live between them and give your team a single place to act on the output.",
   },
   {
-    question: "Why not hire full-time?",
+    question: "Who owns the code, prompts, and data?",
     answer:
-      "Hiring senior product talent takes time, salary, and management overhead. LimeDock gives you a senior bench immediately, with the ability to scale up or pause.",
+      "You do. Source lives in your Git org, infrastructure runs in your cloud account, prompts and evals ship as versioned files in the repo, and your data never leaves your walls. If we part ways tomorrow, every workflow keeps running.",
   },
   {
-    question: "How do you communicate?",
+    question: "What do we pay besides your build fee?",
     answer:
-      "One source of truth, async updates, weekly demos, and decision logs. Calls are used when they move the work, not as a default ceremony.",
+      "API keys — OpenAI, Anthropic, or whatever model you route to — plus your usual cloud bill. There are no per-seat invoices from LimeDock. Costs scale with usage, not headcount.",
   },
   {
-    question: "Do you do fixed scope or retainer?",
+    question: "Do you work on marketing, sales, or management?",
     answer:
-      "Both. Launches, rebrands, websites, and pitch decks often fit fixed scope. Ongoing product and growth work usually fits a retainer.",
+      "We usually pick one to start. Focusing on the department where the manual work stings the most gets you a live automation in the first two weeks. Once it's stable, we extend into the other sides — often on the same codebase.",
+  },
+  {
+    question: "How long until we can use the first workflow?",
+    answer:
+      "First working prototype lands within 48 hours of a workflow call. A production-ready automation ships in the first few weeks. From there we release a new workflow, or a meaningful upgrade to an existing one, every Friday.",
   },
 ];
 
@@ -92,11 +97,11 @@ export default function FAQ() {
             FAQs
           </span>
           <h2 className="text-display-md text-ink mt-7 max-w-md">
-            Common questions before we start.
+            The things SaaS teams ask before they hand us their workflow.
           </h2>
           <p className="text-body-md text-body mt-5 leading-[1.55] max-w-sm">
-            If the thing you care about is not here, send a short note. We usually
-            reply the same day.
+            If your question isn&apos;t here, send a short note. We usually reply
+            the same day.
           </p>
           <a href="mailto:ranjeet@limedock.com" className="text-link text-label-md inline-flex mt-6">
             ranjeet@limedock.com
