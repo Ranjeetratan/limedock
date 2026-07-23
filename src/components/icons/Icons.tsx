@@ -6,7 +6,7 @@
 
 import type { SVGProps } from "react";
 
-type Props = SVGProps<SVGSVGElement> & { size?: number };
+type Props = Omit<SVGProps<SVGSVGElement>, "strokeWidth"> & { size?: number; strokeWidth?: number };
 
 function baseProps({
   size = 20,
