@@ -169,10 +169,10 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} LimeDock. All rights reserved.
           </p>
           <div className="flex gap-6">
-            <Link href="#" className="focus-ring rounded-sm hover:text-ink transition-colors">
+            <Link href="/privacy" className="focus-ring rounded-sm hover:text-ink transition-colors">
               Privacy
             </Link>
-            <Link href="#" className="focus-ring rounded-sm hover:text-ink transition-colors">
+            <Link href="/terms" className="focus-ring rounded-sm hover:text-ink transition-colors">
               Terms
             </Link>
           </div>
