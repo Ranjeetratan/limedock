@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   CATEGORY_LABELS,
   INDUSTRY_LABELS,
@@ -18,6 +18,8 @@ type Props = {
   entries: DirectoryEntry[];
   initialType?: EntryType | "all";
 };
+
+const PAGE_SIZE = 12;
 
 export default function DirectoriesBrowser({
   entries,
@@ -42,8 +44,15 @@ export default function DirectoriesBrowser({
     }).filter((e) => allowed.has(e.slug));
   }, [entries, filters]);
 
-  const skills = visible.filter((e) => e.type === "skill");
-  const agents = visible.filter((e) => e.type === "agent");
+  const skills = useMemo(
+    () => visible.filter((e) => e.type === "skill"),
+    [visible]
+  );
+  const agents = useMemo(
+    () => visible.filter((e) => e.type === "agent"),
+    [visible]
+  );
+
   const showSkills = filters.type === "all" || filters.type === "skill";
   const showAgents = filters.type === "all" || filters.type === "agent";
 
@@ -66,6 +75,7 @@ export default function DirectoriesBrowser({
         <div className="space-y-14">
           {showSkills && (
             <EntrySection
+              key={`skills-${filters.category}-${filters.industry}-${filters.query}`}
               kind="skill"
               title="Skills"
               description="Focused playbooks Claude loads on demand — install once, reuse on every matching task."
@@ -75,6 +85,7 @@ export default function DirectoriesBrowser({
           )}
           {showAgents && (
             <EntrySection
+              key={`agents-${filters.category}-${filters.industry}-${filters.query}`}
               kind="agent"
               title="Agents"
               description="Multi-step workers that plan, review, or orchestrate work across tools and personas."
@@ -102,6 +113,34 @@ function EntrySection({
   emptyLabel: string;
 }) {
   const isSkill = kind === "skill";
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  const sentinelRef = useRef<HTMLDivElement | null>(null);
+
+  const page = entries.slice(0, visibleCount);
+  const hasMore = visibleCount < entries.length;
+
+  useEffect(() => {
+    setVisibleCount(PAGE_SIZE);
+  }, [entries]);
+
+  useEffect(() => {
+    const node = sentinelRef.current;
+    if (!node || !hasMore) return;
+
+    const observer = new IntersectionObserver(
+      (observed) => {
+        if (observed.some((entry) => entry.isIntersecting)) {
+          setVisibleCount((count) =>
+            Math.min(count + PAGE_SIZE, entries.length)
+          );
+        }
+      },
+      { rootMargin: "400px 0px" }
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [hasMore, entries.length]);
 
   return (
     <section>
@@ -135,58 +174,76 @@ function EntrySection({
       {entries.length === 0 ? (
         <p className="mt-6 text-body-md text-muted">{emptyLabel}</p>
       ) : (
-        <ul className="mt-2 divide-y divide-hairline border-b border-hairline">
-          {entries.map((entry) => (
-            <li key={entry.slug}>
-              <Link
-                href={`/directories/${entry.slug}`}
-                className="group grid gap-4 py-8 md:grid-cols-[112px_1fr_auto] md:items-start focus-ring rounded-sm"
-              >
-                <div className="pt-1">
-                  <span
-                    className={`inline-flex min-h-8 items-center rounded-sm px-2.5 text-caption uppercase tracking-[0.08em] ${
-                      isSkill
-                        ? "bg-signature-forest/10 text-signature-forest"
-                        : "bg-signature-coral/10 text-signature-coral"
-                    }`}
-                  >
-                    {isSkill ? "Skill" : "Agent"}
-                  </span>
-                </div>
-                <div>
-                  <h3 className="text-title-sm text-ink group-hover:text-link transition-colors">
-                    {entry.name}
-                  </h3>
-                  <p className="text-body-md text-body mt-2 max-w-3xl leading-[1.55]">
-                    {entry.summary}
-                  </p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {entry.categories.map((c) => (
-                      <span
-                        key={c}
-                        className="rounded-sm border border-hairline bg-surface-soft px-2 py-1 text-caption text-muted"
-                      >
-                        {CATEGORY_LABELS[c]}
-                      </span>
-                    ))}
-                    {entry.industries.slice(0, 3).map((i) => (
-                      <span
-                        key={i}
-                        className="rounded-sm border border-hairline px-2 py-1 text-caption text-muted"
-                      >
-                        {INDUSTRY_LABELS[i]}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                <span className="text-body-md text-link md:pt-1 whitespace-nowrap">
-                  View details →
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <>
+          <ul className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {page.map((entry) => (
+              <li key={entry.slug} className="h-full">
+                <DirectoryCard entry={entry} />
+              </li>
+            ))}
+          </ul>
+
+          <div ref={sentinelRef} className="h-10" aria-hidden />
+
+          <p className="mt-2 text-center text-caption text-muted">
+            Showing {page.length} of {entries.length} {title.toLowerCase()}
+            {hasMore ? " · Keep scrolling" : " · All loaded"}
+          </p>
+        </>
       )}
     </section>
+  );
+}
+
+function DirectoryCard({ entry }: { entry: DirectoryEntry }) {
+  const isSkill = entry.type === "skill";
+
+  return (
+    <Link
+      href={`/directories/${entry.slug}`}
+      className="group flex h-full flex-col rounded-md border border-hairline bg-canvas p-5 transition-colors hover:border-border-strong hover:bg-surface-soft focus-ring"
+    >
+      <div className="flex items-start justify-between gap-3">
+        <span
+          className={`inline-flex min-h-7 items-center rounded-sm px-2.5 text-caption uppercase tracking-[0.08em] ${
+            isSkill
+              ? "bg-signature-forest/10 text-signature-forest"
+              : "bg-signature-coral/10 text-signature-coral"
+          }`}
+        >
+          {isSkill ? "Skill" : "Agent"}
+        </span>
+        <span className="text-caption text-link opacity-0 transition-opacity group-hover:opacity-100">
+          View →
+        </span>
+      </div>
+
+      <h3 className="text-title-sm text-ink mt-4 line-clamp-2 transition-colors group-hover:text-link">
+        {entry.name}
+      </h3>
+
+      <p className="mt-3 flex-1 text-body-md leading-[1.55] text-body line-clamp-4">
+        {entry.summary}
+      </p>
+
+      <div className="mt-5 flex flex-wrap gap-1.5 border-t border-hairline pt-4">
+        {entry.categories.slice(0, 2).map((c) => (
+          <span
+            key={c}
+            className="rounded-sm bg-signature-cream px-2 py-1 text-caption text-ink"
+          >
+            {CATEGORY_LABELS[c]}
+          </span>
+        ))}
+        {entry.industries.slice(0, 1).map((i) => (
+          <span
+            key={i}
+            className="rounded-sm border border-hairline px-2 py-1 text-caption text-muted"
+          >
+            {INDUSTRY_LABELS[i]}
+          </span>
+        ))}
+      </div>
+    </Link>
   );
 }
