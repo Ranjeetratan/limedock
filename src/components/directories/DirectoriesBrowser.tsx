@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import {
   CATEGORY_LABELS,
-  ENTRY_TYPE_LABELS,
   INDUSTRY_LABELS,
   countByType,
   filterEntries,
   type DirectoryEntry,
+  type EntryType,
 } from "@/lib/directories";
 import DirectoryFilters, {
   type DirectoryFilterState,
@@ -18,32 +19,36 @@ type Props = {
   entries: DirectoryEntry[];
 };
 
+function parseTypeParam(value: string | null): EntryType | "all" {
+  if (value === "skill" || value === "agent") return value;
+  return "all";
+}
+
 export default function DirectoriesBrowser({ entries }: Props) {
-  const [filters, setFilters] = useState<DirectoryFilterState>({
-    type: "all",
+  const searchParams = useSearchParams();
+  const [filters, setFilters] = useState<DirectoryFilterState>(() => ({
+    type: parseTypeParam(searchParams.get("type")),
     category: "all",
     industry: "all",
     query: "",
-  });
+  }));
 
   const counts = useMemo(() => countByType(), []);
 
-  const results = useMemo(
-    () =>
-      filterEntries({
-        type: filters.type,
-        category: filters.category,
-        industry: filters.industry,
-        query: filters.query,
-      }),
-    [filters]
-  );
-
-  // Keep client filter aligned with server-provided entries for hydration safety
   const visible = useMemo(() => {
     const allowed = new Set(entries.map((e) => e.slug));
-    return results.filter((e) => allowed.has(e.slug));
-  }, [entries, results]);
+    return filterEntries({
+      type: filters.type,
+      category: filters.category,
+      industry: filters.industry,
+      query: filters.query,
+    }).filter((e) => allowed.has(e.slug));
+  }, [entries, filters]);
+
+  const skills = visible.filter((e) => e.type === "skill");
+  const agents = visible.filter((e) => e.type === "agent");
+  const showSkills = filters.type === "all" || filters.type === "skill";
+  const showAgents = filters.type === "all" || filters.type === "agent";
 
   return (
     <div className="space-y-12">
@@ -55,48 +60,136 @@ export default function DirectoriesBrowser({ entries }: Props) {
       />
 
       {visible.length === 0 ? (
-        <div className="border border-hairline bg-surface-soft px-8 py-16 text-center">
+        <div className="border border-hairline bg-signature-cream/40 px-8 py-16 text-center">
           <p className="text-label-md text-body">
             No matches. Try another type, category, or industry.
           </p>
         </div>
       ) : (
-        <ul className="divide-y divide-hairline border-y border-hairline">
-          {visible.map((entry) => (
+        <div className="space-y-14">
+          {showSkills && (
+            <EntrySection
+              kind="skill"
+              title="Skills"
+              description="Focused playbooks Claude loads on demand — install once, reuse on every matching task."
+              entries={skills}
+              emptyLabel="No skills match these filters."
+            />
+          )}
+          {showAgents && (
+            <EntrySection
+              kind="agent"
+              title="Agents"
+              description="Multi-step workers that plan, review, or orchestrate work across tools and personas."
+              entries={agents}
+              emptyLabel="No agents match these filters."
+            />
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function EntrySection({
+  kind,
+  title,
+  description,
+  entries,
+  emptyLabel,
+}: {
+  kind: EntryType;
+  title: string;
+  description: string;
+  entries: DirectoryEntry[];
+  emptyLabel: string;
+}) {
+  const isSkill = kind === "skill";
+
+  return (
+    <section>
+      <div
+        className={`rounded-md border px-5 py-5 md:px-7 md:py-6 ${
+          isSkill
+            ? "border-signature-mint/80 bg-signature-mint/25"
+            : "border-signature-peach/90 bg-signature-peach/30"
+        }`}
+      >
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p className="text-caption uppercase tracking-[0.1em] text-muted">
+              {isSkill ? "Reusable capability packs" : "Orchestrated workflows"}
+            </p>
+            <h2 className="text-display-md text-ink mt-2">{title}</h2>
+            <p className="text-body-md text-body mt-2 max-w-2xl leading-[1.5]">
+              {description}
+            </p>
+          </div>
+          <span
+            className={`inline-flex min-h-9 items-center rounded-sm px-3 text-caption uppercase tracking-[0.08em] text-on-dark ${
+              isSkill ? "bg-signature-forest" : "bg-signature-coral"
+            }`}
+          >
+            {entries.length} {title.toLowerCase()}
+          </span>
+        </div>
+      </div>
+
+      {entries.length === 0 ? (
+        <p className="mt-6 text-body-md text-muted">{emptyLabel}</p>
+      ) : (
+        <ul className="mt-2 divide-y divide-hairline border-b border-hairline">
+          {entries.map((entry) => (
             <li key={entry.slug}>
               <Link
                 href={`/directories/${entry.slug}`}
-                className="group grid gap-4 py-7 md:grid-cols-[140px_1fr_auto] md:items-start focus-ring rounded-sm"
+                className="group grid gap-4 py-8 md:grid-cols-[112px_1fr_auto] md:items-start focus-ring rounded-sm"
               >
-                <div className="text-caption text-muted uppercase tracking-[0.08em] pt-1">
-                  {ENTRY_TYPE_LABELS[entry.type]}
+                <div className="pt-1">
+                  <span
+                    className={`inline-flex min-h-8 items-center rounded-sm px-2.5 text-caption uppercase tracking-[0.08em] ${
+                      isSkill
+                        ? "bg-signature-forest/10 text-signature-forest"
+                        : "bg-signature-coral/10 text-signature-coral"
+                    }`}
+                  >
+                    {isSkill ? "Skill" : "Agent"}
+                  </span>
                 </div>
                 <div>
-                  <h2 className="text-title-sm text-ink group-hover:text-link transition-colors">
+                  <h3 className="text-title-sm text-ink group-hover:text-link transition-colors">
                     {entry.name}
-                  </h2>
-                  <p className="text-body-md text-body mt-2 max-w-2xl leading-[1.55]">
+                  </h3>
+                  <p className="text-body-md text-body mt-2 max-w-3xl leading-[1.55]">
                     {entry.summary}
                   </p>
-                  <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-caption text-muted">
-                    <span>
-                      {entry.categories
-                        .map((c) => CATEGORY_LABELS[c])
-                        .join(" · ")}
-                    </span>
-                    <span>
-                      {entry.industries
-                        .map((i) => INDUSTRY_LABELS[i])
-                        .join(" · ")}
-                    </span>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {entry.categories.map((c) => (
+                      <span
+                        key={c}
+                        className="rounded-sm border border-hairline bg-surface-soft px-2 py-1 text-caption text-muted"
+                      >
+                        {CATEGORY_LABELS[c]}
+                      </span>
+                    ))}
+                    {entry.industries.slice(0, 3).map((i) => (
+                      <span
+                        key={i}
+                        className="rounded-sm border border-hairline px-2 py-1 text-caption text-muted"
+                      >
+                        {INDUSTRY_LABELS[i]}
+                      </span>
+                    ))}
                   </div>
                 </div>
-                <span className="text-body-md text-link md:pt-1">View</span>
+                <span className="text-body-md text-link md:pt-1 whitespace-nowrap">
+                  View details →
+                </span>
               </Link>
             </li>
           ))}
         </ul>
       )}
-    </div>
+    </section>
   );
 }

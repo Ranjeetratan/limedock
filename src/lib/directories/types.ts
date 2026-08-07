@@ -25,12 +25,20 @@ export type DirectoryEntry = {
   name: string;
   type: EntryType;
   summary: string;
+  /** Longer editorial overview shown on the detail page */
+  overview: string;
   categories: Category[];
   industries: Industry[];
   link: string;
   installation: string;
   howToUse: string;
   useCases: string[];
+  /** Example prompts the user can copy */
+  examplePrompts: string[];
+  /** What you need before installing */
+  prerequisites: string[];
+  /** Practical tips / gotchas */
+  tips: string[];
   sources: string[];
 };
 

@@ -3,7 +3,6 @@
 import {
   CATEGORIES,
   CATEGORY_LABELS,
-  ENTRY_TYPE_LABELS,
   INDUSTRIES,
   INDUSTRY_LABELS,
   type Category,
@@ -25,7 +24,31 @@ type Props = {
   resultCount: number;
 };
 
-const TYPE_ORDER: Array<EntryType | "all"> = ["all", "skill", "agent"];
+const TYPE_TABS: Array<{
+  id: EntryType | "all";
+  label: string;
+  hint: string;
+  activeClass: string;
+}> = [
+  {
+    id: "all",
+    label: "All",
+    hint: "Skills + Agents",
+    activeClass: "border-ink bg-ink text-on-primary",
+  },
+  {
+    id: "skill",
+    label: "Skills",
+    hint: "Reusable playbooks",
+    activeClass: "border-signature-forest bg-signature-forest text-on-dark",
+  },
+  {
+    id: "agent",
+    label: "Agents",
+    hint: "Multi-step workers",
+    activeClass: "border-signature-coral bg-signature-coral text-on-dark",
+  },
+];
 
 export default function DirectoryFilters({
   value,
@@ -35,24 +58,37 @@ export default function DirectoryFilters({
 }: Props) {
   return (
     <div className="space-y-8">
-      <div className="flex flex-wrap gap-2">
-        {TYPE_ORDER.map((type) => {
-          const active = value.type === type;
+      <div className="grid gap-3 sm:grid-cols-3">
+        {TYPE_TABS.map((tab) => {
+          const active = value.type === tab.id;
           return (
             <button
-              key={type}
+              key={tab.id}
               type="button"
-              onClick={() => onChange({ ...value, type })}
-              className={`min-h-10 px-4 text-body-md focus-ring rounded-sm border transition-colors ${
+              onClick={() => onChange({ ...value, type: tab.id })}
+              className={`rounded-md border px-5 py-4 text-left transition-colors focus-ring ${
                 active
-                  ? "border-ink bg-ink text-on-primary"
-                  : "border-hairline bg-canvas text-ink hover:border-border-strong"
+                  ? tab.activeClass
+                  : "border-hairline bg-canvas text-ink hover:border-border-strong hover:bg-surface-soft"
               }`}
             >
-              {ENTRY_TYPE_LABELS[type]}
-              <span className={`ml-2 ${active ? "text-white/70" : "text-muted"}`}>
-                {counts[type]}
-              </span>
+              <div className="flex items-baseline justify-between gap-3">
+                <span className="text-title-sm">{tab.label}</span>
+                <span
+                  className={`text-caption tabular-nums ${
+                    active ? "text-white/75" : "text-muted"
+                  }`}
+                >
+                  {counts[tab.id]}
+                </span>
+              </div>
+              <p
+                className={`mt-1 text-caption ${
+                  active ? "text-white/70" : "text-muted"
+                }`}
+              >
+                {tab.hint}
+              </p>
             </button>
           );
         })}
@@ -67,7 +103,7 @@ export default function DirectoryFilters({
             type="search"
             value={value.query}
             onChange={(e) => onChange({ ...value, query: e.target.value })}
-            placeholder="Search skills and agents"
+            placeholder="Search by name, use case, or category"
             className="mt-2 w-full min-h-12 rounded-md border border-hairline bg-canvas px-4 text-body-md text-ink outline-none focus:border-ink"
           />
         </label>
@@ -102,7 +138,7 @@ export default function DirectoryFilters({
             Category
           </span>
           <span className="text-caption text-muted">
-            {resultCount} result{resultCount === 1 ? "" : "s"}
+            {resultCount} showing
           </span>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -111,7 +147,7 @@ export default function DirectoryFilters({
             onClick={() => onChange({ ...value, category: "all" })}
             className={`min-h-9 px-3 text-body-md focus-ring rounded-sm border transition-colors ${
               value.category === "all"
-                ? "border-ink bg-surface-soft text-ink"
+                ? "border-ink bg-signature-cream text-ink"
                 : "border-hairline text-muted hover:text-ink hover:border-border-strong"
             }`}
           >
@@ -126,7 +162,7 @@ export default function DirectoryFilters({
                 onClick={() => onChange({ ...value, category })}
                 className={`min-h-9 px-3 text-body-md focus-ring rounded-sm border transition-colors ${
                   active
-                    ? "border-ink bg-surface-soft text-ink"
+                    ? "border-ink bg-signature-cream text-ink"
                     : "border-hairline text-muted hover:text-ink hover:border-border-strong"
                 }`}
               >

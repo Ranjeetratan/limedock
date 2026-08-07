@@ -50,8 +50,11 @@ export function filterEntries(filters: DirectoryFilters = {}): DirectoryEntry[] 
     const haystack = [
       entry.name,
       entry.summary,
+      entry.overview,
       entry.howToUse,
       ...entry.useCases,
+      ...entry.examplePrompts,
+      ...entry.tips,
       ...entry.categories,
       ...entry.industries,
     ]

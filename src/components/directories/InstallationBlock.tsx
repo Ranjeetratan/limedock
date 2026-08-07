@@ -2,17 +2,9 @@ type Props = {
   content: string;
 };
 
-/** Renders installation text; fenced code blocks become <pre>. */
+/** Renders installation / how-to text; fenced code blocks become <pre>, ### become headings. */
 export default function InstallationBlock({ content }: Props) {
-  const parts = content.split(/```(?:bash|sh|shell|zsh)?\n?([\s\S]*?)```/g);
-
-  if (parts.length === 1) {
-    return (
-      <p className="text-body-md text-body whitespace-pre-wrap leading-[1.6]">
-        {content}
-      </p>
-    );
-  }
+  const parts = content.split(/```(?:bash|sh|shell|zsh|text)?\n?([\s\S]*?)```/g);
 
   return (
     <div className="space-y-4">
@@ -29,13 +21,45 @@ export default function InstallationBlock({ content }: Props) {
             </pre>
           );
         }
+
         return (
-          <p
-            key={index}
-            className="text-body-md text-body whitespace-pre-wrap leading-[1.6]"
-          >
-            {part.trim()}
-          </p>
+          <div key={index} className="space-y-3">
+            {part
+              .trim()
+              .split(/\n{2,}/)
+              .map((block, blockIndex) => {
+                const lines = block.split("\n");
+                if (lines[0]?.startsWith("### ")) {
+                  return (
+                    <div key={blockIndex} className="space-y-2">
+                      <h3 className="text-title-sm text-ink">
+                        {lines[0].replace(/^###\s+/, "")}
+                      </h3>
+                      {lines.slice(1).join("\n").trim() ? (
+                        <p className="text-body-md text-body whitespace-pre-wrap leading-[1.65]">
+                          {lines.slice(1).join("\n").trim()}
+                        </p>
+                      ) : null}
+                    </div>
+                  );
+                }
+                if (lines[0]?.startsWith("**") && lines[0]?.endsWith("**") && lines.length === 1) {
+                  return (
+                    <p key={blockIndex} className="text-body-md font-medium text-ink">
+                      {lines[0].replace(/^\*\*|\*\*$/g, "")}
+                    </p>
+                  );
+                }
+                return (
+                  <p
+                    key={blockIndex}
+                    className="text-body-md text-body whitespace-pre-wrap leading-[1.65]"
+                  >
+                    {block.trim()}
+                  </p>
+                );
+              })}
+          </div>
         );
       })}
     </div>
