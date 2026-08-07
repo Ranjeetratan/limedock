@@ -54,6 +54,9 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
+            <Link href="/directories" className="focus-ring rounded-sm">
+              Directories
+            </Link>
             <Link href="/blog" className="focus-ring rounded-sm">
               Blog
             </Link>
@@ -108,7 +111,11 @@ export default function Navbar() {
               transition={{ duration: 0.28, ease: [0.2, 0.8, 0.2, 1] }}
               className="flex flex-col gap-1"
             >
-              {[...NAV_LINKS, { href: "/blog", label: "Blog" }].map((link) => (
+              {[
+                ...NAV_LINKS,
+                { href: "/directories", label: "Directories" },
+                { href: "/blog", label: "Blog" },
+              ].map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
