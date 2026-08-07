@@ -1,8 +1,7 @@
-import { Suspense } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import DirectoriesBrowser from "@/components/directories/DirectoriesBrowser";
-import { countByType, getAllEntries } from "@/lib/directories";
+import { countByType, getAllEntries, type EntryType } from "@/lib/directories";
 
 export const metadata = {
   title: "Directories | LimeDock",
@@ -10,9 +9,20 @@ export const metadata = {
     "Browse Claude Skills and Agents separately — filtered by category and industry, with install guides, prompts, and use cases.",
 };
 
-export default function DirectoriesPage() {
+type PageProps = {
+  searchParams: Promise<{ type?: string }>;
+};
+
+function parseType(value?: string): EntryType | "all" {
+  if (value === "skill" || value === "agent") return value;
+  return "all";
+}
+
+export default async function DirectoriesPage({ searchParams }: PageProps) {
+  const params = await searchParams;
   const entries = getAllEntries();
   const counts = countByType();
+  const initialType = parseType(params.type);
 
   return (
     <main className="min-h-screen bg-canvas">
@@ -51,15 +61,7 @@ export default function DirectoriesPage() {
 
       <section className="section-air pt-2 pb-24">
         <div className="container-air">
-          <Suspense
-            fallback={
-              <div className="border border-hairline bg-surface-soft px-8 py-16 text-center text-body-md text-muted">
-                Loading directories…
-              </div>
-            }
-          >
-            <DirectoriesBrowser entries={entries} />
-          </Suspense>
+          <DirectoriesBrowser entries={entries} initialType={initialType} />
         </div>
       </section>
 

@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { useSearchParams } from "next/navigation";
 import {
   CATEGORY_LABELS,
   INDUSTRY_LABELS,
@@ -17,21 +16,19 @@ import DirectoryFilters, {
 
 type Props = {
   entries: DirectoryEntry[];
+  initialType?: EntryType | "all";
 };
 
-function parseTypeParam(value: string | null): EntryType | "all" {
-  if (value === "skill" || value === "agent") return value;
-  return "all";
-}
-
-export default function DirectoriesBrowser({ entries }: Props) {
-  const searchParams = useSearchParams();
-  const [filters, setFilters] = useState<DirectoryFilterState>(() => ({
-    type: parseTypeParam(searchParams.get("type")),
+export default function DirectoriesBrowser({
+  entries,
+  initialType = "all",
+}: Props) {
+  const [filters, setFilters] = useState<DirectoryFilterState>({
+    type: initialType,
     category: "all",
     industry: "all",
     query: "",
-  }));
+  });
 
   const counts = useMemo(() => countByType(), []);
 
