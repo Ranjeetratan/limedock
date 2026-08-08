@@ -54,6 +54,9 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
+            <Link href="/real-estate-services" className="focus-ring rounded-sm">
+              Real Estate
+            </Link>
             <Link href="/directories" className="focus-ring rounded-sm">
               Directories
             </Link>
@@ -113,6 +116,7 @@ export default function Navbar() {
             >
               {[
                 ...NAV_LINKS,
+                { href: "/real-estate-services", label: "Real Estate" },
                 { href: "/directories", label: "Directories" },
                 { href: "/blog", label: "Blog" },
               ].map((link) => (

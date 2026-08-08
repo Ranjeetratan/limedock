@@ -21,7 +21,7 @@ const footerGroups = [
     title: "Solutions",
     links: [
       ["Law firms", "/law-firms"],
-      ["Real estate", "/real-estate"],
+      ["Real estate", "/real-estate-services"],
       ["Sales workflows", "#capabilities"],
       ["Marketing workflows", "#capabilities"],
       ["Management workflows", "#capabilities"],
