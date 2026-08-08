@@ -134,18 +134,18 @@ export default function RealEstateLandingContent() {
         >
           <span className="inline-flex items-center gap-2 text-caption text-white/60 tracking-[0.06em] uppercase mb-6">
             <span className="h-px w-8 bg-white/40" />
-            For real estate founders & brokerage leaders
+            Real estate brokerage automation · Lead response · Listing follow-up
           </span>
 
           <h1
             className="text-white max-w-3xl leading-[1.1] tracking-tight"
             style={{ fontSize: "clamp(2.4rem, 5.5vw, 4.2rem)", fontWeight: 600 }}
           >
-            You closed 4 deals last month. You lost 11 to slow follow-up.
+            Your brokerage lost listings, Zillow leads, and closings to slow follow-up this month.
           </h1>
 
           <p className="text-white/70 mt-6 text-lg max-w-xl leading-[1.55]">
-            LimeDock builds the automations that close the gap — lead routing, showing feedback, nurture, and agent digests wired into your Slack and CRM.
+            LimeDock builds owned automation systems for real estate teams — portal lead routing, post-showing feedback loops, MLS-triggered listing nurture, and agent coordination digests. Wired into your Slack, CRM, and listing tools. You own the code.
           </p>
 
           <div className="mt-10 flex flex-wrap items-center gap-4">
@@ -155,7 +155,7 @@ export default function RealEstateLandingContent() {
               rel="noopener noreferrer"
               className="btn-primary"
             >
-              Map my lead response
+              Fix my lead response
             </a>
             <Link
               href="/"
