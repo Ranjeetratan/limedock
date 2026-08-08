@@ -4,16 +4,57 @@ import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import InstallationBlock from "@/components/directories/InstallationBlock";
+import DirectoryDetailConversion from "@/components/directories/DirectoryDetailConversion";
 import {
   CATEGORY_LABELS,
   INDUSTRY_LABELS,
   getEntryBySlug,
   getEntrySlugs,
+  getRelatedEntries,
+  type DirectoryEntry,
+  type EntryType,
 } from "@/lib/directories";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
+
+const TYPE_META: Record<
+  EntryType,
+  {
+    label: string;
+    plural: string;
+    hero: string;
+    badge: string;
+    accent: string;
+    dot: string;
+  }
+> = {
+  skill: {
+    label: "Skill",
+    plural: "skills",
+    hero: "border-signature-mint/70 bg-gradient-to-br from-signature-mint/35 via-canvas to-signature-cream/80",
+    badge: "bg-signature-forest text-on-dark",
+    accent: "border-signature-forest",
+    dot: "bg-signature-forest",
+  },
+  agent: {
+    label: "Agent",
+    plural: "agents",
+    hero: "border-signature-peach/80 bg-gradient-to-br from-signature-peach/40 via-canvas to-signature-cream/80",
+    badge: "bg-signature-coral text-on-dark",
+    accent: "border-signature-coral",
+    dot: "bg-signature-coral",
+  },
+  system: {
+    label: "System",
+    plural: "systems",
+    hero: "border-signature-mustard/70 bg-gradient-to-br from-signature-yellow/40 via-canvas to-signature-cream/80",
+    badge: "bg-signature-mustard text-ink",
+    accent: "border-signature-mustard",
+    dot: "bg-signature-mustard",
+  },
+};
 
 export function generateStaticParams() {
   return getEntrySlugs().map((slug) => ({ slug }));
@@ -43,10 +84,11 @@ export default async function DirectoryEntryPage({ params }: PageProps) {
     notFound();
   }
 
-  const isSkill = entry.type === "skill";
-  const backHref = isSkill
-    ? "/directories?type=skill"
-    : "/directories?type=agent";
+  const meta = TYPE_META[entry.type];
+  const related = getRelatedEntries(entry);
+  const backHref = `/directories?type=${entry.type}`;
+  const relatedTitle =
+    entry.type === "system" ? "Skills in this system" : "Used in systems";
 
   return (
     <main className="min-h-screen bg-canvas">
@@ -55,11 +97,7 @@ export default async function DirectoryEntryPage({ params }: PageProps) {
       <article className="pt-28 md:pt-32 pb-24">
         <div className="container-air">
           <div
-            className={`relative overflow-hidden rounded-lg border min-h-[280px] p-8 md:p-12 ${
-              isSkill
-                ? "border-signature-mint/70 bg-gradient-to-br from-signature-mint/35 via-canvas to-signature-cream/80"
-                : "border-signature-peach/80 bg-gradient-to-br from-signature-peach/40 via-canvas to-signature-cream/80"
-            }`}
+            className={`relative overflow-hidden rounded-lg border min-h-[280px] p-8 md:p-12 ${meta.hero}`}
           >
             <Link
               href="/directories"
@@ -79,11 +117,9 @@ export default async function DirectoryEntryPage({ params }: PageProps) {
 
             <div className="mt-8 flex flex-wrap gap-2">
               <span
-                className={`inline-flex min-h-8 items-center rounded-sm px-3 text-caption uppercase tracking-[0.08em] text-on-dark ${
-                  isSkill ? "bg-signature-forest" : "bg-signature-coral"
-                }`}
+                className={`inline-flex min-h-8 items-center rounded-sm px-3 text-caption uppercase tracking-[0.08em] ${meta.badge}`}
               >
-                {isSkill ? "Skill" : "Agent"}
+                {meta.label}
               </span>
               {entry.categories.map((c) => (
                 <span
@@ -103,25 +139,40 @@ export default async function DirectoryEntryPage({ params }: PageProps) {
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
-              <a
-                href={entry.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-primary inline-flex !min-h-11 !px-5"
-              >
-                Open source link
-              </a>
+              {entry.link && entry.link !== "#" ? (
+                <a
+                  href={entry.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-primary inline-flex !min-h-11 !px-5"
+                >
+                  Open source link
+                </a>
+              ) : null}
               <Link
                 href={backHref}
                 className="inline-flex min-h-11 items-center rounded-sm border border-hairline bg-canvas px-5 text-body-md text-ink focus-ring"
               >
-                Browse more {isSkill ? "skills" : "agents"}
+                Browse more {meta.plural}
               </Link>
             </div>
           </div>
         </div>
 
         <div className="container-air max-w-[920px] mt-14 space-y-12">
+          {related.length > 0 && (
+            <section>
+              <SectionHeading index="00" title={relatedTitle} />
+              <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+                {related.map((relatedEntry) => (
+                  <li key={relatedEntry.slug}>
+                    <RelatedCard entry={relatedEntry} />
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+
           <section>
             <SectionHeading index="01" title="Overview" />
             <p className="mt-5 text-body-md text-body leading-[1.7] whitespace-pre-wrap">
@@ -139,17 +190,21 @@ export default async function DirectoryEntryPage({ params }: PageProps) {
             </div>
           </section>
 
-          <section className="border-t border-hairline pt-12">
-            <SectionHeading index="02" title="Link" />
-            <a
-              href={entry.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-5 inline-block text-body-md text-link break-all focus-ring rounded-sm"
-            >
-              {entry.link}
-            </a>
-          </section>
+          <DirectoryDetailConversion entry={entry} />
+
+          {entry.link && entry.link !== "#" ? (
+            <section className="border-t border-hairline pt-12">
+              <SectionHeading index="02" title="Link" />
+              <a
+                href={entry.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-5 inline-block text-body-md text-link break-all focus-ring rounded-sm"
+              >
+                {entry.link}
+              </a>
+            </section>
+          ) : null}
 
           <section className="border-t border-hairline pt-12">
             <SectionHeading index="03" title="Installation guide" />
@@ -185,9 +240,7 @@ export default async function DirectoryEntryPage({ params }: PageProps) {
               {entry.useCases.map((useCase) => (
                 <li
                   key={useCase}
-                  className={`text-body-md text-body leading-[1.55] pl-4 border-l-2 ${
-                    isSkill ? "border-signature-forest" : "border-signature-coral"
-                  }`}
+                  className={`text-body-md text-body leading-[1.55] pl-4 border-l-2 ${meta.accent}`}
                 >
                   {useCase}
                 </li>
@@ -201,9 +254,7 @@ export default async function DirectoryEntryPage({ params }: PageProps) {
               {entry.prerequisites.map((item) => (
                 <li key={item} className="flex gap-3 text-body-md text-body leading-[1.55]">
                   <span
-                    className={`mt-2 h-1.5 w-1.5 shrink-0 rounded-full ${
-                      isSkill ? "bg-signature-forest" : "bg-signature-coral"
-                    }`}
+                    className={`mt-2 h-1.5 w-1.5 shrink-0 rounded-full ${meta.dot}`}
                   />
                   {item}
                 </li>
@@ -249,6 +300,26 @@ export default async function DirectoryEntryPage({ params }: PageProps) {
 
       <Footer />
     </main>
+  );
+}
+
+function RelatedCard({ entry }: { entry: DirectoryEntry }) {
+  const meta = TYPE_META[entry.type];
+  return (
+    <Link
+      href={`/directories/${entry.slug}`}
+      className="flex h-full flex-col rounded-md border border-hairline bg-canvas p-4 transition-colors hover:border-border-strong hover:bg-surface-soft focus-ring"
+    >
+      <span
+        className={`inline-flex w-fit min-h-7 items-center rounded-sm px-2.5 text-caption uppercase tracking-[0.08em] ${meta.badge}`}
+      >
+        {meta.label}
+      </span>
+      <span className="mt-3 text-title-sm text-ink">{entry.name}</span>
+      <span className="mt-2 text-body-md text-body line-clamp-2 leading-[1.45]">
+        {entry.summary}
+      </span>
+    </Link>
   );
 }
 

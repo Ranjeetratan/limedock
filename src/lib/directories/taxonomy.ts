@@ -4,6 +4,7 @@ export const ENTRY_TYPE_LABELS: Record<EntryType | "all", string> = {
   all: "All",
   skill: "Skills",
   agent: "Agents",
+  system: "Systems",
 };
 
 export const CATEGORY_LABELS: Record<Category, string> = {

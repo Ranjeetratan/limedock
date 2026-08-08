@@ -1,4 +1,7 @@
 import type { DirectoryEntry } from "./types";
+import { ANTI_SLOP_SKILLS } from "./anti-slop-skills";
+import { GROWTH_ARCHITECTURE_SKILLS } from "./growth-architecture-skills";
+import { DIRECTORY_SYSTEMS } from "./systems";
 
 /** Seeded from Claude skills roundup articles. Update via chat when new links are shared. */
 export const DIRECTORY_ENTRIES: DirectoryEntry[] = [
@@ -1537,18 +1540,18 @@ export const DIRECTORY_ENTRIES: DirectoryEntry[] = [
     slug: "taste-skill",
     name: "Taste Skill",
     type: "skill",
-    summary: "Sets three design dials before building: design variance, motion intensity, and visual density—so Claude matches the intended vibe.",
-    overview: "Taste Skill is a Claude skill added to LimeDock Directories from recent community and vendor roundups.\n\nSets three design dials before building: design variance, motion intensity, and visual density—so Claude matches the intended vibe.\n\nThis page covers install, how to invoke it, example prompts, prerequisites, and concrete use cases.",
+    summary: "Anti-slop frontend framework for AI agents — brief inference, design-system mapping, dark-mode protocol, and hard pre-flight checks (v2: design-taste-frontend).",
+    overview: "Taste Skill (Leonxlnx / tasteskill.dev) stops Cursor, Claude Code, Codex, Gemini CLI, v0, and Lovable from shipping generic frontends. v2 reads the brief, infers direction, maps to real design systems when applicable, and enforces a strict pre-flight checklist. Legacy v1 remains as design-taste-frontend-v1.\n\nAlso sets design variance, motion intensity, and visual density dials so agents match the intended vibe before building.",
     categories: ["design","marketing","product"],
     industries: ["saas","agency","ecommerce","other"],
-    link: "https://www.sellingwithnas.com/best-claude-skills-for-website-design",
-    installation: "Install the Taste Skill from the GitHub link in Nas’s web design skills guide (pair with Frontend Design).",
-    howToUse: "Set dials first (experimental↔safe, motion, density), then run Frontend Design / build prompts.",
-    useCases: ["Calm wellness brand (low density/motion)","Dense SaaS dashboard settings","Experimental portfolio variance","Brief Claude before any UI code","Team playbook trial of Taste Skill on a real workflow"],
-    examplePrompts: ["Use the Taste Skill skill for: Calm wellness brand (low density/motion)","Walk me through Taste Skill step by step, then execute on my project.","Review my current approach and improve it using Taste Skill.","Produce a reusable checklist for running Taste Skill on similar work."],
+    link: "https://www.tasteskill.dev/",
+    installation: "```bash\nnpx skills add Leonxlnx/taste-skill\n# or pin v2 skill name:\nnpx skills add https://github.com/Leonxlnx/taste-skill --skill \"design-taste-frontend\"\n# legacy:\nnpx skills add https://github.com/Leonxlnx/taste-skill --skill design-taste-frontend-v1\n```\nWorks with Claude Code, Cursor, Codex, Gemini CLI, v0, Lovable, OpenCode.",
+    howToUse: "Install, then describe the brief (industry, audience, mood). Let v2 infer direction and run pre-flight checks before emitting UI. Pair with Frontend Design / Hallmark / Design Loop for multi-page coherence.",
+    useCases: ["Calm wellness brand (low density/motion)","Dense SaaS dashboard settings","Experimental portfolio variance","Brief Claude before any UI code","Escape generic AI landing-page templates"],
+    examplePrompts: ["Use Taste Skill (design-taste-frontend) for a calm fintech marketing site — avoid purple gradients.","Set variance/motion/density dials, then build the pricing page.","Audit this redesign with Taste Skill pre-flight checks before shipping."],
     prerequisites: ["Claude Code, Claude.ai (Skills enabled), or an Agent Skills–compatible host","Permission to install third-party skills — audit SKILL.md and scripts first","Project context (CLAUDE.md / product notes) for better outputs"],
-    tips: ["Keep triggers specific so Taste Skill only fires when relevant.","Audit SKILL.md and any bundled scripts before production use.","Pair with verification (tests, review, screenshots) before shipping.","Re-audit installed skills monthly to avoid context tax from unused packs."],
-    sources: ["https://www.sellingwithnas.com/best-claude-skills-for-website-design"],
+    tips: ["v2 is experimental but recommended; pin v1 only if something breaks.","Pair with Hallmark for stronger anti-slop visual gates.","Re-audit installed skills monthly to avoid context tax from unused packs."],
+    sources: ["https://www.tasteskill.dev/","https://github.com/Leonxlnx/taste-skill","https://www.sellingwithnas.com/best-claude-skills-for-website-design"],
   },
   {
     slug: "design-loop",
@@ -3131,4 +3134,7 @@ export const DIRECTORY_ENTRIES: DirectoryEntry[] = [
     tips: ["Keep triggers specific so Growth Marketing Innovation only fires when relevant.","Audit SKILL.md and any bundled scripts before production use.","Pair with verification (analytics, QA, human edit) before shipping.","Re-audit installed skills monthly to avoid context tax from unused packs."],
     sources: ["https://mcpmarket.com/tools/skills/growth-marketing-innovation","https://growthmethod.com/claude-code-guide-marketers/"],
   },
+  ...ANTI_SLOP_SKILLS,
+  ...GROWTH_ARCHITECTURE_SKILLS,
+  ...DIRECTORY_SYSTEMS,
 ];

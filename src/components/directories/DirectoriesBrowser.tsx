@@ -13,6 +13,7 @@ import {
 import DirectoryFilters, {
   type DirectoryFilterState,
 } from "./DirectoryFilters";
+import DirectoriesConversionStrip from "./DirectoriesConversionStrip";
 
 type Props = {
   entries: DirectoryEntry[];
@@ -20,6 +21,35 @@ type Props = {
 };
 
 const PAGE_SIZE = 12;
+
+const TYPE_STYLES: Record<
+  EntryType,
+  {
+    sectionBorder: string;
+    badge: string;
+    chip: string;
+    eyebrow: string;
+  }
+> = {
+  skill: {
+    sectionBorder: "border-signature-mint/80 bg-signature-mint/25",
+    badge: "bg-signature-forest text-on-dark",
+    chip: "bg-signature-forest/10 text-signature-forest",
+    eyebrow: "Reusable capability packs",
+  },
+  agent: {
+    sectionBorder: "border-signature-peach/90 bg-signature-peach/30",
+    badge: "bg-signature-coral text-on-dark",
+    chip: "bg-signature-coral/10 text-signature-coral",
+    eyebrow: "Orchestrated workflows",
+  },
+  system: {
+    sectionBorder: "border-signature-mustard/80 bg-signature-yellow/25",
+    badge: "bg-signature-mustard text-ink",
+    chip: "bg-signature-mustard/20 text-ink",
+    eyebrow: "Composable skill architectures",
+  },
+};
 
 export default function DirectoriesBrowser({
   entries,
@@ -52,9 +82,14 @@ export default function DirectoriesBrowser({
     () => visible.filter((e) => e.type === "agent"),
     [visible]
   );
+  const systems = useMemo(
+    () => visible.filter((e) => e.type === "system"),
+    [visible]
+  );
 
   const showSkills = filters.type === "all" || filters.type === "skill";
   const showAgents = filters.type === "all" || filters.type === "agent";
+  const showSystems = filters.type === "all" || filters.type === "system";
 
   return (
     <div className="space-y-12">
@@ -65,6 +100,8 @@ export default function DirectoriesBrowser({
         resultCount={visible.length}
       />
 
+      <DirectoriesConversionStrip />
+
       {visible.length === 0 ? (
         <div className="border border-hairline bg-signature-cream/40 px-8 py-16 text-center">
           <p className="text-label-md text-body">
@@ -73,6 +110,16 @@ export default function DirectoriesBrowser({
         </div>
       ) : (
         <div className="space-y-14">
+          {showSystems && (
+            <EntrySection
+              key={`systems-${filters.category}-${filters.industry}-${filters.query}`}
+              kind="system"
+              title="Systems"
+              description="Small architectures that combine skills and agents for Sales, Marketing, Growth, Design, Engineering, Ops, and Product."
+              entries={systems}
+              emptyLabel="No systems match these filters."
+            />
+          )}
           {showSkills && (
             <EntrySection
               key={`skills-${filters.category}-${filters.industry}-${filters.query}`}
@@ -112,7 +159,7 @@ function EntrySection({
   entries: DirectoryEntry[];
   emptyLabel: string;
 }) {
-  const isSkill = kind === "skill";
+  const styles = TYPE_STYLES[kind];
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const sentinelRef = useRef<HTMLDivElement | null>(null);
 
@@ -143,18 +190,14 @@ function EntrySection({
   }, [hasMore, entries.length]);
 
   return (
-    <section>
+    <section id={kind === "system" ? "directory-systems" : undefined}>
       <div
-        className={`rounded-md border px-5 py-5 md:px-7 md:py-6 ${
-          isSkill
-            ? "border-signature-mint/80 bg-signature-mint/25"
-            : "border-signature-peach/90 bg-signature-peach/30"
-        }`}
+        className={`rounded-md border px-5 py-5 md:px-7 md:py-6 ${styles.sectionBorder}`}
       >
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <p className="text-caption uppercase tracking-[0.1em] text-muted">
-              {isSkill ? "Reusable capability packs" : "Orchestrated workflows"}
+              {styles.eyebrow}
             </p>
             <h2 className="text-display-md text-ink mt-2">{title}</h2>
             <p className="text-body-md text-body mt-2 max-w-2xl leading-[1.5]">
@@ -162,9 +205,7 @@ function EntrySection({
             </p>
           </div>
           <span
-            className={`inline-flex min-h-9 items-center rounded-sm px-3 text-caption uppercase tracking-[0.08em] text-on-dark ${
-              isSkill ? "bg-signature-forest" : "bg-signature-coral"
-            }`}
+            className={`inline-flex min-h-9 items-center rounded-sm px-3 text-caption uppercase tracking-[0.08em] ${styles.badge}`}
           >
             {entries.length} {title.toLowerCase()}
           </span>
@@ -196,7 +237,13 @@ function EntrySection({
 }
 
 function DirectoryCard({ entry }: { entry: DirectoryEntry }) {
-  const isSkill = entry.type === "skill";
+  const styles = TYPE_STYLES[entry.type];
+  const label =
+    entry.type === "skill"
+      ? "Skill"
+      : entry.type === "agent"
+        ? "Agent"
+        : "System";
 
   return (
     <Link
@@ -205,13 +252,9 @@ function DirectoryCard({ entry }: { entry: DirectoryEntry }) {
     >
       <div className="flex items-start justify-between gap-3">
         <span
-          className={`inline-flex min-h-7 items-center rounded-sm px-2.5 text-caption uppercase tracking-[0.08em] ${
-            isSkill
-              ? "bg-signature-forest/10 text-signature-forest"
-              : "bg-signature-coral/10 text-signature-coral"
-          }`}
+          className={`inline-flex min-h-7 items-center rounded-sm px-2.5 text-caption uppercase tracking-[0.08em] ${styles.chip}`}
         >
-          {isSkill ? "Skill" : "Agent"}
+          {label}
         </span>
         <span className="text-caption text-link opacity-0 transition-opacity group-hover:opacity-100">
           View →
@@ -243,6 +286,11 @@ function DirectoryCard({ entry }: { entry: DirectoryEntry }) {
             {INDUSTRY_LABELS[i]}
           </span>
         ))}
+        {entry.type === "system" && entry.skillSlugs?.length ? (
+          <span className="rounded-sm border border-signature-mustard/50 px-2 py-1 text-caption text-ink">
+            {entry.skillSlugs.length} skills
+          </span>
+        ) : null}
       </div>
     </Link>
   );

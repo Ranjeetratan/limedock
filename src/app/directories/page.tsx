@@ -1,12 +1,13 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import DirectoriesBrowser from "@/components/directories/DirectoriesBrowser";
+import DirectoriesMobileCtaBar from "@/components/directories/DirectoriesMobileCtaBar";
 import { countByType, getAllEntries, type EntryType } from "@/lib/directories";
 
 export const metadata = {
   title: "Directories | LimeDock",
   description:
-    "Browse Claude Skills and Agents separately — filtered by category and industry, with install guides, prompts, and use cases.",
+    "Browse Claude Skills, Agents, and Systems as inspiration — then book LimeDock to build owned marketing, sales, and ops automations for your SaaS team.",
 };
 
 type PageProps = {
@@ -14,7 +15,7 @@ type PageProps = {
 };
 
 function parseType(value?: string): EntryType | "all" {
-  if (value === "skill" || value === "agent") return value;
+  if (value === "skill" || value === "agent" || value === "system") return value;
   return "all";
 }
 
@@ -39,12 +40,13 @@ export default async function DirectoriesPage({ searchParams }: PageProps) {
                 LimeDock Directories
               </span>
               <h1 className="text-display-xl text-ink mt-7">
-                Skills and Agents, kept separate.
+                Skills, Agents, and Systems.
               </h1>
               <p className="text-label-md text-body mt-5 max-w-xl leading-[1.45]">
-                Skills are reusable playbooks. Agents are multi-step workers.
-                Filter by category and industry, then open any entry for install
-                steps, prompts, and real use cases.
+                A catalog of skills and systems to steal ideas from — and a
+                path to owned automation. LimeDock designs and ships the
+                marketing, sales, and ops workflows your SaaS team still runs
+                by hand, plugged into Slack, CRM, and your stack.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <span className="inline-flex min-h-10 items-center rounded-sm bg-signature-forest px-4 text-caption uppercase tracking-[0.08em] text-on-dark">
@@ -52,6 +54,9 @@ export default async function DirectoriesPage({ searchParams }: PageProps) {
                 </span>
                 <span className="inline-flex min-h-10 items-center rounded-sm bg-signature-coral px-4 text-caption uppercase tracking-[0.08em] text-on-dark">
                   {counts.agent} Agents
+                </span>
+                <span className="inline-flex min-h-10 items-center rounded-sm bg-signature-mustard px-4 text-caption uppercase tracking-[0.08em] text-ink">
+                  {counts.system} Systems
                 </span>
               </div>
             </div>
@@ -66,6 +71,7 @@ export default async function DirectoriesPage({ searchParams }: PageProps) {
       </section>
 
       <Footer />
+      <DirectoriesMobileCtaBar />
     </main>
   );
 }

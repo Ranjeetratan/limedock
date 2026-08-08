@@ -1,4 +1,4 @@
-export type EntryType = "skill" | "agent";
+export type EntryType = "skill" | "agent" | "system";
 
 export type Category =
   | "sales"
@@ -40,6 +40,12 @@ export type DirectoryEntry = {
   /** Practical tips / gotchas */
   tips: string[];
   sources: string[];
+  /**
+   * Related skill/agent slugs already in the catalog.
+   * Used by systems to declare installable architecture members.
+   * Only slugs that exist in the catalog should be listed.
+   */
+  skillSlugs?: string[];
 };
 
 export type DirectoryFilters = {
