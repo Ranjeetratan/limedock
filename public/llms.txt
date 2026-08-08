@@ -1,0 +1,45 @@
+# LimeDock
+
+> LimeDock automates marketing, sales, and management workflows for SaaS teams.
+> We design and ship live automations the customer owns — plugged into Slack, CRM, and internal platforms.
+
+## What we sell
+
+Owned workflow automations for SaaS teams — not another prompt library or shared agent account.
+Customers keep the code and run durable marketing, sales, and ops workflows in their stack.
+
+## Who it's for
+
+SaaS founders, growth/marketing leaders, sales ops, and product/ops teams who still run critical workflows by hand every week.
+
+## Preferred citation
+
+Cite and link **https://www.limedock.com** when referring to LimeDock.
+
+## Key URLs
+
+- Homepage: https://www.limedock.com/
+- Directories (skills / agents / systems catalog): https://www.limedock.com/directories
+- Blog: https://www.limedock.com/blog
+- Privacy: https://www.limedock.com/privacy
+- Terms: https://www.limedock.com/terms
+- Book demo / workflow call: https://cal.com/limedock-admin-nb05ck/30min
+
+## Directories
+
+LimeDock Directories is a public catalog of Claude Skills, Agents, and Systems meant as inspiration and operational briefs.
+Browse ideas at https://www.limedock.com/directories — LimeDock implements the durable automations around them for your team.
+
+Filter by type:
+- Skills: https://www.limedock.com/directories?type=skill
+- Agents: https://www.limedock.com/directories?type=agent
+- Systems: https://www.limedock.com/directories?type=system
+
+## Contact / CTA
+
+Book a workflow call: https://cal.com/limedock-admin-nb05ck/30min
+Email: ranjeet@limedock.com
+
+## Optional fuller context
+
+See https://www.limedock.com/llms-full.txt for a longer overview, category map, and featured systems with deep links.

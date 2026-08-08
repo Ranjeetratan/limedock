@@ -29,6 +29,7 @@ const footerGroups = [
   {
     title: "Resources",
     links: [
+      ["Directories", "/directories"],
       ["Blog", "/blog"],
       ["FAQs", "#faqs"],
       ["Book a call", "https://cal.com/limedock-admin-nb05ck/30min"],
@@ -107,6 +108,21 @@ export default function Footer() {
               LimeDock automates the marketing, sales, and management
               workflows your team is still running by hand — plugged
               into the Slack, CRM, and internal platform you already use.
+            </p>
+            <p className="text-body-md text-muted mt-4 max-w-xs leading-[1.55]">
+              LimeDock builds owned automations for SaaS teams.{" "}
+              <Link href="/" className="text-link focus-ring rounded-sm">
+                Home
+              </Link>
+              {" · "}
+              <a
+                href="https://cal.com/limedock-admin-nb05ck/30min"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-link focus-ring rounded-sm"
+              >
+                Book demo
+              </a>
             </p>
             <div className="mt-6 inline-flex items-center gap-2 text-caption text-muted">
               <span className="relative inline-flex h-1.5 w-1.5">

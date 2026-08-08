@@ -1,13 +1,34 @@
+import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import JsonLd from "@/components/JsonLd";
 import DirectoriesBrowser from "@/components/directories/DirectoriesBrowser";
 import DirectoriesMobileCtaBar from "@/components/directories/DirectoriesMobileCtaBar";
 import { countByType, getAllEntries, type EntryType } from "@/lib/directories";
+import { BOOK_DEMO_URL, absoluteUrl } from "@/lib/site";
 
-export const metadata = {
-  title: "Directories | LimeDock",
-  description:
-    "Browse Claude Skills, Agents, and Systems as inspiration — then book LimeDock to build owned marketing, sales, and ops automations for your SaaS team.",
+const title = "Directories — SaaS Automation Skills, Agents & Systems";
+const description =
+  "Browse Claude Skills, Agents, and Systems as inspiration — then book LimeDock to build owned marketing, sales, and ops automations for your SaaS team.";
+
+export const metadata: Metadata = {
+  title,
+  description,
+  alternates: {
+    canonical: "/directories",
+  },
+  openGraph: {
+    title,
+    description,
+    url: absoluteUrl("/directories"),
+    type: "website",
+    siteName: "LimeDock",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+  },
 };
 
 type PageProps = {
@@ -25,8 +46,48 @@ export default async function DirectoriesPage({ searchParams }: PageProps) {
   const counts = countByType();
   const initialType = parseType(params.type);
 
+  const itemListElements = entries.slice(0, 40).map((entry, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    name: entry.name,
+    url: absoluteUrl(`/directories/${entry.slug}`),
+    description: entry.summary,
+  }));
+
+  const collectionJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: title,
+    description,
+    url: absoluteUrl("/directories"),
+    isPartOf: {
+      "@type": "WebSite",
+      name: "LimeDock",
+      url: absoluteUrl("/"),
+    },
+    about: {
+      "@type": "Organization",
+      name: "LimeDock",
+      url: absoluteUrl("/"),
+    },
+    mainEntity: {
+      "@type": "ItemList",
+      name: "LimeDock Directories catalog",
+      numberOfItems: entries.length,
+      itemListElement: itemListElements,
+    },
+    offers: {
+      "@type": "Offer",
+      name: "Book a LimeDock workflow call",
+      url: BOOK_DEMO_URL,
+      description:
+        "LimeDock implements owned marketing, sales, and ops automations for SaaS teams.",
+    },
+  };
+
   return (
     <main className="min-h-screen bg-canvas">
+      <JsonLd data={collectionJsonLd} />
       <Navbar />
 
       <section className="pt-28 md:pt-32 pb-10">

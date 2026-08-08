@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import JsonLd from "@/components/JsonLd";
 import InstallationBlock from "@/components/directories/InstallationBlock";
 import DirectoryDetailConversion from "@/components/directories/DirectoryDetailConversion";
 import {
@@ -14,6 +15,7 @@ import {
   type DirectoryEntry,
   type EntryType,
 } from "@/lib/directories";
+import { BOOK_DEMO_URL, absoluteUrl } from "@/lib/site";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -70,9 +72,34 @@ export async function generateMetadata({
     return { title: "Not found" };
   }
 
+  const typeLabel =
+    entry.type === "system"
+      ? "System"
+      : entry.type === "agent"
+        ? "Agent"
+        : "Skill";
+  const title = `${entry.name} — ${typeLabel} for SaaS Automation`;
+  const description = `${entry.summary} Explore in LimeDock Directories, then book LimeDock to implement owned marketing, sales, and ops automations for your SaaS team.`;
+  const url = absoluteUrl(`/directories/${entry.slug}`);
+
   return {
-    title: `${entry.name} | Directories | LimeDock`,
-    description: entry.summary,
+    title,
+    description,
+    alternates: {
+      canonical: `/directories/${entry.slug}`,
+    },
+    openGraph: {
+      title,
+      description,
+      url,
+      type: "article",
+      siteName: "LimeDock",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
   };
 }
 
@@ -89,9 +116,48 @@ export default async function DirectoryEntryPage({ params }: PageProps) {
   const backHref = `/directories?type=${entry.type}`;
   const relatedTitle =
     entry.type === "system" ? "Skills in this system" : "Used in systems";
+  const pageUrl = absoluteUrl(`/directories/${entry.slug}`);
+  const schemaType =
+    entry.type === "system"
+      ? "TechArticle"
+      : entry.type === "agent"
+        ? "SoftwareApplication"
+        : "CreativeWork";
+
+  const entryJsonLd = {
+    "@context": "https://schema.org",
+    "@type": schemaType,
+    name: entry.name,
+    description: entry.summary,
+    url: pageUrl,
+    ...(entry.type === "agent"
+      ? { applicationCategory: "BusinessApplication", operatingSystem: "Web" }
+      : {}),
+    ...(entry.type === "system" || entry.type === "skill"
+      ? { about: "SaaS workflow automation" }
+      : {}),
+    isPartOf: {
+      "@type": "CollectionPage",
+      name: "LimeDock Directories",
+      url: absoluteUrl("/directories"),
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "LimeDock",
+      url: absoluteUrl("/"),
+    },
+    offers: {
+      "@type": "Offer",
+      name: "Book a LimeDock workflow call",
+      url: BOOK_DEMO_URL,
+      description:
+        "LimeDock builds owned automations for SaaS teams inspired by this directory entry.",
+    },
+  };
 
   return (
     <main className="min-h-screen bg-canvas">
+      <JsonLd data={entryJsonLd} />
       <Navbar />
 
       <article className="pt-28 md:pt-32 pb-24">
