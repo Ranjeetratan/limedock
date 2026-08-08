@@ -65,37 +65,38 @@ const workflows = [
     title: "Stage-aware listing nurture",
     desc: "Buyer and seller sequences that fire on MLS status changes — new listing, price reduction, open house, under contract. No manual list management.",
     trigger: "Trigger: MLS status change",
-    img: "/images/real-estate/interior.jpg",
+    img: "/images/real-estate/listing.jpg",
   },
   {
     num: "03",
     title: "Showing feedback loop",
     desc: "Post-showing nudge to the buyer agent → structured notes → summary to seller → CRM updated. The full loop, automated.",
     trigger: "Trigger: showing window end",
-    img: "/images/real-estate/agent-desk.jpg",
+    img: "/images/real-estate/open-house.jpg",
   },
   {
     num: "04",
     title: "Agent coordination digest",
     desc: "Daily Slack digest of open leads, stalled listings, and unanswered follow-ups. Your team lead sees what's leaking before the week gets loud.",
     trigger: "Trigger: cron 8:00 AM",
-    img: "/images/real-estate/interior.jpg",
+    img: "/images/real-estate/agent-desk.jpg",
   },
   {
     num: "05",
     title: "Post-close review & referral capture",
     desc: "Closing triggers a multi-touch sequence: Google/Zillow review request, video testimonial link, and a referral intro template — all on schedule.",
     trigger: "Trigger: deal close date",
-    img: "/images/real-estate/hero.jpg",
+    img: "/images/real-estate/closing.jpg",
   },
   {
     num: "06",
     title: "Real-time attribution dashboard",
     desc: "Track which sources close, which agents convert, and what your marketing ROI actually is — live, without rebuilding a spreadsheet every week.",
     trigger: "Trigger: live event stream",
-    img: "/images/real-estate/agent-desk.jpg",
+    img: "/images/real-estate/interior.jpg",
   },
 ];
+
 
 const befores = [
   ["Portal leads wait in a shared inbox", "Leads route to the right agent in < 60s"],
