@@ -64,7 +64,7 @@ export default async function DirectoriesPage({ searchParams }: PageProps) {
         </div>
       </section>
 
-      <section className="section-air pt-2 pb-24">
+      <section className="section-air pt-2 pb-28 md:pb-24">
         <div className="container-air">
           <DirectoriesBrowser entries={entries} initialType={initialType} />
         </div>

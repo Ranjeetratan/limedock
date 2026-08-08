@@ -1,13 +1,18 @@
 "use client";
 
-import Link from "next/link";
 import BookDemoLink from "./BookDemoLink";
+
+type Props = {
+  onBrowseSystems?: () => void;
+};
 
 /**
  * Soft-sell strip between filters and catalog results.
  * One headline, one sentence, primary + secondary CTAs — not a card grid.
  */
-export default function DirectoriesConversionStrip() {
+export default function DirectoriesConversionStrip({
+  onBrowseSystems,
+}: Props) {
   return (
     <aside
       className="relative overflow-hidden rounded-md border border-hairline bg-gradient-to-r from-signature-cream via-canvas to-signature-mint/30 px-6 py-7 md:px-8 md:py-8"
@@ -33,18 +38,22 @@ export default function DirectoriesConversionStrip() {
         </div>
         <div className="flex flex-wrap items-center gap-3 shrink-0">
           <BookDemoLink location="directories_listing_strip" />
-          <a
-            href="#directory-systems"
-            className="btn-secondary inline-flex !min-h-11 !px-5"
-          >
-            Browse systems
-          </a>
-          <Link
-            href="/"
-            className="inline-flex min-h-11 items-center px-2 text-body-md text-muted underline-offset-4 hover:text-ink hover:underline focus-ring rounded-sm"
-          >
-            How we work
-          </Link>
+          {onBrowseSystems ? (
+            <button
+              type="button"
+              onClick={onBrowseSystems}
+              className="btn-secondary inline-flex !min-h-11 !px-5"
+            >
+              Browse systems
+            </button>
+          ) : (
+            <a
+              href="#directory-systems"
+              className="btn-secondary inline-flex !min-h-11 !px-5"
+            >
+              Browse systems
+            </a>
+          )}
         </div>
       </div>
     </aside>

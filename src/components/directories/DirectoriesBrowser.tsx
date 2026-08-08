@@ -90,6 +90,18 @@ export default function DirectoriesBrowser({
   const showSkills = filters.type === "all" || filters.type === "skill";
   const showAgents = filters.type === "all" || filters.type === "agent";
   const showSystems = filters.type === "all" || filters.type === "system";
+  const [pendingSystemsScroll, setPendingSystemsScroll] = useState(false);
+
+  useEffect(() => {
+    if (!pendingSystemsScroll || !showSystems) return;
+    const timer = window.setTimeout(() => {
+      document
+        .getElementById("directory-systems")
+        ?.scrollIntoView({ behavior: "smooth", block: "start" });
+      setPendingSystemsScroll(false);
+    }, 50);
+    return () => window.clearTimeout(timer);
+  }, [pendingSystemsScroll, showSystems, systems.length]);
 
   return (
     <div className="space-y-12">
@@ -100,7 +112,12 @@ export default function DirectoriesBrowser({
         resultCount={visible.length}
       />
 
-      <DirectoriesConversionStrip />
+      <DirectoriesConversionStrip
+        onBrowseSystems={() => {
+          setFilters((prev) => ({ ...prev, type: "system" }));
+          setPendingSystemsScroll(true);
+        }}
+      />
 
       {visible.length === 0 ? (
         <div className="border border-hairline bg-signature-cream/40 px-8 py-16 text-center">
@@ -190,7 +207,10 @@ function EntrySection({
   }, [hasMore, entries.length]);
 
   return (
-    <section id={kind === "system" ? "directory-systems" : undefined}>
+    <section
+      id={kind === "system" ? "directory-systems" : undefined}
+      className={kind === "system" ? "scroll-mt-28" : undefined}
+    >
       <div
         className={`rounded-md border px-5 py-5 md:px-7 md:py-6 ${styles.sectionBorder}`}
       >
