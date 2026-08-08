@@ -1,567 +1,467 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Magnetic from "@/components/motion/Magnetic";
-import RevealWords from "@/components/motion/RevealWords";
-import TiltCard from "@/components/motion/TiltCard";
-import RealEstateSlackFeed from "./RealEstateSlackFeed";
-import RealEstateFlowchart from "./RealEstateFlowchart";
-import {
-  IconClock,
-  IconCalendar,
-  IconSpark,
-  IconLock,
-  IconArrowRight,
-  IconSlack,
-  IconMerge,
-  IconTerminal,
-  IconKey,
-  IconInfra,
-} from "@/components/icons/Icons";
+import Link from "next/link";
 import { BOOK_DEMO_URL } from "@/lib/site";
+
+const EASE = [0.2, 0.8, 0.2, 1] as const;
+
+const fadeUp = {
+  initial: { opacity: 0, y: 28 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true as const, margin: "-80px" },
+  transition: { duration: 0.65, ease: EASE },
+};
+
+const pains = [
+  {
+    line: "Zillow lead. 3h 42m. No response.",
+    sub: "Speed-to-lead",
+    img: "/images/real-estate/hero.jpg",
+    overlay: "rgba(10,46,14,0.72)",
+  },
+  {
+    line: "Showing feedback? Three unanswered texts.",
+    sub: "Showing follow-up",
+    img: "/images/real-estate/interior.jpg",
+    overlay: "rgba(170,45,0,0.65)",
+  },
+  {
+    line: "Open house, 14 visitors. 0 follow-ups sent.",
+    sub: "Nurture sequences",
+    img: "/images/real-estate/hero.jpg",
+    overlay: "rgba(24,29,38,0.75)",
+  },
+  {
+    line: "Listing stale 11 days. No price-drop alert sent.",
+    sub: "Listing automation",
+    img: "/images/real-estate/interior.jpg",
+    overlay: "rgba(252,171,121,0.25)",
+  },
+  {
+    line: "Deal closed. Review never asked for.",
+    sub: "Referral capture",
+    img: "/images/real-estate/agent-desk.jpg",
+    overlay: "rgba(10,46,14,0.68)",
+  },
+  {
+    line: "Monday digest. Built by hand. Every week.",
+    sub: "Agent accountability",
+    img: "/images/real-estate/interior.jpg",
+    overlay: "rgba(24,29,38,0.72)",
+  },
+];
+
+const workflows = [
+  {
+    num: "01",
+    title: "Portal Lead → Slack + CRM in 60 seconds",
+    desc: "Inbound lead from Zillow, Realtor.com, or your site auto-creates a CRM contact, assigns the right agent, and posts a drafted first-touch in Slack.",
+    trigger: "Trigger: portal webhook",
+    img: "/images/real-estate/hero.jpg",
+  },
+  {
+    num: "02",
+    title: "Stage-aware listing nurture",
+    desc: "Buyer and seller sequences that fire on MLS status changes — new listing, price reduction, open house, under contract. No manual list management.",
+    trigger: "Trigger: MLS status change",
+    img: "/images/real-estate/interior.jpg",
+  },
+  {
+    num: "03",
+    title: "Showing feedback loop",
+    desc: "Post-showing nudge to the buyer agent → structured notes → summary to seller → CRM updated. The full loop, automated.",
+    trigger: "Trigger: showing window end",
+    img: "/images/real-estate/agent-desk.jpg",
+  },
+  {
+    num: "04",
+    title: "Agent coordination digest",
+    desc: "Daily Slack digest of open leads, stalled listings, and unanswered follow-ups. Your team lead sees what's leaking before the week gets loud.",
+    trigger: "Trigger: cron 8:00 AM",
+    img: "/images/real-estate/interior.jpg",
+  },
+  {
+    num: "05",
+    title: "Post-close review & referral capture",
+    desc: "Closing triggers a multi-touch sequence: Google/Zillow review request, video testimonial link, and a referral intro template — all on schedule.",
+    trigger: "Trigger: deal close date",
+    img: "/images/real-estate/hero.jpg",
+  },
+  {
+    num: "06",
+    title: "Real-time attribution dashboard",
+    desc: "Track which sources close, which agents convert, and what your marketing ROI actually is — live, without rebuilding a spreadsheet every week.",
+    trigger: "Trigger: live event stream",
+    img: "/images/real-estate/agent-desk.jpg",
+  },
+];
+
+const befores = [
+  ["Portal leads wait in a shared inbox", "Leads route to the right agent in < 60s"],
+  ["Showing feedback lives in iMessage threads", "Feedback captured, summarized, sent to seller automatically"],
+  ["Nurture stops when the market gets loud", "Stage-aware sequences run regardless of how busy it gets"],
+  ["Team lead compiles digest on Sunday night", "Digest lands in Slack every Monday at 8am"],
+  ["Closed deal, no review asked for", "Post-close sequence fires on closing date, every time"],
+  ["No idea which agent responded in time", "Response times tracked, visible, actionable"],
+];
 
 export default function RealEstateLandingContent() {
   return (
-    <div className="space-y-0">
-      {/* SECTION 1: HERO */}
-      <section className="section-air bg-canvas pt-28 md:pt-36">
+    <div>
+      {/* ── SECTION 1: HERO — full-bleed property photo ── */}
+      <section className="relative min-h-screen flex items-end pb-20 md:pb-28 overflow-hidden">
+        {/* Background photo */}
+        <img
+          src="/images/real-estate/hero.jpg"
+          alt="Luxury property"
+          className="absolute inset-0 w-full h-full object-cover object-center"
+        />
+        {/* Dark overlay */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to top, rgba(10,14,20,0.92) 0%, rgba(10,14,20,0.55) 50%, rgba(10,14,20,0.25) 100%)",
+          }}
+        />
+
+        <motion.div
+          initial={{ opacity: 0, y: 32 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, ease: [0.2, 0.8, 0.2, 1] }}
+          className="container-air relative z-10"
+        >
+          <span className="inline-flex items-center gap-2 text-caption text-white/60 tracking-[0.06em] uppercase mb-6">
+            <span className="h-px w-8 bg-white/40" />
+            For real estate founders & brokerage leaders
+          </span>
+
+          <h1
+            className="text-white max-w-3xl leading-[1.1] tracking-tight"
+            style={{ fontSize: "clamp(2.4rem, 5.5vw, 4.2rem)", fontWeight: 600 }}
+          >
+            You closed 4 deals last month. You lost 11 to slow follow-up.
+          </h1>
+
+          <p className="text-white/70 mt-6 text-lg max-w-xl leading-[1.55]">
+            LimeDock builds the automations that close the gap — lead routing, showing feedback, nurture, and agent digests wired into your Slack and CRM.
+          </p>
+
+          <div className="mt-10 flex flex-wrap items-center gap-4">
+            <a
+              href={BOOK_DEMO_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary"
+            >
+              Map my lead response
+            </a>
+            <Link
+              href="/"
+              className="text-white/60 hover:text-white text-body-md transition-colors"
+            >
+              See how LimeDock works →
+            </Link>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* ── SECTION 2: YOUR MONDAY MORNING — editorial story ── */}
+      <section className="py-24 md:py-32" style={{ backgroundColor: "#f9f4ec" }}>
         <div className="container-air">
-          <div className="grid lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] gap-12 lg:gap-16 items-center">
-            <div>
-              <span className="eyebrow">
-                <span className="dot" />
-                For real estate founders & brokerage leaders
-              </span>
+          <motion.div {...fadeUp} className="max-w-xl mb-14">
+            <span className="eyebrow">
+              <span className="dot !bg-signature-coral" />
+              A founder's Monday
+            </span>
+            <h2 className="text-display-md text-ink mt-5">
+              Here's what a typical Monday looks like without automation.
+            </h2>
+          </motion.div>
 
-              <h1 className="text-display-xl text-ink mt-6 font-medium tracking-tight">
-                <RevealWords
-                  text="Stop losing portal leads and listing updates to manual inbox hustle."
-                  highlightIndices={[2, 3, 7, 8]}
-                  highlightClassName="text-signature-coral font-semibold"
-                />
-              </h1>
+          <div className="grid lg:grid-cols-[1fr_420px] gap-16 items-start">
+            <div className="space-y-12">
+              {/* Scene 1 */}
+              <motion.div {...fadeUp} className="border-l-2 border-signature-coral pl-7">
+                <p className="text-caption font-mono text-muted tracking-widest">9:02 AM</p>
+                <p className="text-title-sm text-ink mt-2 mb-3">The inbox is already behind.</p>
+                <p className="text-body-md text-body leading-[1.65]">
+                  Three Zillow leads came in overnight. They're sitting in a shared Gmail with no owner. 
+                  Your top agent is on a showing. Someone will get to them — probably after lunch. 
+                  The competing brokerage responded at 8:47am. They'll take two of those three.
+                </p>
+              </motion.div>
 
-              <p className="text-title-md text-body mt-6 leading-[1.55] max-w-xl">
-                LimeDock builds custom, owned workflow automations that auto-route Zillow & Realtor.com leads, capture showing feedback, trigger stage-aware listing nurture, and deliver daily agent digests inside Slack & CRM.
-              </p>
+              {/* Scene 2 */}
+              <motion.div {...fadeUp} className="border-l-2 border-signature-peach pl-7">
+                <p className="text-caption font-mono text-muted tracking-widest">1:17 PM</p>
+                <p className="text-title-sm text-ink mt-2 mb-3">The showing happened. Now what?</p>
+                <p className="text-body-md text-body leading-[1.65]">
+                  Marcus did the showing at 22 Birchwood. The buyer seemed interested. But feedback? 
+                  It's in Marcus's texts, maybe. The seller calls you at 1pm asking how it went. 
+                  You text Marcus. He's between showings. You'll try again tonight.
+                </p>
+              </motion.div>
 
-              <div className="mt-8 flex flex-wrap items-center gap-4">
-                <Magnetic strength={16}>
-                  <a
-                    href={BOOK_DEMO_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-primary group inline-flex items-center gap-2"
-                  >
-                    Book a workflow call
-                    <IconArrowRight
-                      size={16}
-                      className="transition-transform duration-300 group-hover:translate-x-1"
-                    />
-                  </a>
-                </Magnetic>
+              {/* Scene 3 */}
+              <motion.div {...fadeUp} className="border-l-2 border-hairline pl-7">
+                <p className="text-caption font-mono text-muted tracking-widest">5:44 PM</p>
+                <p className="text-title-sm text-ink mt-2 mb-3">The week slipped through again.</p>
+                <p className="text-body-md text-body leading-[1.65]">
+                  You pull up the CRM to see who followed up on what. Half the leads have no activity. 
+                  Two listings have been stale for 9 days. Saturday's open house had 14 visitors. 
+                  Zero follow-up emails went out. You'll build a digest this weekend. You said that last weekend too.
+                </p>
+              </motion.div>
 
-                <Magnetic strength={12}>
-                  <a href="#workflows" className="btn-secondary">
-                    Explore workflows
-                  </a>
-                </Magnetic>
-              </div>
+              {/* Pull quote */}
+              <motion.blockquote
+                {...fadeUp}
+                className="border-l-4 border-ink pl-6 py-2"
+              >
+                <p
+                  className="text-ink leading-[1.4] italic"
+                  style={{ fontSize: "clamp(1.25rem, 2.5vw, 1.6rem)", fontWeight: 500 }}
+                >
+                  "The market moves in minutes. Your inbox takes hours."
+                </p>
+              </motion.blockquote>
             </div>
 
-            {/* Right-column Slack live feed mockup */}
+            {/* Photo accent */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: [0.2, 0.8, 0.2, 1] }}
+              {...fadeUp}
+              className="hidden lg:block sticky top-28"
             >
-              <RealEstateSlackFeed />
+              <div className="relative rounded-2xl overflow-hidden aspect-[4/5]">
+                <img
+                  src="/images/real-estate/agent-desk.jpg"
+                  alt="Real estate agent at work"
+                  className="w-full h-full object-cover object-center"
+                />
+                <div
+                  className="absolute inset-0"
+                  style={{ background: "linear-gradient(to top, rgba(10,14,20,0.5) 0%, transparent 60%)" }}
+                />
+                <div className="absolute bottom-5 left-5 right-5">
+                  <p className="text-white text-caption font-mono tracking-widest opacity-70">
+                    THE REALITY WITHOUT AUTOMATION
+                  </p>
+                </div>
+              </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* SECTION 2: PAIN SECTION (DARK CARD TREATMENT) */}
-      <section className="section-air bg-canvas" id="pains">
+      {/* ── SECTION 3: PAIN MOMENTS — photo card grid ── */}
+      <section className="py-24 md:py-32 bg-ink overflow-hidden">
         <div className="container-air">
+          <motion.div {...fadeUp} className="max-w-2xl mb-16">
+            <span className="eyebrow !text-white/60">
+              <span className="dot !bg-white" />
+              The 6 moments you lose a deal
+            </span>
+            <h2 className="text-display-md text-white mt-5">
+              Every week. Same leaks. Different deals.
+            </h2>
+            <p className="text-white/60 text-body-md mt-4 leading-[1.55] max-w-lg">
+              These aren't edge cases. They're Monday through Friday at every brokerage running without automation.
+            </p>
+          </motion.div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {pains.map((pain, i) => (
+              <motion.div
+                key={pain.line}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.55, delay: i * 0.07, ease: [0.2, 0.8, 0.2, 1] }}
+                className="relative rounded-xl overflow-hidden aspect-[4/3] group"
+              >
+                <img
+                  src={pain.img}
+                  alt={pain.sub}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div
+                  className="absolute inset-0"
+                  style={{ background: pain.overlay }}
+                />
+                <div className="absolute inset-0 p-6 flex flex-col justify-end">
+                  <p className="text-caption font-mono text-white/50 tracking-widest uppercase mb-2">
+                    {pain.sub}
+                  </p>
+                  <p className="text-white font-medium leading-[1.3]" style={{ fontSize: "1.05rem" }}>
+                    {pain.line}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── SECTION 4: BEFORE / AFTER transformation ── */}
+      <section className="py-24 md:py-32 bg-canvas">
+        <div className="container-air">
+          <motion.div {...fadeUp} className="max-w-xl mb-16">
+            <span className="eyebrow">
+              <span className="dot !bg-signature-forest" />
+              The transformation
+            </span>
+            <h2 className="text-display-md text-ink mt-5">
+              What changes when your brokerage runs on owned automation.
+            </h2>
+          </motion.div>
+
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.65, ease: [0.2, 0.8, 0.2, 1] }}
-            className="signature-card bg-signature-forest text-on-dark overflow-hidden relative"
+            {...fadeUp}
+            className="grid md:grid-cols-2 gap-0 rounded-2xl overflow-hidden border border-hairline"
           >
-            <span
-              aria-hidden
-              className="pointer-events-none absolute -top-24 -left-24 h-[360px] w-[360px] rounded-full opacity-40 blur-3xl"
-              style={{
-                background:
-                  "radial-gradient(circle, rgba(252,171,121,0.4), transparent 70%)",
-              }}
-            />
+            {/* Before column */}
+            <div className="p-8 md:p-10 border-b md:border-b-0 md:border-r border-hairline bg-canvas">
+              <p className="text-caption font-mono text-muted tracking-widest mb-8">WITHOUT LIMEDOCK</p>
+              <ul className="space-y-7">
+                {befores.map(([before]) => (
+                  <li key={before} className="flex items-start gap-4">
+                    <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-signature-coral shrink-0" />
+                    <p className="text-body-md text-body leading-[1.5]">{before}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-            <div className="grid lg:grid-cols-[0.72fr_1.28fr] gap-10 lg:gap-14 relative">
-              <div>
-                <span className="eyebrow !text-white/80">
-                  <span className="dot !bg-white" />
-                  The real estate operations bottleneck
-                </span>
-                <h2 className="text-display-md text-white mt-7 max-w-md">
-                  Speed-to-lead and listing follow-up shouldn&apos;t depend on who remembers to check the board.
-                </h2>
-                <p className="text-body-md text-white/78 mt-5 leading-[1.55] max-w-md">
-                  Generic CRMs offer rigid drip campaigns that agents ignore. Meanwhile, portal leads cold-out in shared inboxes, showing feedback stays locked in iMessage, and listing follow-ups drop when market activity spikes.
-                </p>
-              </div>
-
-              {/* 7 Visceral Real Estate Pains Grid */}
-              <div className="grid sm:grid-cols-2 gap-4 text-ink">
-                <div className="card-luminous rounded-xl p-5 bg-signature-cream relative">
-                  <div className="text-caption font-mono text-muted">01 · SPEED-TO-LEAD</div>
-                  <h3 className="text-title-sm text-ink mt-2 font-medium">Portal Speed-to-Lead Lag</h3>
-                  <p className="text-body-md text-body mt-2 leading-[1.5]">
-                    Inbound leads from Zillow, Realtor.com, and website forms sit in a shared email inbox while agents manual-assign. Competitors respond in 2 minutes while your team takes 2 hours.
-                  </p>
-                </div>
-
-                <div className="card-luminous rounded-xl p-5 bg-signature-mint relative">
-                  <div className="text-caption font-mono text-muted">02 · LISTING FOLLOW-UP</div>
-                  <h3 className="text-title-sm text-ink mt-2 font-medium">Forgotten Listing Follow-Up</h3>
-                  <p className="text-body-md text-body mt-2 leading-[1.5]">
-                    Price adjustments, open house alerts, and stale inquiry re-engagements depend on memory or whiteboards instead of automated stage triggers.
-                  </p>
-                </div>
-
-                <div className="card-luminous rounded-xl p-5 bg-signature-peach relative">
-                  <div className="text-caption font-mono text-muted">03 · SHOWINGS</div>
-                  <h3 className="text-title-sm text-ink mt-2 font-medium">Scattered Showing Feedback</h3>
-                  <p className="text-body-md text-body mt-2 leading-[1.5]">
-                    Agent feedback after property showings is trapped in personal SMS threads and Slack DMs. Sellers don&apos;t get updates, and listing agents miss hot buyer signals.
-                  </p>
-                </div>
-
-                <div className="card-luminous rounded-xl p-5 bg-canvas relative">
-                  <div className="text-caption font-mono text-muted">04 · NURTURE</div>
-                  <h3 className="text-title-sm text-ink mt-2 font-medium">Dead Nurture Sequences</h3>
-                  <p className="text-body-md text-body mt-2 leading-[1.5]">
-                    Buyer and seller nurture sequences freeze the moment a deal goes into escrow or market volatility surges—leaving past clients and pipeline leads untouched.
-                  </p>
-                </div>
-
-                <div className="card-luminous rounded-xl p-5 bg-signature-cream relative">
-                  <div className="text-caption font-mono text-muted">05 · ACCOUNTABILITY</div>
-                  <h3 className="text-title-sm text-ink mt-2 font-medium">Manual Agent Coordination</h3>
-                  <p className="text-body-md text-body mt-2 leading-[1.5]">
-                    Team leads waste hours every week manually compiling open lead status, stalled listings, and pending follow-ups to keep agents accountable.
-                  </p>
-                </div>
-
-                <div className="card-luminous rounded-xl p-5 bg-signature-mint relative">
-                  <div className="text-caption font-mono text-muted">06 · REVIEWS</div>
-                  <h3 className="text-title-sm text-ink mt-2 font-medium">Leaked Post-Close Referrals</h3>
-                  <p className="text-body-md text-body mt-2 leading-[1.5]">
-                    Zero automated mechanism to convert closed deals into verified Google reviews, client video testimonials, or neighborhood circle marketing.
-                  </p>
-                </div>
-
-                <div className="card-luminous rounded-xl p-5 bg-signature-peach sm:col-span-2 lg:col-span-2 relative">
-                  <div className="text-caption font-mono text-muted">07 · VISIBILITY</div>
-                  <h3 className="text-title-sm text-ink mt-2 font-medium">Black-Box Pipeline Visibility</h3>
-                  <p className="text-body-md text-body mt-2 leading-[1.5]">
-                    Brokerage founders have no real-time visibility into lead response velocity, abandoned inquiries, or agent close-loop metrics until the weekly summary.
-                  </p>
-                </div>
-              </div>
+            {/* After column */}
+            <div className="p-8 md:p-10" style={{ backgroundColor: "#f0f7f3" }}>
+              <p className="text-caption font-mono tracking-widest mb-8" style={{ color: "#0a2e0e" }}>
+                WITH LIMEDOCK
+              </p>
+              <ul className="space-y-7">
+                {befores.map(([, after]) => (
+                  <li key={after} className="flex items-start gap-4">
+                    <span className="mt-1.5 h-1.5 w-1.5 rounded-full shrink-0" style={{ backgroundColor: "#0a2e0e" }} />
+                    <p className="text-body-md leading-[1.5]" style={{ color: "#0a2e0e" }}>{after}</p>
+                  </li>
+                ))}
+              </ul>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* SECTION 3: MANUAL VS AUTOMATED FLOWCHART */}
-      <RealEstateFlowchart />
-
-      {/* SECTION 4: HOW IT WORKS (3-STEP PROCESS) */}
-      <section className="section-air bg-canvas" id="how-it-works">
+      {/* ── SECTION 5: WORKFLOWS — vertical numbered timeline ── */}
+      <section className="py-24 md:py-32" style={{ backgroundColor: "#f9f4ec" }}>
         <div className="container-air">
-          <div className="max-w-2xl">
+          <motion.div {...fadeUp} className="max-w-xl mb-20">
             <span className="eyebrow">
-              <span className="dot" />
-              The process
+              <span className="dot !bg-signature-coral" />
+              The automations
             </span>
-            <h2 className="text-display-lg text-ink mt-5">
-              How LimeDock builds your brokerage engine
+            <h2 className="text-display-md text-ink mt-5">
+              Pick the workflow losing you the most leads.
             </h2>
             <p className="text-body-md text-body mt-4 leading-[1.55]">
-              From auditing lead drop-offs to deploying live automations in Slack & CRM, we ship your system step by step.
+              We ship the first one in 48 hours. Then one every week. You own the code.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-6 mt-12">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.5, ease: [0.2, 0.8, 0.2, 1] }}
-              className="card-luminous rounded-xl p-8 bg-signature-cream relative overflow-hidden flex flex-col justify-between"
-            >
-              <div>
-                <span className="rounded-full bg-ink text-white px-3 py-1 text-caption font-mono inline-block">
-                  Step 01
-                </span>
-                <h3 className="text-title-lg text-ink mt-6 font-medium">
-                  Discovery & Workflow Audit
-                </h3>
-                <p className="text-body-md text-body mt-4 leading-[1.55]">
-                  We audit your lead channels (Zillow, Realtor.com, website), CRM (Follow Up Boss, HubSpot), and agent communication tools (Slack/SMS) to map where deals are leaking.
-                </p>
-              </div>
-              <div className="mt-8 pt-6 border-t border-hairline/60 flex items-center justify-between text-caption text-muted font-mono">
-                <span>Auditing lead drop-off</span>
-                <span>Week 1</span>
-              </div>
-            </motion.div>
+          <div className="space-y-20">
+            {workflows.map((wf, i) => (
+              <motion.div
+                key={wf.num}
+                initial={{ opacity: 0, y: 32 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.6, ease: [0.2, 0.8, 0.2, 1] }}
+                className={`grid md:grid-cols-2 gap-12 md:gap-20 items-center ${
+                  i % 2 === 1 ? "md:[direction:rtl]" : ""
+                }`}
+              >
+                {/* Text side */}
+                <div className={i % 2 === 1 ? "md:[direction:ltr]" : ""}>
+                  <p
+                    className="font-mono leading-none mb-5"
+                    style={{ fontSize: "clamp(3rem, 7vw, 5.5rem)", color: "rgba(24,29,38,0.12)", fontWeight: 700 }}
+                  >
+                    {wf.num}
+                  </p>
+                  <h3 className="text-title-lg text-ink leading-[1.25] -mt-4 md:-mt-6">
+                    {wf.title}
+                  </h3>
+                  <p className="text-body-md text-body mt-4 leading-[1.65] max-w-md">
+                    {wf.desc}
+                  </p>
+                  <p className="text-caption font-mono text-muted mt-5 tracking-widest">
+                    {wf.trigger}
+                  </p>
+                </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.5, delay: 0.1, ease: [0.2, 0.8, 0.2, 1] }}
-              className="card-luminous rounded-xl p-8 bg-signature-mint relative overflow-hidden flex flex-col justify-between"
-            >
-              <div>
-                <span className="rounded-full bg-ink text-white px-3 py-1 text-caption font-mono inline-block">
-                  Step 02
-                </span>
-                <h3 className="text-title-lg text-ink mt-6 font-medium">
-                  Custom System Architecture
-                </h3>
-                <p className="text-body-md text-body mt-4 leading-[1.55]">
-                  We engineer custom, dedicated automation pipelines tailored to your brokerage&apos;s routing rules and listing stage triggers—built on code you own 100%.
-                </p>
-              </div>
-              <div className="mt-8 pt-6 border-t border-hairline/60 flex items-center justify-between text-caption text-muted font-mono">
-                <span>Custom API wiring</span>
-                <span>Week 2</span>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.5, delay: 0.2, ease: [0.2, 0.8, 0.2, 1] }}
-              className="card-luminous rounded-xl p-8 bg-signature-peach relative overflow-hidden flex flex-col justify-between"
-            >
-              <div>
-                <span className="rounded-full bg-ink text-white px-3 py-1 text-caption font-mono inline-block">
-                  Step 03
-                </span>
-                <h3 className="text-title-lg text-ink mt-6 font-medium">
-                  Live in Your Stack (48h Cadence)
-                </h3>
-                <p className="text-body-md text-body mt-4 leading-[1.55]">
-                  We deploy directly into your Slack, CRM, and listing infrastructure. Your team gets live alerts and automated loops without learning another SaaS tool.
-                </p>
-              </div>
-              <div className="mt-8 pt-6 border-t border-hairline/60 flex items-center justify-between text-caption text-muted font-mono">
-                <span>Live Slack & CRM launch</span>
-                <span>Friday release</span>
-              </div>
-            </motion.div>
+                {/* Photo side */}
+                <div className={i % 2 === 1 ? "md:[direction:ltr]" : ""}>
+                  <div className="relative rounded-2xl overflow-hidden aspect-[4/3] shadow-[0_20px_60px_-20px_rgba(24,29,38,0.18)]">
+                    <img
+                      src={wf.img}
+                      alt={wf.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <div
+                      className="absolute inset-0"
+                      style={{ background: "linear-gradient(135deg, rgba(10,46,14,0.15) 0%, transparent 60%)" }}
+                    />
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* SECTION 5: WORKFLOWS SHOWCASE (6 AUTOMATIONS GRID) */}
-      <section className="section-air bg-canvas" id="workflows">
-        <div className="container-air">
+      {/* ── SECTION 6: CLOSING CTA — full-bleed photo ── */}
+      <section className="relative py-32 md:py-44 overflow-hidden flex items-center">
+        <img
+          src="/images/real-estate/interior.jpg"
+          alt="Modern property interior"
+          className="absolute inset-0 w-full h-full object-cover object-center"
+        />
+        <div
+          className="absolute inset-0"
+          style={{ background: "linear-gradient(to right, rgba(10,14,20,0.88) 0%, rgba(10,14,20,0.55) 60%, rgba(10,14,20,0.3) 100%)" }}
+        />
+
+        <motion.div {...fadeUp} className="container-air relative z-10">
           <div className="max-w-2xl">
-            <span className="eyebrow">
-              <span className="dot" />
-              Real estate automations
+            <span className="inline-flex items-center gap-2 text-caption text-white/50 tracking-[0.06em] uppercase mb-6">
+              <span className="h-px w-8 bg-white/30" />
+              Get started
             </span>
-            <h2 className="text-display-lg text-ink mt-5">
-              Pick the workflow losing you the most leads
+            <h2
+              className="text-white leading-[1.15] tracking-tight"
+              style={{ fontSize: "clamp(2rem, 4.5vw, 3.4rem)", fontWeight: 600 }}
+            >
+              Map one workflow losing you leads.{" "}
+              <span className="text-white/60">30 minutes.</span>
             </h2>
-            <p className="text-body-md text-body mt-4 leading-[1.55]">
-              We build and ship these core real estate engines first, then expand to match your brokerage&apos;s custom operating manual.
+            <p className="text-white/65 mt-5 text-lg leading-[1.55] max-w-lg">
+              Bring your lead response, listing follow-up, or showing feedback. We'll sketch the fastest path to a live automation your brokerage owns.
             </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
-            <div className="card-luminous rounded-xl p-6 bg-signature-cream relative flex flex-col justify-between">
-              <div>
-                <div className="flex items-center justify-between">
-                  <span className="p-2.5 rounded-lg bg-canvas text-ink inline-block">
-                    <IconSlack size={20} />
-                  </span>
-                  <span className="text-caption font-mono text-muted bg-canvas/80 px-2 py-0.5 rounded">
-                    Speed-to-lead
-                  </span>
-                </div>
-                <h3 className="text-title-sm text-ink mt-5 font-medium">
-                  Portal Lead → Instant Slack & CRM Touch
-                </h3>
-                <p className="text-body-md text-body mt-3 leading-[1.55]">
-                  Captures Zillow, Realtor.com & web leads instantly, creates CRM contact, assigns right agent, posts structured alert & drafted response in Slack.
-                </p>
-              </div>
-              <div className="mt-6 pt-4 border-t border-hairline/60 text-caption font-mono text-muted">
-                Trigger: New portal webhook · SLA &lt; 60s
-              </div>
-            </div>
-
-            <div className="card-luminous rounded-xl p-6 bg-signature-mint relative flex flex-col justify-between">
-              <div>
-                <div className="flex items-center justify-between">
-                  <span className="p-2.5 rounded-lg bg-canvas text-ink inline-block">
-                    <IconMerge size={20} />
-                  </span>
-                  <span className="text-caption font-mono text-muted bg-canvas/80 px-2 py-0.5 rounded">
-                    Listing retention
-                  </span>
-                </div>
-                <h3 className="text-title-sm text-ink mt-5 font-medium">
-                  Stage-Aware Listing Nurture
-                </h3>
-                <p className="text-body-md text-body mt-3 leading-[1.55]">
-                  Automated buyer/seller drip sequences triggered by MLS status changes (new listing, price reduction, open house, under contract).
-                </p>
-              </div>
-              <div className="mt-6 pt-4 border-t border-hairline/60 text-caption font-mono text-muted">
-                Trigger: MLS status change · Auto-drip
-              </div>
-            </div>
-
-            <div className="card-luminous rounded-xl p-6 bg-signature-peach relative flex flex-col justify-between">
-              <div>
-                <div className="flex items-center justify-between">
-                  <span className="p-2.5 rounded-lg bg-canvas text-ink inline-block">
-                    <IconClock size={20} />
-                  </span>
-                  <span className="text-caption font-mono text-muted bg-canvas/80 px-2 py-0.5 rounded">
-                    Seller updates
-                  </span>
-                </div>
-                <h3 className="text-title-sm text-ink mt-5 font-medium">
-                  Automated Showing Feedback Loop
-                </h3>
-                <p className="text-body-md text-body mt-3 leading-[1.55]">
-                  Post-showing automated SMS/Slack prompt to buyer agents → structured feedback summary sent directly to seller and logged in CRM.
-                </p>
-              </div>
-              <div className="mt-6 pt-4 border-t border-hairline/60 text-caption font-mono text-muted">
-                Trigger: Showing window end · SMS prompt
-              </div>
-            </div>
-
-            <div className="card-luminous rounded-xl p-6 bg-signature-cream relative flex flex-col justify-between">
-              <div>
-                <div className="flex items-center justify-between">
-                  <span className="p-2.5 rounded-lg bg-canvas text-ink inline-block">
-                    <IconTerminal size={20} />
-                  </span>
-                  <span className="text-caption font-mono text-muted bg-canvas/80 px-2 py-0.5 rounded">
-                    Operations
-                  </span>
-                </div>
-                <h3 className="text-title-sm text-ink mt-5 font-medium">
-                  Agent Coordination & Accountability Digest
-                </h3>
-                <p className="text-body-md text-body mt-3 leading-[1.55]">
-                  Scheduled daily/weekly Slack digests flagging uncontacted leads, overdue listing tasks, and agent response times for brokerage leaders.
-                </p>
-              </div>
-              <div className="mt-6 pt-4 border-t border-hairline/60 text-caption font-mono text-muted">
-                Trigger: Cron 8:00 AM · Slack thread
-              </div>
-            </div>
-
-            <div className="card-luminous rounded-xl p-6 bg-signature-mint relative flex flex-col justify-between">
-              <div>
-                <div className="flex items-center justify-between">
-                  <span className="p-2.5 rounded-lg bg-canvas text-ink inline-block">
-                    <IconKey size={20} />
-                  </span>
-                  <span className="text-caption font-mono text-muted bg-canvas/80 px-2 py-0.5 rounded">
-                    Growth
-                  </span>
-                </div>
-                <h3 className="text-title-sm text-ink mt-5 font-medium">
-                  Post-Close Review & Referral Capture
-                </h3>
-                <p className="text-body-md text-body mt-3 leading-[1.55]">
-                  Automated sequence triggered upon closing date to request Google/Zillow reviews, referral introductions, and anniversary check-ins.
-                </p>
-              </div>
-              <div className="mt-6 pt-4 border-t border-hairline/60 text-caption font-mono text-muted">
-                Trigger: Deal closed date · Multi-touch
-              </div>
-            </div>
-
-            <div className="card-luminous rounded-xl p-6 bg-signature-peach relative flex flex-col justify-between">
-              <div>
-                <div className="flex items-center justify-between">
-                  <span className="p-2.5 rounded-lg bg-canvas text-ink inline-block">
-                    <IconInfra size={20} />
-                  </span>
-                  <span className="text-caption font-mono text-muted bg-canvas/80 px-2 py-0.5 rounded">
-                    Analytics
-                  </span>
-                </div>
-                <h3 className="text-title-sm text-ink mt-5 font-medium">
-                  Real-Time Marketing Attribution Dashboard
-                </h3>
-                <p className="text-body-md text-body mt-3 leading-[1.55]">
-                  Tracks source-to-close metrics, agent conversion speed, and marketing ROI live without manual spreadsheet updates.
-                </p>
-              </div>
-              <div className="mt-6 pt-4 border-t border-hairline/60 text-caption font-mono text-muted">
-                Trigger: Live event stream · Board sync
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 6: PROOF / METRICS STRIP (4 TILTCARDS) */}
-      <section className="section-air bg-canvas" id="proof">
-        <div className="container-air">
-          <div className="max-w-xl">
-            <span className="eyebrow">
-              <span className="dot" />
-              Proven metrics
-            </span>
-            <h2 className="text-display-lg text-ink mt-5">
-              Built for speed, owned by your brokerage
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-10">
-            <TiltCard max={8} spotlight className="h-full">
-              <div className="card-luminous rounded-xl p-6 bg-signature-cream h-full flex flex-col justify-between relative overflow-hidden">
-                <div>
-                  <div className="flex items-center justify-between">
-                    <span className="p-2 rounded-lg bg-canvas text-ink">
-                      <IconClock size={20} />
-                    </span>
-                    <span className="text-caption font-mono text-muted">SLA</span>
-                  </div>
-                  <div className="text-display-lg text-ink font-medium mt-6">
-                    &lt; 2 min
-                  </div>
-                  <div className="text-title-sm text-ink mt-2 font-medium">
-                    Speed-to-Lead Response
-                  </div>
-                  <p className="text-body-md text-body mt-3 leading-[1.5]">
-                    Auto-route portal leads &amp; fire first touch in under 120 seconds.
-                  </p>
-                </div>
-              </div>
-            </TiltCard>
-
-            <TiltCard max={8} spotlight className="h-full">
-              <div className="card-luminous rounded-xl p-6 bg-signature-mint h-full flex flex-col justify-between relative overflow-hidden">
-                <div>
-                  <div className="flex items-center justify-between">
-                    <span className="p-2 rounded-lg bg-canvas text-ink">
-                      <IconSpark size={20} />
-                    </span>
-                    <span className="text-caption font-mono text-muted">SPEED</span>
-                  </div>
-                  <div className="text-display-lg text-ink font-medium mt-6">
-                    48h
-                  </div>
-                  <div className="text-title-sm text-ink mt-2 font-medium">
-                    First Workflow Live
-                  </div>
-                  <p className="text-body-md text-body mt-3 leading-[1.5]">
-                    Your first custom real estate automation running live in your stack.
-                  </p>
-                </div>
-              </div>
-            </TiltCard>
-
-            <TiltCard max={8} spotlight className="h-full">
-              <div className="card-luminous rounded-xl p-6 bg-signature-peach h-full flex flex-col justify-between relative overflow-hidden">
-                <div>
-                  <div className="flex items-center justify-between">
-                    <span className="p-2 rounded-lg bg-canvas text-ink">
-                      <IconCalendar size={20} />
-                    </span>
-                    <span className="text-caption font-mono text-muted">CADENCE</span>
-                  </div>
-                  <div className="text-display-lg text-ink font-medium mt-6">
-                    Friday
-                  </div>
-                  <div className="text-title-sm text-ink mt-2 font-medium">
-                    Delivery Cadence
-                  </div>
-                  <p className="text-body-md text-body mt-3 leading-[1.5]">
-                    Weekly release cycle — new workflow automations shipped every Friday.
-                  </p>
-                </div>
-              </div>
-            </TiltCard>
-
-            <TiltCard max={8} spotlight className="h-full">
-              <div className="card-luminous rounded-xl p-6 bg-signature-cream h-full flex flex-col justify-between relative overflow-hidden">
-                <div>
-                  <div className="flex items-center justify-between">
-                    <span className="p-2 rounded-lg bg-canvas text-ink">
-                      <IconLock size={20} />
-                    </span>
-                    <span className="text-caption font-mono text-muted">OWNERSHIP</span>
-                  </div>
-                  <div className="text-display-lg text-ink font-medium mt-6">
-                    100%
-                  </div>
-                  <div className="text-title-sm text-ink mt-2 font-medium">
-                    Code Ownership
-                  </div>
-                  <p className="text-body-md text-body mt-3 leading-[1.5]">
-                    You own the code and workflows. Zero per-seat fees or platform lock-in.
-                  </p>
-                </div>
-              </div>
-            </TiltCard>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 7: CLOSING CTA */}
-      <section className="section-air bg-canvas pb-20" id="cta">
-        <div className="container-air">
-          <div className="rounded-[16px] border border-hairline bg-gradient-to-r from-signature-cream via-canvas to-signature-mint/30 p-8 md:p-12 shadow-sm relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-8">
-            <div>
-              <span className="eyebrow">
-                <span className="dot" />
-                Get started
-              </span>
-              <h2 className="text-display-md text-ink mt-3 max-w-xl">
-                Ready to stop losing real estate deals to manual follow-up?
-              </h2>
-              <p className="text-body-md text-body mt-3 max-w-lg leading-[1.55]">
-                Map your brokerage&apos;s lead response, listing loops, or showing feedback on a 30-minute workflow call.
-              </p>
-            </div>
-
-            <Magnetic strength={14} className="shrink-0">
+            <div className="mt-10 flex flex-wrap items-center gap-4">
               <a
                 href={BOOK_DEMO_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-primary group inline-flex items-center gap-2"
+                className="btn-primary"
               >
                 Book a workflow call
-                <IconArrowRight
-                  size={16}
-                  className="transition-transform duration-300 group-hover:translate-x-1"
-                />
               </a>
-            </Magnetic>
+              <span className="text-white/40 text-body-md">
+                No pitch. Just your workflow on a whiteboard.
+              </span>
+            </div>
           </div>
-        </div>
+        </motion.div>
       </section>
     </div>
   );
