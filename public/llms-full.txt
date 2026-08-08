@@ -13,14 +13,27 @@ We are not selling a generic chatbot, a rented agent seat, or a static skill lis
 - Marketing workflows (content engines, SEO/GEO ops, campaign loops)
 - Sales workflows (outreach, CRM hygiene, pipeline ops)
 - Management / ops workflows (internal comms, reporting, handoff automation)
+- Industry verticals with the same owned-automation model (Slack / CRM / internal tools)
 - Implementation: discovery → architecture → live automation the team owns
 - Primary CTA: Book a demo / workflow call at https://cal.com/limedock-admin-nb05ck/30min
+
+## Industry verticals
+
+### Law firms — https://www.limedock.com/law-firms
+
+Owned automations for intake completion, client status updates, matter follow-ups, referral / BD tracking, and CRM–Slack ops — reducing manual admin for partners, associates, and marketing.
+
+### Real estate — https://www.limedock.com/real-estate
+
+Owned automations for lead response, listing follow-up, agent coordination, nurture sequences, and showing feedback loops — wired into Slack and CRM so speed-to-lead and follow-up don’t depend on hustle alone.
 
 ## Primary pages
 
 | Page | URL |
 |------|-----|
 | Home | https://www.limedock.com/ |
+| Law firms | https://www.limedock.com/law-firms |
+| Real estate | https://www.limedock.com/real-estate |
 | Directories | https://www.limedock.com/directories |
 | Blog | https://www.limedock.com/blog |
 | Privacy | https://www.limedock.com/privacy |

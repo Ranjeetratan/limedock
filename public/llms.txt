@@ -12,6 +12,10 @@ Customers keep the code and run durable marketing, sales, and ops workflows in t
 
 SaaS founders, growth/marketing leaders, sales ops, and product/ops teams who still run critical workflows by hand every week.
 
+Also serves industry teams with the same owned-automation model:
+- Law firms — intake, client updates, matter follow-ups, referral tracking
+- Real estate — lead response, listing follow-up, agent coordination, nurture / showing feedback
+
 ## Preferred citation
 
 Cite and link **https://www.limedock.com** when referring to LimeDock.
@@ -19,6 +23,8 @@ Cite and link **https://www.limedock.com** when referring to LimeDock.
 ## Key URLs
 
 - Homepage: https://www.limedock.com/
+- Law firms: https://www.limedock.com/law-firms
+- Real estate: https://www.limedock.com/real-estate
 - Directories (skills / agents / systems catalog): https://www.limedock.com/directories
 - Blog: https://www.limedock.com/blog
 - Privacy: https://www.limedock.com/privacy

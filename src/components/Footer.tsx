@@ -20,9 +20,10 @@ const footerGroups = [
   {
     title: "Solutions",
     links: [
+      ["Law firms", "/law-firms"],
+      ["Real estate", "/real-estate"],
       ["Sales workflows", "#capabilities"],
       ["Marketing workflows", "#capabilities"],
-      ["Team copilots", "#capabilities"],
       ["Management workflows", "#capabilities"],
     ],
   },
@@ -44,6 +45,12 @@ const footerGroups = [
       ["Email", "mailto:ranjeet@limedock.com"],
     ],
   },
+] as const;
+
+const alsoFromUs = [
+  ["Poised HQ", "https://poisedhq.com"],
+  ["X Lead Forge", "https://xleadforge.com"],
+  ["HireSchema", "https://hireschema.com"],
 ] as const;
 
 export default function Footer() {
@@ -178,6 +185,27 @@ export default function Footer() {
               </ul>
             </div>
           ))}
+        </div>
+
+        <div className="mt-10 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 text-body-md text-muted">
+          <h3 className="text-caption text-ink shrink-0">Also from us</h3>
+          <ul className="flex flex-wrap gap-x-6 gap-y-3">
+            {alsoFromUs.map(([label, href]) => (
+              <li key={label}>
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-body-md text-muted focus-ring rounded-sm relative group inline-block"
+                >
+                  <span className="transition-colors group-hover:text-ink">
+                    {label}
+                  </span>
+                  <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-ink transition-all duration-300 group-hover:w-full" />
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
 
         <div className="mt-12 pt-6 border-t border-hairline flex flex-col md:flex-row justify-between gap-4 text-body-md text-muted">
