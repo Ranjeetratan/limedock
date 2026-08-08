@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0C2838"/>
+      <stop offset="45%" stop-color="#0f3144"/>
+      <stop offset="100%" stop-color="#143a4f"/>
+    </linearGradient>
+    <linearGradient id="wash" x1="0.2" y1="0" x2="0.9" y2="1">
+      <stop offset="0%" stop-color="#C2A67C" stop-opacity="0.24"/>
+      <stop offset="55%" stop-color="#C2A67C" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#C2A67C" stop-opacity="0.14"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="70%" cy="30%" r="50%">
+      <stop offset="0%" stop-color="#C2A67C" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#0C2838" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grain" width="4" height="4" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="0.6" fill="#F4EFE6" fill-opacity="0.04"/>
+      <circle cx="3" cy="3" r="0.5" fill="#000" fill-opacity="0.05"/>
+    </pattern>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#sky)"/>
+  <rect width="1600" height="1000" fill="url(#glow)"/>
+  <rect width="1600" height="1000" fill="url(#wash)"/>
+  <rect width="1600" height="1000" fill="url(#grain)"/>
+  <path d="M0 720 C280 640 420 780 720 700 C980 640 1180 760 1600 680 L1600 1000 L0 1000 Z" fill="#091e2b" fill-opacity="0.55"/>
+  <path d="M0 820 C340 760 560 860 880 800 C1160 750 1360 840 1600 790 L1600 1000 L0 1000 Z" fill="#071820" fill-opacity="0.65"/>
+</svg>

@@ -1,0 +1,796 @@
+{
+  "id": "2aac99e19d6f",
+  "createdAt": "2026-08-08T18:50:45.286Z",
+  "expiresAt": "2026-08-22T18:50:54.390Z",
+  "company": {
+    "url": "https://thenancykennedyteam.com/",
+    "domain": "thenancykennedyteam.com",
+    "name": "The Nancy Kennedy Team",
+    "tagline": "Croton-on-Hudson Real Estate Experts \u00b7 Houlihan Lawrence",
+    "description": "Nancy Kennedy, Licensed Associate Broker \u2014 leads The Nancy Kennedy Team \u2014 at Houlihan Lawrence \u2014 serving Croton-on-Hudson, Cortlandt Manor, Yorktown, Ossining \u2014 Specialties: Residential & luxury homes; Hudson River / lake waterfront; Townhomes & condos; Mansions & multi-family.",
+    "logoUrl": "/prospects/hl-parent-logo.png",
+    "ogImageUrl": "https://media-production.lp-cdn.com/media/9ce669f0-d82d-4569-b15a-909375754a10",
+    "faviconUrl": "https://thenancykennedyteam.com/favicon.ico",
+    "themeColor": null,
+    "brandColors": [
+      "#0C2838",
+      "#C2A67C",
+      "#F4EFE6"
+    ],
+    "emails": [],
+    "phones": [
+      "(914) 271-5500"
+    ],
+    "address": "1 team in westchester and putnam",
+    "socialLinks": [
+      {
+        "platform": "Facebook",
+        "url": "https://www.facebook.com/thenancykennedyteam/"
+      },
+      {
+        "platform": "Instagram",
+        "url": "https://www.instagram.com/thenancykennedyteam/"
+      },
+      {
+        "platform": "LinkedIn",
+        "url": "https://www.linkedin.com/company/thenancykennedyteam/"
+      }
+    ],
+    "navLinks": [
+      "Properties",
+      "Services",
+      "Blog"
+    ],
+    "ctas": [
+      "Contact Us"
+    ],
+    "signals": [
+      "Instagram connected",
+      "Facebook presence",
+      "Listings / inventory on site",
+      "Home valuation / lead magnet present (needs CRM wiring)",
+      "Contact / inquiry path",
+      "Agent / brokerage positioning",
+      "Lead / CRM language on site",
+      "Luxury / waterfront positioning",
+      "USA luxury / residential brokerage",
+      "Team production model",
+      "Listing inventory on team or brokerage sites",
+      "Instagram / LinkedIn / Facebook present"
+    ],
+    "technologies": [
+      "Google Analytics",
+      "Cloudflare"
+    ],
+    "rawTitle": "Nancy Kennedy Team | Croton-on-Hudson Real Estate Experts",
+    "heroImageUrl": "/prospects/hl-hero.svg",
+    "portraitUrl": "/prospects/nancy-kennedy.jpg"
+  },
+  "market": "usa",
+  "recipientName": "Nancy Kennedy",
+  "headline": "Nancy \u2014 you don\u2019t have a lead problem",
+  "subhead": "The Nancy Kennedy Team already draws the hands. Valuations, DMs, and listing follow-through still depend on someone remembering. Here\u2019s where it breaks \u2014 and what we\u2019d build so it doesn\u2019t.",
+  "observations": [
+    "Nancy Kennedy \u2014 Licensed Associate Broker \u2014 The Nancy Kennedy Team at Houlihan Lawrence.",
+    "Looked at thenancykennedyteam.com.",
+    "thenancykennedyteam.com already does the hard part: traffic, valuation, listings, local trust.",
+    "Pain: after someone fills Home Valuation or Contact, follow-up still depends on a person noticing.",
+    "Pain: Instagram / LinkedIn / Facebook DMs live outside CRM.",
+    "Blog, LinkedIn, Instagram, Facebook \u2014 usually separate chores. They should fire from one listing event.",
+    "Towns that matter here: Croton-on-Hudson, Cortlandt Manor, Yorktown, Ossining, White Plains."
+  ],
+  "opportunities": [
+    {
+      "title": "Valuations go quiet",
+      "gap": "Someone asks what their home is worth. Then\u2026 silence, or a late thank-you.",
+      "fix": "Same-day scored CRM lead + a reply that starts the listing talk.",
+      "impact": "You stop paying for traffic that dies in the inbox."
+    },
+    {
+      "title": "DMs never become pipeline",
+      "gap": "Instagram, LinkedIn, Facebook questions sit in the app. CRM never hears.",
+      "fix": "Every DM into one queue \u2192 draft \u2192 assign \u2192 log.",
+      "impact": "People who already reached out stop leaking to whoever answers first."
+    },
+    {
+      "title": "Listing day is still a content scramble",
+      "gap": "Nancy goes live on MLS. Blog and social wait for \u201cwhen someone has time.\u201d",
+      "fix": "Listing event drafts the pack. Team approves once.",
+      "impact": "Marketing ships the same afternoon as the listing."
+    },
+    {
+      "title": "Too many doors, no front desk",
+      "gap": "Forms, WhatsApp, Maps, portals \u2014 each with its own habit.",
+      "fix": "One front desk. AI drafts. Humans approve.",
+      "impact": "Nothing depends on who happened to check which app."
+    },
+    {
+      "title": "AI search doesn\u2019t know you",
+      "gap": "Buyers ask ChatGPT / Gemini \u201cbest realtor in Croton-on-Hudson.\u201d Another name comes back.",
+      "fix": "Pages and proof those models can actually cite.",
+      "impact": "Your offline reputation shows up in the new default search."
+    }
+  ],
+  "advantages": [
+    {
+      "title": "Fix the leak, not the brand",
+      "body": "Nancy's team already wins on trust and listings. We wire what happens after someone raises a hand."
+    },
+    {
+      "title": "Start where it hurts",
+      "body": "Valuation follow-up, DMs, listing launches \u2014 pick one. Expand when it works."
+    },
+    {
+      "title": "The team can run it",
+      "body": "Anyone can approve. New hires inherit the playbook. You see every step."
+    },
+    {
+      "title": "Your machine or your chat apps",
+      "body": "Local Mac/PC app for privacy, or Slack / Claude / ChatGPT / Gemini. Same workflows."
+    }
+  ],
+  "pitchBeats": [
+    {
+      "id": "inbox",
+      "eyebrow": "Pain \u2192 fix",
+      "title": "Leads show up. Follow-up doesn\u2019t.",
+      "body": "The Nancy Kennedy Team gets hands raised on the site and social. The break is after that \u2014 who saw it, who replied, whether CRM knows. We put every inbound in one place and make the next step obvious.",
+      "bullets": [
+        "WhatsApp \u00b7 forms \u00b7 IG \u00b7 LinkedIn \u00b7 Maps",
+        "AI drafts \u00b7 CRM updates \u00b7 human approve",
+        "Gmail already has the draft waiting"
+      ]
+    },
+    {
+      "id": "delivery",
+      "eyebrow": "How you run it",
+      "title": "No new \u201chome\u201d you have to live in",
+      "body": "Local app on Mac/PC if privacy matters. Or run the same work from Slack, Claude, ChatGPT, or Gemini. We help wire the APIs either way.",
+      "bullets": [
+        "Local = your keys",
+        "Chat apps = where the team already is",
+        "You own the workflows"
+      ]
+    },
+    {
+      "id": "fifteen",
+      "eyebrow": "What \u201cfixed\u201d looks like",
+      "title": "Desk work collapses to a short review",
+      "body": "Once the pieces you chose are running, mornings are approve / assign / move on \u2014 not archaeology across five apps. Rest of the day is showings and people.",
+      "bullets": [
+        "~15 minutes when it\u2019s humming",
+        "Transparent queue",
+        "Extra activity optional"
+      ]
+    },
+    {
+      "id": "team",
+      "eyebrow": "Team reality",
+      "title": "It can\u2019t live in one person\u2019s head",
+      "body": "If Nancy or a coordinator leaves, the next person shouldn\u2019t inherit a mystery. Systems mean anyone can run and approve \u2014 and learn without tribal Slack history.",
+      "bullets": [
+        "Roles clear",
+        "Steps visible",
+        "Handoffs survive turnover"
+      ]
+    },
+    {
+      "id": "geo",
+      "eyebrow": "New search",
+      "title": "When AI picks a realtor in Croton-on-Hudson",
+      "body": "Models recommend what they can find and trust. We help your pages be that \u2014 without keyword sludge.",
+      "bullets": [
+        "Citable team pages",
+        "Local proof",
+        "Consistent Maps + site story"
+      ]
+    }
+  ],
+  "stackConnected": [
+    "thenancykennedyteam.com \u2014 Home Search / Contact / Valuation",
+    "Home Valuation lead form",
+    "Team blog / market updates",
+    "Google Maps / Business Profile",
+    "Instagram (@thenancykennedyteam)",
+    "LinkedIn",
+    "Facebook",
+    "WhatsApp",
+    "Email / Gmail / Outlook (drafts + scheduled follow-ups)",
+    "CRM (Follow Up Boss / kvCORE / HL stack)",
+    "Zillow / Realtor.com / portal leads",
+    "MLS / IDX listings",
+    "SMS",
+    "Phone / call notes",
+    "Google Calendar",
+    "Slack (optional ops channel)"
+  ],
+  "modules": [
+    {
+      "id": "listing-outreach",
+      "title": "New listing \u2192 old buyers",
+      "blurb": "You take a listing live. The system finds who already asked for something like it \u2014 and drafts the note.",
+      "bullets": [
+        "Matches price, beds, and town to your past inquiries",
+        "Writes a short, specific message per person",
+        "You approve or set auto-send rules",
+        "Everything logged (Fair Housing\u2013safe review)"
+      ],
+      "whyForThem": "Your database shouldn\u2019t sit idle while you pay for new leads."
+    },
+    {
+      "id": "enquiry-personalize",
+      "title": "Enquiry replies that answer the question",
+      "blurb": "Someone asks about a 3-bed in Croton under $1.2M. They should get a reply about that \u2014 not \u201cthanks, we\u2019ll be in touch.\u201d",
+      "bullets": [
+        "Pulls beds, budget, town, and listing link out of the form",
+        "Writes a first reply in your tone",
+        "Logs it in CRM and pings whoever should own it",
+        "Suggests a shortlist or a showing time"
+      ],
+      "whyForThem": "Buyers can tell when nobody read the form."
+    },
+    {
+      "id": "google-maps",
+      "title": "Google Maps replies",
+      "blurb": "Reviews and Maps messages get handled while you\u2019re at a showing \u2014 not three days later.",
+      "bullets": [
+        "Drafts review replies you can approve in one tap",
+        "Answers simple Q&A (areas, hours, how to book)",
+        "Turns \u201cmessage us\u201d into a CRM lead",
+        "Flags anything angry or high-intent for you"
+      ],
+      "whyForThem": "People Google you before they call. Empty replies look like you\u2019re closed."
+    },
+    {
+      "id": "listing-launch",
+      "title": "One listing \u2192 blog + LinkedIn + Instagram + X",
+      "blurb": "Listing goes live once. The system drafts the blog, LinkedIn post, Instagram carousel, and X thread \u2014 in your voice \u2014 ready to approve.",
+      "bullets": [
+        "Pulls facts from MLS / site (price, beds, town, hooks)",
+        "Blog draft for the team site or brokerage page",
+        "LinkedIn post + optional carousel",
+        "Instagram caption + slide outline + Stories beat",
+        "X / Twitter short post or thread",
+        "You approve once; Fair Housing check before anything public"
+      ],
+      "whyForThem": "Marketing shouldn\u2019t restart from a blank page every listing."
+    },
+    {
+      "id": "social-inbox",
+      "title": "Instagram, LinkedIn & X DMs \u2192 CRM",
+      "blurb": "Someone DMs \u201cis this still available?\u201d at 9pm. That becomes a scored lead, not a forgotten notification.",
+      "bullets": [
+        "Watches Instagram, LinkedIn, and X inboxes",
+        "Drafts replies that match how you talk",
+        "Qualifies budget / timing / town when it makes sense",
+        "Hot DMs ping you; everything else lands in CRM"
+      ],
+      "whyForThem": "Social is where buyers already hang out \u2014 treat it like a form."
+    },
+    {
+      "id": "unified-inbox",
+      "title": "One place for every inbound",
+      "blurb": "WhatsApp, enquiry form, Instagram DM, LinkedIn DM, Maps message \u2014 one inbox. AI reads it, updates CRM, drafts the reply. You approve.",
+      "bullets": [
+        "Every channel lands in the same queue",
+        "AI scores intent and routes to the right person",
+        "CRM updated without retyping",
+        "Anyone on the team can pick up and approve"
+      ],
+      "whyForThem": "Stop hunting six apps to find one lead."
+    },
+    {
+      "id": "fifteen-min-ops",
+      "title": "The 15-minute operating day",
+      "blurb": "If the systems are running, the desk work collapses into one short review \u2014 then you\u2019re free for showings, listing appointments, and the human work that actually closes.",
+      "bullets": [
+        "One morning queue: what\u2019s hot, what\u2019s stuck, what to approve",
+        "Everything else already drafted or routed overnight",
+        "You stay in control \u2014 approve, override, or hand off",
+        "Transparent: every step visible in tools you own"
+      ],
+      "whyForThem": "The goal isn\u2019t more AI. It\u2019s getting your day back."
+    },
+    {
+      "id": "llm-geo",
+      "title": "Show up when someone asks ChatGPT / Claude / Gemini",
+      "blurb": "Buyers don\u2019t only Google anymore. They ask AI: \u201cWho\u2019s the best realtor in Croton?\u201d or \u201cBest Westchester team for waterfront?\u201d We help your pages and proof be what those models cite.",
+      "bullets": [
+        "Clear, citable pages about your team, towns, and listings",
+        "Structured facts models can trust (not fluff SEO)",
+        "Consistent presence across site, Maps, and public profiles",
+        "Ongoing: when the market moves, the public story updates with it"
+      ],
+      "whyForThem": "If AI recommends the next agent, that agent shouldn\u2019t be someone else."
+    },
+    {
+      "id": "local-or-cli",
+      "title": "Run it your way \u2014 local app or from Slack / Claude / ChatGPT",
+      "blurb": "Privacy first: a local app on your Mac or PC that you download and run. Or a CLI / agent layer so the team manages workflows from Slack, Claude, Codex, ChatGPT, or Gemini. We help wire the APIs either way.",
+      "bullets": [
+        "Local desktop app \u2014 data stays on your machine; you hold the keys",
+        "We help integrate Gmail, CRM, WhatsApp, Maps, calendars",
+        "Or operate from Slack / Claude / Codex / ChatGPT / Gemini",
+        "Same workflows \u2014 pick the surface your team actually opens"
+      ],
+      "whyForThem": "You shouldn\u2019t have to live inside another SaaS tab."
+    },
+    {
+      "id": "lead-magnet",
+      "title": "Home valuation \u2192 real follow-up",
+      "blurb": "You already collect home-value requests. We\u2019ll make sure each one becomes a scored lead and a same-day follow-up \u2014 not a quiet inbox.",
+      "bullets": [
+        "Valuation / guide request hits CRM the same minute",
+        "Hot / warm / cold score on the way in",
+        "Same-day follow-up sequence starts",
+        "You see who asked for a value and never got a call"
+      ],
+      "whyForThem": "Asking for a value is asking to talk about selling."
+    },
+    {
+      "id": "blog-engine",
+      "title": "Market blogs that don\u2019t sound like robots",
+      "blurb": "Monthly Westchester / Putnam update, neighborhood notes, sold stories \u2014 drafted from real numbers, edited so it still sounds like your team.",
+      "bullets": [
+        "Pulls comps / market stats you already track",
+        "Draft \u2192 human polish pass (no filler SEO sludge)",
+        "Internal links to live listings and valuation",
+        "Ships as blog + LinkedIn + email snippet in one go"
+      ],
+      "whyForThem": "Consistent publishing without a content agency on retainer."
+    },
+    {
+      "id": "call-intel",
+      "title": "Calls that get smarter",
+      "blurb": "Before the call: brief on who they are. After: what went well, what to try next time, how to convert more \u2014 without a manager sitting in.",
+      "bullets": [
+        "Pre-call briefing from CRM + past messages",
+        "Optional recording / notes capture (with consent rules)",
+        "Post-call summary into CRM",
+        "Plain-English coaching: missed asks, next step, tone"
+      ],
+      "whyForThem": "Every conversation teaches the next one."
+    }
+  ],
+  "workflowSteps": [
+    "Map where hands are raised \u2014 forms, WhatsApp, DMs, Maps",
+    "Close the first leak (usually valuation or DMs)",
+    "Drafts land in Gmail / CRM; humans approve",
+    "Expand only when that slice is boringly reliable"
+  ],
+  "workflowCharts": [
+    {
+      "id": "unified-inbox-flow",
+      "title": "Everything inbound \u2192 one queue",
+      "subtitle": "WhatsApp \u00b7 every form \u00b7 Instagram \u00b7 LinkedIn \u00b7 Maps. AI processes. You approve.",
+      "nodes": [
+        {
+          "id": "in",
+          "label": "Any channel",
+          "detail": "WA \u00b7 forms \u00b7 DM \u00b7 Maps"
+        },
+        {
+          "id": "ai",
+          "label": "AI reads",
+          "detail": "Intent \u00b7 score"
+        },
+        {
+          "id": "crm",
+          "label": "CRM update",
+          "detail": "Owner assigned"
+        },
+        {
+          "id": "draft",
+          "label": "Draft reply",
+          "detail": "Sounds like Nancy"
+        },
+        {
+          "id": "gmail",
+          "label": "Gmail drafts",
+          "detail": "Follow-ups queued"
+        },
+        {
+          "id": "ok",
+          "label": "Team approves",
+          "detail": "App / Slack / Claude"
+        },
+        {
+          "id": "book",
+          "label": "Schedule call",
+          "detail": "Calendar"
+        },
+        {
+          "id": "coach",
+          "label": "After call",
+          "detail": "Notes + tips"
+        }
+      ],
+      "edges": [
+        {
+          "from": "in",
+          "to": "ai"
+        },
+        {
+          "from": "ai",
+          "to": "crm"
+        },
+        {
+          "from": "crm",
+          "to": "draft"
+        },
+        {
+          "from": "draft",
+          "to": "gmail"
+        },
+        {
+          "from": "gmail",
+          "to": "ok"
+        },
+        {
+          "from": "ok",
+          "to": "book"
+        },
+        {
+          "from": "book",
+          "to": "coach"
+        }
+      ]
+    },
+    {
+      "id": "delivery-flow",
+      "title": "How the team runs it",
+      "subtitle": "Local Mac/PC app for privacy \u2014 or Slack / Claude / ChatGPT / Gemini.",
+      "nodes": [
+        {
+          "id": "sys",
+          "label": "Your systems",
+          "detail": "Owned workflows"
+        },
+        {
+          "id": "api",
+          "label": "APIs wired",
+          "detail": "Gmail \u00b7 CRM \u00b7 WA"
+        },
+        {
+          "id": "local",
+          "label": "Local app",
+          "detail": "Mac / PC download"
+        },
+        {
+          "id": "cli",
+          "label": "Or Slack / AI apps",
+          "detail": "Claude \u00b7 GPT \u00b7 Gemini"
+        },
+        {
+          "id": "team",
+          "label": "Anyone approves",
+          "detail": "Transparent"
+        }
+      ],
+      "edges": [
+        {
+          "from": "sys",
+          "to": "api"
+        },
+        {
+          "from": "api",
+          "to": "local"
+        },
+        {
+          "from": "api",
+          "to": "cli"
+        },
+        {
+          "from": "local",
+          "to": "team"
+        },
+        {
+          "from": "cli",
+          "to": "team"
+        }
+      ]
+    },
+    {
+      "id": "enquiry-personalize-flow",
+      "title": "When someone fills the enquiry form",
+      "subtitle": "Answer what they asked. Then log it.",
+      "nodes": [
+        {
+          "id": "form",
+          "label": "Form submitted",
+          "detail": "Their question"
+        },
+        {
+          "id": "read",
+          "label": "Read it",
+          "detail": "Town \u00b7 beds \u00b7 budget"
+        },
+        {
+          "id": "draft",
+          "label": "Draft reply",
+          "detail": "Sounds like Nancy"
+        },
+        {
+          "id": "crm",
+          "label": "CRM + score",
+          "detail": "Who owns it"
+        },
+        {
+          "id": "alert",
+          "label": "Ping the team",
+          "detail": "Text / Slack"
+        },
+        {
+          "id": "send",
+          "label": "Send",
+          "detail": "Or approve first"
+        },
+        {
+          "id": "next",
+          "label": "Offer next step",
+          "detail": "Shortlist / showing"
+        }
+      ],
+      "edges": [
+        {
+          "from": "form",
+          "to": "read"
+        },
+        {
+          "from": "read",
+          "to": "draft"
+        },
+        {
+          "from": "draft",
+          "to": "crm"
+        },
+        {
+          "from": "crm",
+          "to": "alert"
+        },
+        {
+          "from": "alert",
+          "to": "send"
+        },
+        {
+          "from": "send",
+          "to": "next"
+        }
+      ]
+    },
+    {
+      "id": "listing-launch-flow",
+      "title": "Listing goes live \u2192 every channel",
+      "subtitle": "Blog, LinkedIn, Instagram, X \u2014 drafted once, approved once.",
+      "nodes": [
+        {
+          "id": "live",
+          "label": "Listing live",
+          "detail": "MLS / site"
+        },
+        {
+          "id": "facts",
+          "label": "Pull facts",
+          "detail": "Price \u00b7 beds \u00b7 hook"
+        },
+        {
+          "id": "blog",
+          "label": "Blog draft",
+          "detail": "Team voice"
+        },
+        {
+          "id": "li",
+          "label": "LinkedIn",
+          "detail": "Post / carousel"
+        },
+        {
+          "id": "ig",
+          "label": "Instagram",
+          "detail": "Caption + slides"
+        },
+        {
+          "id": "x",
+          "label": "X / Twitter",
+          "detail": "Short / thread"
+        },
+        {
+          "id": "ok",
+          "label": "Nancy approves",
+          "detail": "Fair Housing check"
+        },
+        {
+          "id": "ship",
+          "label": "Publish",
+          "detail": "All channels"
+        }
+      ],
+      "edges": [
+        {
+          "from": "live",
+          "to": "facts"
+        },
+        {
+          "from": "facts",
+          "to": "blog"
+        },
+        {
+          "from": "facts",
+          "to": "li"
+        },
+        {
+          "from": "facts",
+          "to": "ig"
+        },
+        {
+          "from": "facts",
+          "to": "x"
+        },
+        {
+          "from": "blog",
+          "to": "ok"
+        },
+        {
+          "from": "li",
+          "to": "ok"
+        },
+        {
+          "from": "ig",
+          "to": "ok"
+        },
+        {
+          "from": "x",
+          "to": "ok"
+        },
+        {
+          "from": "ok",
+          "to": "ship"
+        }
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "name": "Lead Magnets",
+      "slug": "lead-magnets",
+      "summary": "Lead Magnets skill from Corey Haines\u2019 Marketing Skills collection.",
+      "type": "skill"
+    },
+    {
+      "name": "Property Listing",
+      "slug": "property-listing",
+      "summary": "Writes Fair Housing\u2013aware MLS/Zillow listing copy: hook headline, lifestyle description, highlights, and neighborhood notes from property facts.",
+      "type": "skill"
+    },
+    {
+      "name": "Cold Email Writing",
+      "slug": "cold-email",
+      "summary": "Cold Email Writing skill from Corey Haines\u2019 Marketing Skills collection.",
+      "type": "skill"
+    },
+    {
+      "name": "Email Sequences",
+      "slug": "emails",
+      "summary": "Marketing Skills sub-skill for email sequences, drips, and lifecycle flows\u00e2\u0080\u0094named among the collection\u00e2\u0080\u0099s highlighted capabilities.",
+      "type": "skill"
+    },
+    {
+      "name": "Copywriting",
+      "slug": "copywriting",
+      "summary": "Copywriting skill from Corey Haines\u2019 Marketing Skills collection.",
+      "type": "skill"
+    },
+    {
+      "name": "Content Strategy",
+      "slug": "content-strategy",
+      "summary": "Content Strategy skill from Corey Haines\u2019 Marketing Skills collection.",
+      "type": "skill"
+    },
+    {
+      "name": "Social Content",
+      "slug": "social",
+      "summary": "When the user wants help creating, scheduling, or optimizing social media content for LinkedIn, Twitter/X, Instagram, TikTok, Facebook, or other platforms, or wants to do social listening and engagement triage.",
+      "type": "skill"
+    },
+    {
+      "name": "Branded Carousel Generator",
+      "slug": "branded-carousel-generator",
+      "summary": "Shapes content into publishable branded social carousels\u00e2\u0080\u0094not generic template splits\u00e2\u0080\u0094so posts can recur without redesigning from scratch.",
+      "type": "skill"
+    }
+  ],
+  "agents": [
+    {
+      "name": "Lead Qualifier Agent",
+      "slug": "lead-qualifier-agent",
+      "summary": "Screens and scores inbound real estate leads on budget, timeline, and buying intent \u2014 then drafts a personalized first response for speed-to-lead.",
+      "type": "agent"
+    },
+    {
+      "name": "Lead Research Assistant",
+      "slug": "lead-research-assistant",
+      "summary": "Identifies and qualifies leads by analyzing your product, finding target companies, and suggesting outreach strategies.",
+      "type": "skill"
+    },
+    {
+      "name": "Contract Terms Analyzer",
+      "slug": "contract-terms-analyzer",
+      "summary": "Reviews purchase agreements and leases for key terms, dates, obligations, missing clauses, and negotiation flags \u2014 decision support, not legal advice.",
+      "type": "skill"
+    },
+    {
+      "name": "Disclosure Review",
+      "slug": "disclosure-review",
+      "summary": "Gap-analyzes seller disclosures, inspections, and title docs against your state\u2019s required disclosure checklist \u2014 flags for licensed follow-up.",
+      "type": "skill"
+    }
+  ],
+  "systems": [
+    {
+      "name": "Real Estate Listing & Lead Engine",
+      "slug": "real-estate-listing-lead-engine",
+      "summary": "End-to-end agent stack: qualify leads \u2192 listing copy \u2192 Fair Housing gate \u2192 CMA/consult prep \u2192 follow-up \u2192 optional CRM/IDX wiring.",
+      "type": "system"
+    },
+    {
+      "name": "Sales Outreach System",
+      "slug": "sales-outreach-system",
+      "summary": "Research \u2192 personalization \u2192 cold email/sequences \u2192 ads assist \u2192 RevOps feedback loop.",
+      "type": "system"
+    },
+    {
+      "name": "Blogging / Content Engine",
+      "slug": "blogging-content-engine",
+      "summary": "End-to-end blog and content system: strategy \u2192 draft \u2192 anti-slop edit \u2192 SEO/GEO \u2192 distribution carousels.",
+      "type": "system"
+    },
+    {
+      "name": "Growth Experimentation System",
+      "slug": "growth-experimentation-system",
+      "summary": "Hypothesis \u2192 ICE backlog \u2192 flag/experiment \u2192 analyze \u2192 compound learnings \u2014 wired for GrowthBook + marketing experiment skills.",
+      "type": "system"
+    }
+  ],
+  "morningBrief": {
+    "activeLeads": 162,
+    "hotLeads": 28,
+    "siteVisitsToday": 9,
+    "dealsLikelyClose": 5,
+    "pipelineLabel": "Example morning after the leaks are closed",
+    "attention": [
+      {
+        "level": "red",
+        "text": "3 valuation asks with no human reply yet"
+      },
+      {
+        "level": "orange",
+        "text": "2 Instagram DMs asking about Croton inventory"
+      },
+      {
+        "level": "green",
+        "text": "Listing pack ready to approve for today\u2019s new exclusive"
+      }
+    ],
+    "recommendedAction": "Clear the three valuations first \u2014 those are listing conversations already in progress."
+  },
+  "nextSteps": [
+    "Next step: 30 minutes",
+    "We walk through Nancy's real day on The Nancy Kennedy Team \u2014 where leads enter, where they stall, what you wish just worked. No deck marathon. Then we agree what to fix first.",
+    "A short build plan for that first pain (not a 40-item wishlist)",
+    "How you\u2019d run it \u2014 local app or Slack / Claude / ChatGPT",
+    "Timeline and pricing for that scope",
+    "You choose. You keep what we ship.",
+    "This link expires in 24 hours."
+  ],
+  "callPlan": {
+    "ctaLabel": "Book 30 minutes",
+    "nextAction": "Next step: 30 minutes",
+    "callGoal": "We walk through Nancy's real day on The Nancy Kennedy Team \u2014 where leads enter, where they stall, what you wish just worked. No deck marathon. Then we agree what to fix first.",
+    "afterCall": [
+      "A short build plan for that first pain (not a 40-item wishlist)",
+      "How you\u2019d run it \u2014 local app or Slack / Claude / ChatGPT",
+      "Timeline and pricing for that scope",
+      "You choose. You keep what we ship."
+    ]
+  },
+  "openingMessage": "Hi Nancy \u2014\n\nThe Nancy Kennedy Team doesn\u2019t have a demand problem. People already find you on thenancykennedyteam.com.\n\nThe pain is quieter: valuation requests that cool off, DMs that never hit CRM, listing launches that wait for \u201csomeone to write the posts,\u201d and a day spent stitching apps together.\n\nWe\u2019re LimeDock. We build owned workflows for that \u2014 not another CRM. On a 30-minute call we learn how your team actually works, pick the first leak to close, and take it from there.\n\nCould start with valuation follow-up. Or one inbox for forms + WhatsApp + social. Or listing \u2192 content pack. Local Mac/PC app if you want privacy, or Slack / Claude / ChatGPT if that\u2019s where people live.\n\nWhen someone asks AI for the best realtor in Croton-on-Hudson, we also care that your name is what comes back.\n\nThis page is a sketch. After the call: what we\u2019d build, timeline, pricing.\n\n\u2014 LimeDock"
+}

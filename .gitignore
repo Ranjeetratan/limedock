@@ -48,3 +48,10 @@ yarn-error.log*
 next-env.d.ts
 .tmp-marketingskills/
 .firecrawl/
+
+# Private research KB (not for public/site)
+.agents/research/
+!.agents/research/.gitkeep
+
+# Ephemeral prospect presentations (24h local store)
+.data/

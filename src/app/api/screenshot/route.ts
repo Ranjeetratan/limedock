@@ -11,6 +11,10 @@ import type { NextRequest } from "next/server";
  * PNG directly. Either way the response is an image/png with a long
  * Cache-Control, so Vercel's edge caches the result and we only hit
  * the upstream service once every 24h per URL.
+ *
+ * Domains behind aggressive Cloudflare bot blocks are refused — mshots
+ * would otherwise capture the "Sorry, you have been blocked" page and
+ * we'd serve that as the hero image.
  */
 
 // Cached on Vercel's edge via the Cache-Control response header; the
@@ -19,11 +23,28 @@ export const runtime = "nodejs";
 
 const ALLOWED_PROTOCOLS = new Set(["http:", "https:"]);
 
+/** Hosts where screenshot bots only get Cloudflare challenge / block pages */
+const BOT_BLOCKED_HOSTS = [
+  /(^|\.)houlihanlawrence\.com$/i,
+  /(^|\.)thenancykennedyteam\.com$/i,
+  /(^|\.)reliancenetwork\.com$/i,
+  /(^|\.)cloudflare\.com$/i,
+];
+
 function isValidUrl(input: string | null): input is string {
   if (!input) return false;
   try {
     const u = new URL(input);
     return ALLOWED_PROTOCOLS.has(u.protocol);
+  } catch {
+    return false;
+  }
+}
+
+function isBotBlockedHost(input: string): boolean {
+  try {
+    const host = new URL(input).hostname.replace(/^www\./, "");
+    return BOT_BLOCKED_HOSTS.some((re) => re.test(host) || re.test(`www.${host}`));
   } catch {
     return false;
   }
@@ -74,6 +95,15 @@ export async function GET(req: NextRequest) {
   const target = req.nextUrl.searchParams.get("url");
   if (!isValidUrl(target)) {
     return new Response("Invalid url", { status: 400 });
+  }
+  if (isBotBlockedHost(target)) {
+    return new Response("Screenshot unavailable for bot-protected sites", {
+      status: 422,
+      headers: {
+        "Cache-Control": "public, max-age=3600",
+        "X-Screenshot-Skip": "bot-protected",
+      },
+    });
   }
 
   let bytes = await fromMicrolink(target);
