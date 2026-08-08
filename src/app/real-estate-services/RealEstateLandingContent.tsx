@@ -135,18 +135,18 @@ export default function RealEstateLandingContent() {
         >
           <span className="inline-flex items-center gap-2 text-caption text-white/60 tracking-[0.06em] uppercase mb-6">
             <span className="h-px w-8 bg-white/40" />
-            Real estate brokerage automation · Lead response · Listing follow-up
+            Workflow automation for real estate brokerages
           </span>
 
           <h1
             className="text-white max-w-3xl leading-[1.1] tracking-tight"
             style={{ fontSize: "clamp(2.4rem, 5.5vw, 4.2rem)", fontWeight: 600 }}
           >
-            Your brokerage lost listings, Zillow leads, and closings to slow follow-up this month.
+            We build the automation layer your real estate brokerage is missing.
           </h1>
 
-          <p className="text-white/70 mt-6 text-lg max-w-xl leading-[1.55]">
-            LimeDock builds owned automation systems for real estate teams — portal lead routing, post-showing feedback loops, MLS-triggered listing nurture, and agent coordination digests. Wired into your Slack, CRM, and listing tools. You own the code.
+          <p className="text-white/70 mt-6 text-lg max-w-xl leading-[1.65]">
+            LimeDock designs and deploys custom, owned workflow systems for real estate teams — portal lead routing, showing feedback loops, MLS-triggered listing nurture, agent coordination digests, and post-close review capture. Everything wired into your Slack, CRM, and listing tools. You own the code, forever.
           </p>
 
           <div className="mt-10 flex flex-wrap items-center gap-4">
@@ -156,7 +156,7 @@ export default function RealEstateLandingContent() {
               rel="noopener noreferrer"
               className="btn-primary"
             >
-              Fix my lead response
+              Book a workflow call
             </a>
             <Link
               href="/"
