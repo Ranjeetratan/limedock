@@ -1,146 +1,172 @@
 # Real estate support / contact form outreach
 
-Paste-ready copy for LimeDock founder outreach to real estate platforms and brokerages via website support or contact forms.
+Paste-ready copy for LimeDock founder outreach to real estate platforms and brokerages via website support or contact forms. Optimized for **replies** — pain first, cost clear, one easy ask.
 
 **Links**
 - Real estate page: https://www.limedock.com/real-estate
 - Book demo: https://cal.com/limedock-admin-nb05ck/30min
 
-**Product reminder:** LimeDock builds *owned* workflow automations (marketing / sales / ops) in Slack, CRM, and their stack — not another SaaS they rent forever. Focus on LimeDock; mention Poised HQ / X Lead Forge / HireSchema only if a one-liner genuinely helps.
+**Product reminder:** LimeDock builds *owned* workflow automations in Slack, CRM, and their stack — transparent, one place — not “AI magic” and not another SaaS they rent forever. Focus on LimeDock.
+
+---
+
+## Why this gets replies
+
+- Names a pain they already feel (portal leads dying, overnight silence, CRM that agents skip) before mentioning LimeDock.
+- Makes the cost obvious in one line (lost deals, burned ad spend, partner hours) so “ignore” feels expensive.
+- Ends with a one-word or one-click yes (reply yes / skim the page / book 15) instead of a feature dump or hard pitch.
+
+---
+
+## Top 6 pain points (ranked by reply likelihood)
+
+1. **Portal speed-to-lead** — Zillow / Realtor / portal lead sits in a shared inbox while a competitor texts first.
+2. **Overnight lead death** — after-hours / weekend inquiries go cold before anyone assigns them.
+3. **Agents ignore the CRM** — follow-up lives in texts and memory; CRM is where leads go to die.
+4. **Inquiry friction / leads leaking** — site path to “talk to an agent” is slow or unclear; paid traffic never reaches a human.
+5. **Showing feedback black hole** — no-shows and post-showing notes vanish in SMS; sellers stay in the dark.
+6. **Listing follow-up chaos + blind owners** — price changes / open-house interest stall; managers get no Slack digest until the weekly scramble.
 
 ---
 
 ## Smart version of the plan (don’t just blast forms)
 
 - **Qualify first.** Prioritize brokerages / platforms with clear lead intake (site forms, portals, agent teams) — skip pure MLS directory shells and sites with “no vendor pitches” in the form.
-- **Personalize one line.** Notice something real on their site or ops (mobile CTA, lead form friction, slow reply culture) before the pitch. Generic blasts get blocked; one specific line gets read.
-- **Respect the channel.** Support forms are for customers. Say you’re reaching out about a partnership / ops idea, not pretend you have a ticket. Prefer “Contact / Partnerships / Sales” when those exist.
-- **One concrete offer.** Don’t dump every service. Offer one improvement (speed-to-lead, follow-up loop, or a clearer path from inquiry → agent).
-- **Soft CTA, low volume.** Link the real-estate page; optional demo. Cap daily sends, rotate variants, and stop if they ignore or ask you not to use the form.
+- **Personalize one line.** Use a sniper below tied to a pain you can see. Generic blasts get blocked.
+- **Respect the channel.** Say you’re not filing a support ticket. Prefer Contact / Partnerships / Sales when those exist.
+- **One pain, one offer.** Don’t list every workflow. Hit one cost, one fix.
+- **Soft CTA, low volume.** Cap daily sends, rotate variants, stop if they ignore or ask you not to use the form.
 
 ---
 
 ## 1. Positioning line
 
-LimeDock builds owned automations for real estate teams — lead response, listing follow-up, and agent coordination that live in Slack and your CRM, so you stop renting another tool forever.
+LimeDock installs owned automations for real estate teams — lead response, listing follow-up, showing feedback — in Slack and your CRM. Transparent workflows you own, not another rented bot seat.
 
 ---
 
-## 2. Short support-form variants
+## 2. Ultra-short form variants (pain-first, ≤ ~70 words)
 
-Support fields are often tiny. Keep under ~400 characters where possible. Swap in a personalization sniper at the top when you have one.
+Support fields are tiny. Swap in a personalization sniper at the top when you have one.
 
-### A — Design / UX + lead follow-up
+### ★ DEFAULT — Portal speed-to-lead (use this first)
 
-Hi — I spent a few minutes on your site. The path from inquiry to a real human could be tighter (especially on mobile), and a lot of brokerages lose leads in that gap.
+Hi — not a support ticket. For whoever owns lead ops:
 
-We help real estate teams clean that up: clearer lead capture + owned automations that route to Slack/CRM and fire a fast first touch — without another rented SaaS forever.
+When Zillow / portal leads sit in a shared inbox, the first brokerage that texts usually wins — the rest of that ad spend is gone. LimeDock wires owned route → Slack alert → first-touch in your CRM.
 
-If useful: https://www.limedock.com/real-estate  
-Happy to map one workflow: https://cal.com/limedock-admin-nb05ck/30min
+If lead follow-up is still manual, reply **yes** and I’ll send 3 workflows we install — or https://www.limedock.com/real-estate · book https://cal.com/limedock-admin-nb05ck/30min
 
 — [Name], LimeDock
 
-### B — Ops / one place / AI automations / save time
+### A — Overnight lead death
 
-Hi — quick note (not a support ticket): many brokerages still chase leads, listing updates, and showing feedback across inboxes, texts, and CRM.
+Hi — not a ticket. For growth/ops:
 
-LimeDock wires those loops into one place agents already work — Slack + CRM — with transparent, owned automations (not a black-box bot seat). Goal: less admin, faster follow-up.
+Leads that hit after hours often die before anyone assigns them — lost deals on traffic you already paid for. We install owned after-hours routing + Slack alerts + first-touch in your CRM (transparent, not a black-box bot).
 
-More here: https://www.limedock.com/real-estate  
-Optional 30-min map: https://cal.com/limedock-admin-nb05ck/30min
-
-— [Name], LimeDock
-
-### C — Growth / speed-to-lead / transparent owned automations
-
-Hi — portal and site leads go cold fast when assignment and first touch are manual.
-
-We build owned speed-to-lead and nurture workflows for real estate teams: route → alert the right agent in Slack → first reply ready, with CRM context. Transparent automations your team owns.
-
-Details: https://www.limedock.com/real-estate  
-Book if you want to sketch one loop: https://cal.com/limedock-admin-nb05ck/30min
+Worth a 15-min look? Reply **yes**, or https://www.limedock.com/real-estate · https://cal.com/limedock-admin-nb05ck/30min
 
 — [Name], LimeDock
 
----
+### B — Agents ignore CRM / follow-up chaos
 
-## 3. Longer contact-form version (~80–120 words)
+Hi — not a support request.
 
-Hi — I’m [Name] from LimeDock. This isn’t a support request; I wanted to reach whoever owns growth or ops.
+If follow-up still lives in texts and “who remembered,” partners burn hours on stale leads while CRM sits quiet. LimeDock puts owned lead + listing loops in Slack + CRM — one place, workflows you own.
 
-I looked at how [Company] takes inbound leads. A lot of brokerages lose deals in the same places: slow first response, listing follow-up that depends on memory, and showing feedback stuck in texts. We build owned automations that live in Slack and your CRM — lead routing, first-touch, nurture, and agent digests — so the team isn’t babysitting another SaaS forever.
+If that’s still manual, reply **yes** and I’ll send 3 workflows — or https://www.limedock.com/real-estate · book https://cal.com/limedock-admin-nb05ck/30min
 
-If it’s useful, here’s how we work with real estate teams: https://www.limedock.com/real-estate  
-If you want, we can map one workflow on a short call: https://cal.com/limedock-admin-nb05ck/30min
+— [Name], LimeDock
 
-Either way, no pressure — happy to send a one-pager if email is better.
+### C — Inquiry friction / leads leaking
 
----
+Hi — not a ticket. Quick ops note:
 
-## 4. Subject / topic field options
+If the path from site inquiry → agent has friction, paid traffic leaks before a human replies — wasted spend. We tighten that with owned capture → route → Slack/CRM first touch.
 
-Use boring, internal-looking topics. Avoid “partnership opportunity!!!” energy.
+Worth a look? Reply **yes**, or https://www.limedock.com/real-estate · https://cal.com/limedock-admin-nb05ck/30min
 
-1. Real estate workflow idea
-2. Lead follow-up / ops
-3. Speed-to-lead question
-4. Partnership / vendor intro (honest)
-5. Site + lead routing note
-6. Not a support ticket — ops idea
-7. Quick note for your growth/ops lead
+— [Name], LimeDock
 
 ---
 
-## 5. Personalization snipers (fill-in-the-blank openers)
+## 3. Longer contact-form version (~100 words)
 
-Drop one at the top of A/B/C. Keep it factual and polite — never insult.
+Hi — I’m [Name] from LimeDock. Not a support request — looking for whoever owns growth or ops at [Company].
 
-1. **Slow / unclear lead path:** “On [page], the inquiry path takes a few steps before someone can actually reach an agent — that usually costs speed-to-lead.”
-2. **Cluttered nav / competing CTAs:** “Your nav has a lot of competing paths; the ‘contact an agent’ action isn’t the clearest thing on the page.”
-3. **Weak mobile CTA:** “On mobile, I didn’t see a clear primary CTA to inquire / book — leads often bounce there.”
-4. **Portal leads dying:** “If Zillow / portal leads are still landing in a shared inbox, that’s usually where response time collapses.”
-5. **No after-hours / weekend loop:** “If leads come in after hours with no auto-route + Slack alert, you’re probably losing the first-touch race overnight.”
+Most brokerages I talk to lose the same deals: portal leads sitting while a competitor texts first, overnight inquiries going cold, and showing/listing follow-up stuck in texts. That’s wasted portal spend and partner time on leads that already paid to arrive.
+
+We install owned automations in Slack and your CRM — route, alert, first touch, listing nurture, showing feedback digests — transparent workflows your team owns, not another rented tool.
+
+If lead follow-up is still manual, reply **yes** and I’ll send 3 workflows we install. Or skim https://www.limedock.com/real-estate — or book 15: https://cal.com/limedock-admin-nb05ck/30min
 
 ---
 
-## 6. CTA (always soft)
+## 4. Subject / topic field options (name the pain)
 
-**Default pair (use both when space allows):**
-- See how we work with real estate teams: https://www.limedock.com/real-estate
-- Optional: map one workflow (30 min): https://cal.com/limedock-admin-nb05ck/30min
+Short, internal-looking. Pain in the subject so the right person opens it.
 
-**Ultra-short CTA (character-limited forms):**
-Worth a look? https://www.limedock.com/real-estate
+1. Portal leads sitting overnight
+2. Speed-to-lead / shared inbox
+3. After-hours lead response
+4. Showing feedback black hole
+5. Listing follow-up stalling
+6. Agents skipping CRM follow-up
+7. Not a ticket — lead ops note
 
-**Soft closes (pick one):**
-- Happy to map one loop if useful.
-- No pressure — page above is enough to skim.
-- If this isn’t your lane, feel free to point me to the right person.
+---
+
+## 5. Personalization snipers (tied to pain)
+
+Drop one at the top of Default / A–D. Factual — frame as inquiry friction / leads leaking, never “your site looks bad.”
+
+1. **Portal / shared inbox:** “If Zillow / Realtor leads still land in a shared inbox, that’s usually where the first-text race is lost.”
+2. **Overnight silence:** “If after-hours inquiries sit until morning with no Slack route, you’re giving the night to whoever replies first.”
+3. **Inquiry friction:** “On [page], the path from inquire → agent takes a few extra steps — that’s where paid traffic often leaks before a human replies.”
+4. **CRM ignore:** “If agents still chase follow-up in texts while CRM sits quiet, response times usually collapse on busy listing weeks.”
+5. **Showing / listing stall:** “If post-showing notes or open-house interest still live in SMS threads, sellers and listing agents stay blind until interest cools.”
+
+---
+
+## 6. CTA ladder (pick what the form allows)
+
+**Reply-bait (email field or when this is used as email):**
+- If lead follow-up is still manual, reply **yes** and I’ll send 3 workflows we install.
+- Worth a 15-min look? Reply **yes**.
+
+**Click the page (forms that won’t email you back):**
+- https://www.limedock.com/real-estate
+
+**Book:**
+- https://cal.com/limedock-admin-nb05ck/30min
+
+**Ultra-short (character-limited):**
+Lead follow-up still manual? Reply yes — or https://www.limedock.com/real-estate
 
 ---
 
 ## 7. Do / Don’t
 
-- **Do** offer one concrete improvement (e.g. portal lead → Slack + CRM first touch).
+- **Do** open on one concrete pain + one cost sentence.
 - **Do** say clearly you’re not a customer / not filing a support ticket.
-- **Do** personalize with one real observation from their site or lead flow.
-- **Don’t** claim you’re a client, “partner,” or that you “love working with them” when you’ve never spoken.
-- **Don’t** trash their design (“your site looks amateur”); frame gaps as opportunity and speed-to-lead, not aesthetics.
+- **Do** personalize with one real observation tied to a pain above.
+- **Don’t** lead with “AI” or a feature list.
+- **Don’t** trash their design; say inquiry friction / leads leaking.
+- **Don’t** pretend you’re a client or existing partner.
 
 ---
 
-## Best default (paste-ready)
+## ★ Best default (paste-ready)
 
 Use when you only have 60 seconds and a generic contact box. Add a sniper line if you can.
 
 ```
-Hi — not a support ticket. Quick note for whoever owns growth/ops.
+Hi — not a support ticket. For whoever owns lead ops:
 
-A lot of brokerages lose deals between “new lead” and “agent actually replies” — especially portal + site inquiries. LimeDock builds owned automations in Slack/CRM for that loop: route, alert, first touch, follow-up — transparent workflows your team owns, not another rented tool.
+When Zillow / portal leads sit in a shared inbox, the first brokerage that texts usually wins — the rest of that ad spend is gone. LimeDock wires owned route → Slack alert → first-touch in your CRM.
 
-Real estate overview: https://www.limedock.com/real-estate
-Optional 30-min map: https://cal.com/limedock-admin-nb05ck/30min
+If lead follow-up is still manual, reply yes and I’ll send 3 workflows we install — or https://www.limedock.com/real-estate · book https://cal.com/limedock-admin-nb05ck/30min
 
 — [Name], LimeDock
 ```
