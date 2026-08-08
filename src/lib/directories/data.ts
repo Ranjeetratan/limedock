@@ -1,6 +1,7 @@
 import type { DirectoryEntry } from "./types";
 import { ANTI_SLOP_SKILLS } from "./anti-slop-skills";
 import { GROWTH_ARCHITECTURE_SKILLS } from "./growth-architecture-skills";
+import { REAL_ESTATE_SKILLS } from "./real-estate-skills";
 import { DIRECTORY_SYSTEMS } from "./systems";
 
 /** Seeded from Claude skills roundup articles. Update via chat when new links are shared. */
@@ -3136,5 +3137,6 @@ export const DIRECTORY_ENTRIES: DirectoryEntry[] = [
   },
   ...ANTI_SLOP_SKILLS,
   ...GROWTH_ARCHITECTURE_SKILLS,
+  ...REAL_ESTATE_SKILLS,
   ...DIRECTORY_SYSTEMS,
 ];

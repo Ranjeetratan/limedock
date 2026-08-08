@@ -26,6 +26,7 @@ export const INDUSTRY_LABELS: Record<Industry, string> = {
   agency: "Agency",
   education: "Education",
   marketplace: "Marketplace",
+  "real-estate": "Real Estate",
   other: "Other",
 };
 

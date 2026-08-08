@@ -18,6 +18,7 @@ export type Industry =
   | "agency"
   | "education"
   | "marketplace"
+  | "real-estate"
   | "other";
 
 export type DirectoryEntry = {
