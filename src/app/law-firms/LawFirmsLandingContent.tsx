@@ -17,37 +17,37 @@ const pains = [
   {
     line: "New-matter intake. Missing 3 fields. 4 emails to fix it.",
     sub: "Intake Friction",
-    img: "/images/law-firms/hero.jpg",
+    img: "/images/law-firms/courthouse.jpg",
     overlay: "rgba(22, 32, 45, 0.75)", // Deep navy/slate
   },
   {
     line: "Client status update. 45 minutes of associate archaeology.",
     sub: "Client Communication",
-    img: "/images/law-firms/library.jpg",
+    img: "/images/law-firms/associate.jpg",
     overlay: "rgba(45, 55, 72, 0.65)", // Slate
   },
   {
     line: "Referral sent. Thank you forgotten. Pipeline blind.",
     sub: "Business Development",
-    img: "/images/law-firms/hero.jpg",
+    img: "/images/law-firms/handshake.jpg",
     overlay: "rgba(15, 23, 42, 0.8)", // Darkest slate
   },
   {
     line: "Outstanding documents. Nudge delayed until the deadline.",
     sub: "Matter Follow-up",
-    img: "/images/law-firms/library.jpg",
+    img: "/images/law-firms/documents.jpg",
     overlay: "rgba(71, 85, 105, 0.4)", // Lighter slate
   },
   {
     line: "Partner meeting. CRM pipeline is 3 weeks out of date.",
     sub: "Firm Visibility",
-    img: "/images/law-firms/partner.jpg",
+    img: "/images/law-firms/lobby.jpg",
     overlay: "rgba(22, 32, 45, 0.75)",
   },
   {
     line: "Monthly newsletter. Built by hand by a senior associate.",
     sub: "Marketing Ops",
-    img: "/images/law-firms/meeting.jpg",
+    img: "/images/law-firms/stairs.jpg",
     overlay: "rgba(15, 23, 42, 0.7)",
   },
 ];
@@ -58,21 +58,21 @@ const workflows = [
     title: "Intake → CRM matter + Slack channel",
     desc: "Web form or email inquiry becomes a structured matter record, triggers a missing-field chase, and opens a dedicated Slack thread for the team.",
     trigger: "Trigger: new intake form",
-    img: "/images/law-firms/hero.jpg",
+    img: "/images/law-firms/gavel.jpg",
   },
   {
     num: "02",
     title: "Matter follow-up sequences",
     desc: "Outstanding docs, conflict checks, and engagement-letter reminders fire on schedule with clear owners in Slack.",
     trigger: "Trigger: status change",
-    img: "/images/law-firms/library.jpg",
+    img: "/images/law-firms/briefcase.jpg",
   },
   {
     num: "03",
     title: "Client status digests",
     desc: "Weekly or on-demand summaries generated from CRM and calendar so client updates don’t require a full matter archaeology session.",
     trigger: "Trigger: weekly cron / slash command",
-    img: "/images/law-firms/partner.jpg",
+    img: "/images/law-firms/library.jpg",
   },
   {
     num: "04",
@@ -402,8 +402,8 @@ export default function LawFirmsLandingContent() {
       {/* ── SECTION 6: CLOSING CTA — full-bleed photo ── */}
       <section className="relative py-32 md:py-44 overflow-hidden flex items-center">
         <img
-          src="/images/law-firms/meeting.jpg"
-          alt="Client meeting"
+          src="/images/law-firms/team.jpg"
+          alt="Law team walking"
           className="absolute inset-0 w-full h-full object-cover object-center"
         />
         <div
