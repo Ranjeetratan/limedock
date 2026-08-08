@@ -122,7 +122,7 @@ const DATA_DIR = path.join(process.cwd(), ".data", "presentations");
 /** Committed / shipped decks (e.g. shared with a prospect) */
 const PUBLISHED_DIR = path.join(process.cwd(), "content", "presentations");
 const TTL_MS = 24 * 60 * 60 * 1000;
-const PUBLISHED_TTL_MS = 14 * 24 * 60 * 60 * 1000; // 14 days for shared links
+const PUBLISHED_TTL_MS = 24 * 60 * 60 * 1000; // 24h for shared links
 
 async function ensureDir() {
   await fs.mkdir(DATA_DIR, { recursive: true });
