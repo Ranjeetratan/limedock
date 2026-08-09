@@ -1,255 +1,141 @@
-# Handoff Report: Real Estate Services Landing Page Requirements & Content Specifications
-
-**Agent**: Explorer 3 (Milestone 1)  
-**Working Directory**: `/Users/ranjeetratan/Desktop/limedock-website/.agents/teamwork_preview_explorer_m1_3`  
-**Target Route**: `/real-estate-services`  
-**Date**: 2026-08-08  
-
----
+# Next.js Image Configuration, Asset Storage & ESLint Audit Report
 
 ## 1. Observation
 
-Direct observations from inspecting the codebase:
+### 1.1 Next.js & Build Configuration
+- **`next.config.ts`** (`/Users/ranjeetratan/Desktop/limedock-website/next.config.ts`):
+  ```ts
+  import type { NextConfig } from "next";
 
-1. **JSON-LD Component (`src/components/JsonLd.tsx`, lines 1–16)**:
-   ```typescript
-   type JsonLdProps = {
-     data: Record<string, unknown> | Record<string, unknown>[];
-   };
-   export default function JsonLd({ data }: JsonLdProps) { ... }
-   ```
-   *Observation*: `JsonLd` accepts a generic `Record<string, unknown>` or an array of records and renders a `<script type="application/ld+json">`.
+  const nextConfig: NextConfig = {
+    /* config options here */
+    reactCompiler: true,
+  };
 
-2. **Existing Real Estate Landing Page (`src/app/real-estate/page.tsx`, lines 1–125)**:
-   - Line 10–28: Exports Next.js `metadata` object (title, description, canonical `/real-estate`, OpenGraph, Twitter).
-   - Line 30–55: Constructs `jsonLd` object with `@type: "WebPage"` containing `isPartOf` (WebSite), `about` (Service: "Real estate workflow automation"), and `offers` (Offer: `BOOK_DEMO_URL`).
-   - Line 61: Renders generic `VerticalLanding` component with basic lists.
+  export default nextConfig;
+  ```
+  - **Observation**: `next.config.ts` has `reactCompiler: true` enabled. No `images` configuration object (e.g. `remotePatterns`, `domains`, `unoptimized`) is defined.
+- **`package.json`** (`/Users/ranjeetratan/Desktop/limedock-website/package.json`):
+  - Next.js version: `16.1.2`
+  - React version: `19.2.3`
+  - ESLint version: `^9` with `eslint-config-next: 16.1.2`
+- **`tsconfig.json`** (`/Users/ranjeetratan/Desktop/limedock-website/tsconfig.json`):
+  - Configures `@/*` path mapping to `./src/*`.
+  - Includes `next-env.d.ts` which references `<reference types="next/image-types/global" />`.
 
-3. **Homepage Layout & Design System (`src/app/page.tsx`, lines 1–44)**:
-   - Uses `ScrollProgress`, `CursorBlob`, `Navbar`, `Footer`, `ExperienceMount`.
-   - Main wrapper: `<main className="min-h-screen bg-canvas text-body">`.
+### 1.2 Asset Storage & Landing Component References
+- **`RealEstateLandingContent.tsx`** (`src/app/real-estate-services/RealEstateLandingContent.tsx`):
+  - Uses standard `<img>` HTML tags at lines 116, 239, 285, 406, 425.
+  - References 6 unique JPEG images in `public/images/real-estate/`:
+    1. `/images/real-estate/hero.jpg` (Lines 20, 32, 61, 117)
+    2. `/images/real-estate/interior.jpg` (Lines 26, 38, 50, 96, 426)
+    3. `/images/real-estate/agent-desk.jpg` (Lines 44, 82, 240)
+    4. `/images/real-estate/listing.jpg` (Line 68)
+    5. `/images/real-estate/open-house.jpg` (Line 75)
+    6. `/images/real-estate/closing.jpg` (Line 89)
+  - **Disk Verification**: All 6 files exist in `/Users/ranjeetratan/Desktop/limedock-website/public/images/real-estate/`.
 
-4. **Sitemap Configuration (`src/app/sitemap.ts`, lines 9–64)**:
-   - Contains `staticRoutes` array with `url`, `lastModified`, `changeFrequency`, and `priority`. Currently lists `/`, `/directories`, `/law-firms`, `/real-estate`, `/blog`, `/privacy`, `/terms`, `/llms.txt`, `/llms-full.txt`.
+- **`LawFirmsLandingContent.tsx`** (`src/app/law-firms/LawFirmsLandingContent.tsx`):
+  - Uses standard `<img>` HTML tags at lines 100, 218, 264, 385, 404.
+  - References 13 unique JPEG images in `public/images/law-firms/`:
+    1. `/images/law-firms/hero.jpg` (Line 101)
+    2. `/images/law-firms/courthouse.jpg` (Line 20)
+    3. `/images/law-firms/associate.jpg` (Line 26)
+    4. `/images/law-firms/handshake.jpg` (Line 32)
+    5. `/images/law-firms/documents.jpg` (Line 38)
+    6. `/images/law-firms/lobby.jpg` (Line 44)
+    7. `/images/law-firms/stairs.jpg` (Line 50)
+    8. `/images/law-firms/gavel.jpg` (Line 61)
+    9. `/images/law-firms/briefcase.jpg` (Line 68)
+    10. `/images/law-firms/library.jpg` (Line 75)
+    11. `/images/law-firms/meeting.jpg` (Line 82)
+    12. `/images/law-firms/partner.jpg` (Line 219)
+    13. `/images/law-firms/team.jpg` (Line 405)
+  - **Disk Verification**: All 13 files exist in `/Users/ranjeetratan/Desktop/limedock-website/public/images/law-firms/`.
 
-5. **Site Constants (`src/lib/site.ts`, lines 1–19)**:
-   - Defines `SITE_URL` (`https://www.limedock.com`), `SITE_NAME` (`LimeDock`), `BOOK_DEMO_URL` (`https://cal.com/limedock-admin-nb05ck/30min`), and `absoluteUrl(path)`.
+- **Other Public Image Storage**:
+  - `public/works-mobile/` (9 PNGs: `mobile-01.png` - `mobile-09.png`)
+  - `public/placeholder-images/` (55 PNGs: `01.png` - `55.png`)
+  - Root `public/` files (`limedock-logo.svg`, `Cofounderbase.png`, `Hireschema.png`, `kingdomofkumar.png`, `aman-profile-pic.jpeg`, `dipit-profile-pic.jpeg`).
 
-6. **Navigation Links (`src/components/Navbar.tsx`, lines 9–63)**:
-   - Defines `NAV_LINKS` and static links for `Directories` and `Blog`.
+### 1.3 ESLint Rules & Verification
+- **`eslint.config.mjs`** (`/Users/ranjeetratan/Desktop/limedock-website/eslint.config.mjs`):
+  ```js
+  import { defineConfig, globalIgnores } from "eslint/config";
+  import nextVitals from "eslint-config-next/core-web-vitals";
+  import nextTs from "eslint-config-next/typescript";
 
-7. **Icon System & SVG Types (`src/components/icons/Icons.tsx`, line 9)**:
-   ```typescript
-   type Props = Omit<SVGProps<SVGSVGElement>, "strokeWidth"> & { size?: number; strokeWidth?: number };
-   ```
-   *Observation*: SVG components explicitly re-type `strokeWidth?: number` to prevent React/TypeScript `strokeWidth` string/number type mismatches.
+  const eslintConfig = defineConfig([
+    ...nextVitals,
+    ...nextTs,
+    globalIgnores([
+      ".next/**",
+      "out/**",
+      "build/**",
+      "next-env.d.ts",
+    ]),
+  ]);
 
-8. **Flow Primitives (`src/components/FromChaosToClarity.tsx` & `src/components/flow/FlowPrimitives.tsx`)**:
-   - `FromChaosToClarity.tsx` demonstrates left column manual tasks, center hub `FlowNode` with `tone="accent"`, right column automations with `tone="highlight"`, connected via `FlowEdge` curves.
+  export default eslintConfig;
+  ```
+- Command run: `npx eslint src/app/real-estate-services/RealEstateLandingContent.tsx src/app/law-firms/LawFirmsLandingContent.tsx`
+- Result output:
+  - 10 `@next/next/no-img-element` warnings reported (5 warnings in `RealEstateLandingContent.tsx`, 5 warnings in `LawFirmsLandingContent.tsx`).
+- Comparison: `src/components/LiveScreenshot.tsx` line 54 uses `// eslint-disable-next-line @next/next/no-img-element` to suppress the warning for its dynamic screenshot `<img src={src} />`.
+
+### 1.4 Dynamic / Remote Image Analysis
+- `src/lib/massblogger.ts` connects to `https://www.massblogger.com` (via `process.env.MASSBLOG_URL` or `NEXT_PUBLIC_MASSBLOG_API`).
+- `src/app/blog/[slug]/page.tsx` and `src/app/blog/page.tsx` use Next.js `<Image src={post.featuredImage} fill />`.
+- If `featuredImage` contains remote domain URLs (e.g. `https://www.massblogger.com/...` or an external CDN), Next.js `<Image>` will throw an `Unconfigured Host` runtime error without `images.remotePatterns` or `images.domains` configured in `next.config.ts`.
 
 ---
 
 ## 2. Logic Chain
 
-1. **Route & Architecture**:
-   - Creating `/real-estate-services/page.tsx` requires exporting `metadata` (Next.js `Metadata` interface) and rendering `<JsonLd data={jsonLd} />` alongside a custom 7-section page component.
-   - Route must be registered in `src/app/sitemap.ts` in `staticRoutes` with `url: absoluteUrl("/real-estate-services")`, `changeFrequency: "monthly"`, and `priority: 0.85`.
-   - Nav link must be added to `Navbar.tsx` (`/real-estate-services`).
+1. **Asset Integrity**:
+   - `RealEstateLandingContent.tsx` and `LawFirmsLandingContent.tsx` reference images with paths starting with `/images/real-estate/` and `/images/law-firms/`.
+   - Inspection of `public/` shows subdirectories `public/images/real-estate/` and `public/images/law-firms/` matching these exact paths.
+   - All 6 real-estate image files and 13 law-firms image files exist locally in `public/`, confirming zero missing local image assets.
 
-2. **Content Differentiation**:
-   - Unlike the generic template used in `/real-estate` (`VerticalLanding`), `/real-estate-services` must be built as a full-depth, homepage-quality page with 7 distinct visual sections tailored specifically to real estate brokerage operations.
+2. **ESLint Compliance**:
+   - `eslint.config.mjs` incorporates `eslint-config-next/core-web-vitals` which includes the rule `@next/next/no-img-element` by default.
+   - Both `RealEstateLandingContent.tsx` and `LawFirmsLandingContent.tsx` use `<img src="..." />` tags instead of Next.js `<Image />` components and do not include suppression comments.
+   - Running `npx eslint` on these files triggers 10 `@next/next/no-img-element` warnings.
 
-3. **Schema & SEO Alignment**:
-   - The JSON-LD schema must include `@type: "WebPage"` with `about: { @type: "Service" }` and `offers: { @type: "Offer" }` referencing `BOOK_DEMO_URL` to maximize search engine indexing and rich snippets.
-
-4. **Type-Safety Enforcement**:
-   - Custom SVG icons or flow diagrams must conform to `strokeWidth: number | undefined` (omitting standard `SVGProps<SVGSVGElement>`'s `strokeWidth: string | number` if strictly numeric) to pass `npm run build` without compiler errors.
-
----
-
-## 3. Structured Content Inventory (All 7 Sections)
-
-### Section 1: Hero (Two-Column Layout)
-- **Eyebrow**: `<span className="eyebrow"><span className="dot" /> For real estate founders & brokerage leaders</span>`
-- **Headline**: `"Stop losing portal leads and listing updates to manual inbox hustle."`
-- **Support Copy**: `"LimeDock builds custom, owned workflow automations that auto-route Zillow & Realtor.com leads, capture showing feedback, trigger stage-aware listing nurture, and deliver daily agent digests inside Slack & CRM."`
-- **CTAs**:
-  - Primary: `"Book a workflow call"` -> `BOOK_DEMO_URL` (`https://cal.com/limedock-admin-nb05ck/30min`)
-  - Secondary: `"Explore workflows"` -> `#workflows`
-- **Right-Column Live Workflow Feed Mockup**:
-  - Slack Channel Header: `#leads-realestate`
-  - Lead Event Card:
-    - Source: `Zillow Premier Lead`
-    - Property: `742 Evergreen Terrace ($1.25M)`
-    - Lead Name: `Sarah Jenkins (Buyer)`
-    - Actions Executed (< 60s):
-      1. `CRM contact created & assigned to Alex Rivera`
-      2. `Personalized SMS & Email first-touch drafted`
-      3. `Showing availability schedule link delivered`
-      4. Status: `Active / Auto-Responded`
-
-### Section 2: Pain Section (Dark Card Treatment)
-- **Container**: `signature-card bg-signature-forest text-on-dark overflow-hidden`
-- **Left Side Problem Framing**:
-  - Eyebrow: `The real estate operations bottleneck`
-  - Title: `"Speed-to-lead and listing follow-up shouldn't depend on who remembers to check the board."`
-  - Body: `"Generic CRMs offer rigid drip campaigns that agents ignore. Meanwhile, portal leads cold-out in shared inboxes, showing feedback stays locked in iMessage, and listing follow-ups drop when market activity spikes."`
-- **Right Side 7 Visceral Pains**:
-  1. **Portal Speed-to-Lead Lag**: Inbound leads from Zillow, Realtor.com, and website forms sit in a shared email inbox while agents manual-assign. Competitors respond in 2 minutes while your team takes 2 hours.
-  2. **Forgotten Listing Follow-Up**: Price adjustments, open house alerts, and stale inquiry re-engagements depend on memory or whiteboards instead of automated stage triggers.
-  3. **Scattered Showing Feedback**: Agent feedback after property showings is trapped in personal SMS threads and Slack DMs. Sellers don't get updates, and listing agents miss hot buyer signals.
-  4. **Dead Nurture Sequences**: Buyer and seller nurture sequences freeze the moment a deal goes into escrow or market volatility surges—leaving past clients and pipeline leads untouched.
-  5. **Manual Agent Coordination**: Team leads waste hours every week manually compiling open lead status, stalled listings, and pending follow-ups to keep agents accountable.
-  6. **Leaked Post-Close Referrals**: Zero automated mechanism to convert closed deals into verified Google reviews, client video testimonials, or neighborhood circle marketing.
-  7. **Black-Box Pipeline Visibility**: Brokerage founders have no real-time visibility into lead response velocity, abandoned inquiries, or agent close-loop metrics until the weekly summary.
-
-### Section 3: "Manual vs. Automated" Flowchart
-- **Pattern**: Adaptation of `FromChaosToClarity` using `FlowCanvas`, `FlowNode`, `FlowEdge`, `FlowLabel`.
-- **Left Column (Manual Tasks - Every Week)**:
-  - `SDR manual-assigns Zillow lead` (owner: `ops`)
-  - `Agent texts feedback after showing` (owner: `agent`)
-  - `Team lead compiles weekly lead digest` (owner: `founder`)
-  - `TC manually checks closing checklist` (owner: `admin`)
-  - `Marketing manually emails open house list` (owner: `marketing`)
-  - `Agent manually logs client call to CRM` (owner: `agent`)
-  - `Admin manually requests seller review` (owner: `admin`)
-  - `Broker tracks response time on spreadsheet` (owner: `ops`)
-- **Center Hub**:
-  - `LimeDock Real Estate Engine` (sub: `custom owned automations`, tone: `accent`, badge: `LD`)
-- **Right Column (Automated Workflows - Runs Itself)**:
-  - `Lead Response & Routing Loop` (sub: `instant assign · slack alert · drafted SMS`, tone: `highlight`)
-  - `Showing & Listing Stage Loop` (sub: `auto feedback · seller digest · price alert`, tone: `highlight`)
-  - `Agent Coordination Digest` (sub: `slack standup · stalled lead alerts · KPI board`, tone: `highlight`)
-
-### Section 4: How It Works (3-Step Luminous Cards)
-- **Container**: `grid md:grid-cols-3 gap-6` with `card-luminous` style
-- **Step 01 — Discovery & Workflow Audit**: `"We audit your lead channels (Zillow, Realtor.com, website), CRM (Follow Up Boss, HubSpot), and agent communication tools (Slack/SMS) to map where deals are leaking."`
-- **Step 02 — Custom System Architecture**: `"We engineer custom, dedicated automation pipelines tailored to your brokerage's routing rules and listing stage triggers—built on code you own 100%."`
-- **Step 03 — Live in Your Stack (48h Cadence)**: `"We deploy directly into your Slack, CRM, and listing infrastructure. Your team gets live alerts and automated loops without learning another SaaS tool."`
-
-### Section 5: Workflows Showcase (Grid of 6 Cards)
-- **Framing**: `"Pick the workflow losing you the most leads"`
-- **Grid Layout**: 6 cards with alternating backgrounds (`bg-signature-cream`, `bg-signature-mint`, `bg-signature-peach`):
-  1. **Portal Lead → Instant Slack & CRM Touch**: Captures Zillow, Realtor.com & web leads instantly, creates CRM contact, assigns right agent, posts structured alert & drafted response in Slack.
-  2. **Stage-Aware Listing Nurture**: Automated buyer/seller drip sequences triggered by MLS status changes (new listing, price reduction, open house, under contract).
-  3. **Automated Showing Feedback Loop**: Post-showing automated SMS/Slack prompt to buyer agents → structured feedback summary sent directly to seller and logged in CRM.
-  4. **Agent Coordination & Accountability Digest**: Scheduled daily/weekly Slack digests flagging uncontacted leads, overdue listing tasks, and agent response times for brokerage leaders.
-  5. **Post-Close Review & Referral Capture**: Automated sequence triggered upon closing date to request Google/Zillow reviews, referral introductions, and anniversary check-ins.
-  6. **Real-Time Marketing Attribution Dashboard**: Tracks source-to-close metrics, agent conversion speed, and marketing ROI live without manual spreadsheet updates.
-
-### Section 6: Proof / Metrics Strip (4 TiltCards)
-- **Card 1**: `< 2 min` | `Speed-to-Lead Response` | `Auto-route portal leads & fire first touch in under 120 seconds.` | `bg-signature-cream`
-- **Card 2**: `48 Hours` | `First Workflow Live` | `Your first custom real estate automation running live in your stack.` | `bg-signature-mint`
-- **Card 3**: `Friday` | `Delivery Cadence` | `Weekly release cycle — new workflow automations shipped every Friday.` | `bg-signature-peach`
-- **Card 4**: `100%` | `Code Ownership` | `You own the code and workflows. Zero per-seat fees or platform lock-in.` | `bg-signature-cream`
-
-### Section 7: Closing CTA Banner
-- **Container**: `signature-card bg-signature-cream border border-hairline relative overflow-hidden`
-- **Headline**: `"Ready to stop losing real estate deals to manual follow-up?"`
-- **Support**: `"Map your brokerage's lead response, listing loops, or showing feedback on a 30-minute workflow call."`
-- **CTA Button**: `btn-primary` -> `"Book a workflow call"` (`https://cal.com/limedock-admin-nb05ck/30min`)
+3. **Next.js Image Configuration Requirement**:
+   - `next.config.ts` currently omits `images` configuration.
+   - All local landing page components work without configuration because static local assets in `public/` do not require domain permissions.
+   - However, for remote dynamic images (such as blog post `featuredImage` from Massblogger API), Next.js `<Image>` requires `images.remotePatterns` to authorize external hostnames.
 
 ---
 
-## 4. Exact Technical Specifications
+## 3. Caveats
 
-### 4.1 SEO Metadata Specification
-In `src/app/real-estate-services/page.tsx`:
-```typescript
-import type { Metadata } from "next";
-import { absoluteUrl } from "@/lib/site";
-
-const title = "Real Estate Workflow Automation & Systems | LimeDock";
-const description =
-  "Custom owned workflow automations for real estate brokerages and teams. Automate portal lead response, showing feedback, listing nurture, and agent coordination in Slack & CRM.";
-
-export const metadata: Metadata = {
-  title,
-  description,
-  alternates: {
-    canonical: "/real-estate-services",
-  },
-  openGraph: {
-    title,
-    description,
-    url: absoluteUrl("/real-estate-services"),
-    type: "website",
-    siteName: "LimeDock",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title,
-    description,
-  },
-};
-```
-
-### 4.2 JSON-LD Schema Specification (WebPage + Service Schema)
-```typescript
-import { BOOK_DEMO_URL, absoluteUrl } from "@/lib/site";
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  name: title,
-  description,
-  url: absoluteUrl("/real-estate-services"),
-  isPartOf: {
-    "@type": "WebSite",
-    name: "LimeDock",
-    url: absoluteUrl("/"),
-  },
-  about: {
-    "@type": "Service",
-    name: "Real Estate Workflow Automation",
-    provider: {
-      "@type": "Organization",
-      name: "LimeDock",
-      url: absoluteUrl("/"),
-    },
-    description:
-      "Owned workflow automations for real estate brokerages including portal lead routing, showing feedback loops, stage-aware listing nurture, and agent coordination digests.",
-  },
-  offers: {
-    "@type": "Offer",
-    name: "Book a Real Estate Workflow Call",
-    url: BOOK_DEMO_URL,
-  },
-};
-```
-
-### 4.3 Type-Safety Recommendations
-1. **SVG `strokeWidth`**:
-   - `strokeWidth` prop must be typed explicitly as `number | undefined` (or `number`) on custom icon/SVG components.
-   - Example pattern: `type IconProps = Omit<SVGProps<SVGSVGElement>, "strokeWidth"> & { size?: number; strokeWidth?: number };`.
-2. **Animation Easing Curves**:
-   - Standardize framer-motion transitions to `transition={{ duration: 0.6, ease: [0.2, 0.8, 0.2, 1] }}`.
-   - Scroll reveals: `viewport={{ once: true, margin: "-80px" }}`.
-3. **No Hex Colors in JSX**:
-   - Strictly use Tailwind token classes: `bg-canvas`, `text-ink`, `text-body`, `bg-signature-forest`, `bg-signature-cream`, `bg-signature-mint`, `bg-signature-peach`, `border-hairline`.
+- **External Massblogger Payload**: We did not execute live API requests to Massblogger during this audit (operational in CODE_ONLY mode). If Massblogger returns relative URLs or base64 images, remotePatterns won't be needed; if it returns remote hostnames (e.g., `www.massblogger.com` or `images.unsplash.com`), `remotePatterns` MUST be added to `next.config.ts`.
+- **Image Optimization Strategy**: Standard `<img>` tags are currently used in the landing content components to allow CSS `object-cover` and absolute positioning layout without fixed intrinsic aspect ratios. Replacing them with `<Image>` will require appropriate `fill` or `width`/`height` props.
 
 ---
 
-## 5. Caveats
+## 4. Conclusion
 
-1. **No Code Modification Executed**: As Explorer 3 operating under read-only rules, no code modifications were applied. Implementation will be handled by Implementer agents in subsequent steps.
-2. **Navbar Dropdown vs Direct Link**: Navbar update in `Navbar.tsx` can either add direct link `Real Estate` or integrate under a sub-nav. Direct link matches `Directories` and `Blog` pattern.
-
----
-
-## 6. Conclusion
-
-The specification for `/real-estate-services` is fully detailed across all 7 required sections, SEO metadata, JSON-LD schema, and TypeScript rules. The page design builds on existing brand tokens and flow diagram primitives while delivering a bespoke, high-depth real estate landing experience.
+1. **Image Assets**: 100% of referenced image assets for both `RealEstateLandingContent.tsx` (6/6 images) and `LawFirmsLandingContent.tsx` (13/13 images) exist in `public/images/real-estate/` and `public/images/law-firms/`.
+2. **ESLint Status**: 10 `@next/next/no-img-element` warnings exist across the two landing page components because standard `<img>` tags are used without Next.js `<Image>` or ESLint suppression comments.
+3. **Next.js Configuration**: `next.config.ts` lacks an `images` block. If external hostnames (e.g., `www.massblogger.com`) are used in blog featured images, `images.remotePatterns` must be configured.
 
 ---
 
-## 7. Verification Method
+## 5. Verification Method
 
-To verify implementation when written:
-1. Run `npm run build` from root directory `/Users/ranjeetratan/Desktop/limedock-website`. Check for exit status 0 and zero TypeScript / Lint errors.
-2. Run `npm run lint` to verify ESLint compliance.
-3. Check HTML source of `/real-estate-services` for:
-   - `<title>Real Estate Workflow Automation & Systems | LimeDock</title>`
-   - `<meta name="description" ...>`
-   - `<script type="application/ld+json">` containing `WebPage` and `Service` schema.
-4. Verify `/sitemap.xml` includes `https://www.limedock.com/real-estate-services`.
+- **Verify file existence on disk**:
+  ```bash
+  ls -la public/images/real-estate/
+  ls -la public/images/law-firms/
+  ```
+- **Verify ESLint image warnings**:
+  ```bash
+  npx eslint src/app/real-estate-services/RealEstateLandingContent.tsx src/app/law-firms/LawFirmsLandingContent.tsx
+  ```
+- **Inspect Next.js Configuration**:
+  ```bash
+  cat next.config.ts
+  ```

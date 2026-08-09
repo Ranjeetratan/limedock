@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { BOOK_DEMO_URL } from "@/lib/site";
 
 const EASE = [0.2, 0.8, 0.2, 1] as const;
@@ -113,11 +114,7 @@ export default function RealEstateLandingContent() {
       {/* ── SECTION 1: HERO — full-bleed property photo ── */}
       <section className="relative min-h-screen flex items-end pb-20 md:pb-28 overflow-hidden">
         {/* Background photo */}
-        <img
-          src="/images/real-estate/hero.jpg"
-          alt="Luxury property"
-          className="absolute inset-0 w-full h-full object-cover object-center"
-        />
+        <Image src="/images/real-estate/hero.jpg" alt="Luxury property" fill priority sizes="100vw" className="object-cover object-center" />
         {/* Dark overlay */}
         <div
           className="absolute inset-0"
@@ -236,11 +233,7 @@ export default function RealEstateLandingContent() {
               className="hidden lg:block sticky top-28"
             >
               <div className="relative rounded-2xl overflow-hidden aspect-[4/5]">
-                <img
-                  src="/images/real-estate/agent-desk.jpg"
-                  alt="Real estate agent at work"
-                  className="w-full h-full object-cover object-center"
-                />
+                <Image src="/images/real-estate/agent-desk.jpg" alt="Real estate agent at work" fill sizes="(min-width: 1024px) 420px, 100vw" className="object-cover object-center" />
                 <div
                   className="absolute inset-0"
                   style={{ background: "linear-gradient(to top, rgba(10,14,20,0.5) 0%, transparent 60%)" }}
@@ -282,11 +275,7 @@ export default function RealEstateLandingContent() {
                 transition={{ duration: 0.55, delay: i * 0.07, ease: [0.2, 0.8, 0.2, 1] }}
                 className="relative rounded-xl overflow-hidden aspect-[4/3] group"
               >
-                <img
-                  src={pain.img}
-                  alt={pain.sub}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
+                <Image src={pain.img} alt={pain.sub} fill sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />
                 <div
                   className="absolute inset-0"
                   style={{ background: pain.overlay }}
@@ -403,11 +392,7 @@ export default function RealEstateLandingContent() {
                 {/* Photo side */}
                 <div className={i % 2 === 1 ? "md:[direction:ltr]" : ""}>
                   <div className="relative rounded-2xl overflow-hidden aspect-[4/3] shadow-[0_20px_60px_-20px_rgba(24,29,38,0.18)]">
-                    <img
-                      src={wf.img}
-                      alt={wf.title}
-                      className="w-full h-full object-cover"
-                    />
+                    <Image src={wf.img} alt={wf.title} fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
                     <div
                       className="absolute inset-0"
                       style={{ background: "linear-gradient(135deg, rgba(10,46,14,0.15) 0%, transparent 60%)" }}
@@ -422,11 +407,7 @@ export default function RealEstateLandingContent() {
 
       {/* ── SECTION 6: CLOSING CTA — full-bleed photo ── */}
       <section className="relative py-32 md:py-44 overflow-hidden flex items-center">
-        <img
-          src="/images/real-estate/interior.jpg"
-          alt="Modern property interior"
-          className="absolute inset-0 w-full h-full object-cover object-center"
-        />
+        <Image src="/images/real-estate/interior.jpg" alt="Modern property interior" fill sizes="100vw" className="object-cover object-center" />
         <div
           className="absolute inset-0"
           style={{ background: "linear-gradient(to right, rgba(10,14,20,0.88) 0%, rgba(10,14,20,0.55) 60%, rgba(10,14,20,0.3) 100%)" }}

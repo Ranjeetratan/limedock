@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { BOOK_DEMO_URL } from "@/lib/site";
 
 const EASE = [0.2, 0.8, 0.2, 1] as const;
@@ -97,11 +98,7 @@ export default function LawFirmsLandingContent() {
       {/* ── SECTION 1: HERO — full-bleed boardroom photo ── */}
       <section className="relative min-h-screen flex items-end pb-20 md:pb-28 overflow-hidden">
         {/* Background photo */}
-        <img
-          src="/images/law-firms/hero.jpg"
-          alt="Luxury modern law firm boardroom"
-          className="absolute inset-0 w-full h-full object-cover object-center"
-        />
+        <Image src="/images/law-firms/hero.jpg" alt="Luxury modern law firm boardroom" fill priority sizes="100vw" className="object-cover object-center" />
         {/* Dark overlay */}
         <div
           className="absolute inset-0"
@@ -215,11 +212,7 @@ export default function LawFirmsLandingContent() {
               className="hidden lg:block sticky top-28"
             >
               <div className="relative rounded-2xl overflow-hidden aspect-[4/5]">
-                <img
-                  src="/images/law-firms/partner.jpg"
-                  alt="Law partner at desk"
-                  className="w-full h-full object-cover object-center"
-                />
+                <Image src="/images/law-firms/partner.jpg" alt="Law partner at desk" fill sizes="(min-width: 1024px) 420px, 100vw" className="object-cover object-center" />
                 <div
                   className="absolute inset-0"
                   style={{ background: "linear-gradient(to top, rgba(15,23,42,0.6) 0%, transparent 60%)" }}
@@ -261,11 +254,7 @@ export default function LawFirmsLandingContent() {
                 transition={{ duration: 0.55, delay: i * 0.07, ease: [0.2, 0.8, 0.2, 1] }}
                 className="relative rounded-xl overflow-hidden aspect-[4/3] group"
               >
-                <img
-                  src={pain.img}
-                  alt={pain.sub}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
+                <Image src={pain.img} alt={pain.sub} fill sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />
                 <div
                   className="absolute inset-0"
                   style={{ background: pain.overlay }}
@@ -382,11 +371,7 @@ export default function LawFirmsLandingContent() {
                 {/* Photo side */}
                 <div className={i % 2 === 1 ? "md:[direction:ltr]" : ""}>
                   <div className="relative rounded-2xl overflow-hidden aspect-[4/3] shadow-[0_20px_60px_-20px_rgba(15,23,42,0.15)]">
-                    <img
-                      src={wf.img}
-                      alt={wf.title}
-                      className="w-full h-full object-cover"
-                    />
+                    <Image src={wf.img} alt={wf.title} fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
                     <div
                       className="absolute inset-0"
                       style={{ background: "linear-gradient(135deg, rgba(15,23,42,0.15) 0%, transparent 60%)" }}
@@ -401,11 +386,7 @@ export default function LawFirmsLandingContent() {
 
       {/* ── SECTION 6: CLOSING CTA — full-bleed photo ── */}
       <section className="relative py-32 md:py-44 overflow-hidden flex items-center">
-        <img
-          src="/images/law-firms/team.jpg"
-          alt="Law team walking"
-          className="absolute inset-0 w-full h-full object-cover object-center"
-        />
+        <Image src="/images/law-firms/team.jpg" alt="Law team walking" fill sizes="100vw" className="object-cover object-center" />
         <div
           className="absolute inset-0"
           style={{ background: "linear-gradient(to right, rgba(15,23,42,0.92) 0%, rgba(15,23,42,0.6) 60%, rgba(15,23,42,0.3) 100%)" }}

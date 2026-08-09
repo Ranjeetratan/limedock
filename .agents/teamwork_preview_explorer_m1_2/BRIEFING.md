@@ -1,49 +1,38 @@
-# BRIEFING — 2026-08-08T09:41:30Z
+# BRIEFING — 2026-08-09T23:31:20Z
 
 ## Mission
-Investigate FlowPrimitives, FromChaosToClarity, Navbar, Footer, site config, VerticalLanding, and sitemap for real-estate-services landing page Section 3 ("Manual vs automated" flow) and routing integration.
+Audit all standard HTML <img> tags in `src/app/law-firms/LawFirmsLandingContent.tsx` and related subcomponents on /law-firms, and propose exact Next.js <Image> replacements.
 
 ## 🔒 My Identity
-- Archetype: Teamwork explorer
-- Roles: Read-only investigator
+- Archetype: teamwork_preview_explorer
+- Roles: Explorer 2
 - Working directory: /Users/ranjeetratan/Desktop/limedock-website/.agents/teamwork_preview_explorer_m1_2
-- Original parent: a8f7c1ef-0280-4258-abff-8564fdef9f63
-- Milestone: Milestone 1
+- Original parent: 391a862e-f4dc-441c-8dc9-95ba80cae672
+- Milestone: m1_2
 
 ## 🔒 Key Constraints
-- Read-only investigation — do NOT implement or modify source code files
-- Provide precise Flow primitives code blueprint for Section 3 ("Manual vs automated")
-- Provide exact changes needed for `Navbar.tsx` and `sitemap.ts`
+- Read-only investigation — do NOT implement code changes in src/
+- Focus on /law-firms page and its sub-components
+- Document img tags, styling, attributes, priority, and propose exact Next.js Image replacements
 
 ## Current Parent
-- Conversation ID: a8f7c1ef-0280-4258-abff-8564fdef9f63
-- Updated: 2026-08-08T09:41:30Z
+- Conversation ID: 391a862e-f4dc-441c-8dc9-95ba80cae672
+- Updated: 2026-08-09T23:31:20Z
 
 ## Investigation State
-- **Explored paths**:
-  - `src/components/flow/FlowPrimitives.tsx`
-  - `src/components/FromChaosToClarity.tsx`
-  - `src/components/Navbar.tsx`
-  - `src/components/Footer.tsx`
-  - `src/lib/site.ts`
-  - `src/app/sitemap.ts`
-  - `src/components/VerticalLanding.tsx`
-  - `src/app/real-estate/page.tsx`
-  - `src/app/law-firms/page.tsx`
+- **Explored paths**: `src/app/law-firms/page.tsx`, `src/app/law-firms/LawFirmsLandingContent.tsx`, `src/components/JsonLd.tsx`, `public/images/law-firms/`
 - **Key findings**:
-  - `FlowPrimitives.tsx` provides `FlowCanvas`, `FlowNode`, `FlowEdge`, `FlowChip`, `FlowLabel`.
-  - `FromChaosToClarity.tsx` uses 1000x520 SVG canvas with 8 left manual task rows, center dark accent hub node, 3 right peach highlight automation nodes, converging & diverging bezier curve edges.
-  - Complete JSX blueprint created for `RealEstateChaosToClarity`.
-  - `sitemap.ts` line 29 ALREADY registers `/real-estate` (`priority: 0.8`).
-  - `Footer.tsx` line 24 ALREADY links to `/real-estate` under Solutions.
-  - `Navbar.tsx` requires updating to add `/real-estate` (desktop & mobile nav).
-- **Unexplored areas**: None (all requested paths explored).
+  - Found 5 standard HTML `<img>` tag locations in `LawFirmsLandingContent.tsx` rendering 13 distinct `.jpg` image assets.
+  - All 13 image assets exist in `public/images/law-firms/`.
+  - Hero image (`/images/law-firms/hero.jpg`) is above-the-fold and requires `priority`.
+  - All parent containers are `relative` (with aspect ratios or full-bleed), making `fill` with `sizes` and `className="object-cover..."` the ideal replacement.
+- **Unexplored areas**: None (investigation complete).
 
 ## Key Decisions Made
-- Written detailed handoff report to `handoff.md`.
+- Prepared exact Next.js `<Image>` replacement specifications for all 5 `<img>` tags.
+- Detailed complete handoff report in `handoff.md`.
 
 ## Artifact Index
-- ORIGINAL_REQUEST.md — Original task dispatch prompt
-- BRIEFING.md — Working memory state
-- progress.md — Liveness heartbeat and step progress
-- handoff.md — Final 5-component analysis report
+- /Users/ranjeetratan/Desktop/limedock-website/.agents/teamwork_preview_explorer_m1_2/ORIGINAL_REQUEST.md — Original User Request
+- /Users/ranjeetratan/Desktop/limedock-website/.agents/teamwork_preview_explorer_m1_2/BRIEFING.md — Briefing file
+- /Users/ranjeetratan/Desktop/limedock-website/.agents/teamwork_preview_explorer_m1_2/handoff.md — Complete 5-component audit report & Next.js Image migration specs

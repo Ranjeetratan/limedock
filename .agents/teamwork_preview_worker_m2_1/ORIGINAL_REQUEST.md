@@ -1,38 +1,47 @@
-## 2026-08-08T09:42:17Z
-<USER_REQUEST>
-You are Worker 1 for Milestone 2 of the real-estate-services landing page project.
+## 2026-08-09T18:02:32Z
+You are Worker 1 (teamwork_preview_worker).
 Your working directory is: /Users/ranjeetratan/Desktop/limedock-website/.agents/teamwork_preview_worker_m2_1
 
+MANDATORY INTEGRITY WARNING:
 DO NOT CHEAT. All implementations must be genuine. DO NOT hardcode test results, create dummy/facade implementations, or circumvent the intended task. A Forensic Auditor will independently verify your work. Integrity violations WILL be detected and your work WILL be rejected.
 
 Objective:
-Implement the complete, premium custom landing page at `src/app/real-estate-services/page.tsx` and all 7 sub-sections according to Requirements R1, R2, R3, and the Explorer handoffs in:
-- `/Users/ranjeetratan/Desktop/limedock-website/.agents/teamwork_preview_explorer_m1_1/handoff.md`
-- `/Users/ranjeetratan/Desktop/limedock-website/.agents/teamwork_preview_explorer_m1_2/handoff.md`
-- `/Users/ranjeetratan/Desktop/limedock-website/.agents/teamwork_preview_explorer_m1_3/handoff.md`
+Migrate all standard HTML <img> tags in `src/app/real-estate-services/RealEstateLandingContent.tsx` and `src/app/law-firms/LawFirmsLandingContent.tsx` to Next.js <Image> component.
 
-Requirements & Architectural Instructions:
-1. File location: `src/app/real-estate-services/page.tsx`.
-2. Include full SEO metadata (`export const metadata: Metadata = ...`) and JSON-LD schema (`<JsonLd data={jsonLd} />` with WebPage + Service schema).
-3. Import and render `<Navbar />` and `<Footer />`.
-4. Implement all 7 visually distinct sections:
-   - Section 1: Hero (Two-column layout, eyebrow tag, bold headline, support copy, dual CTAs using `Magnetic`, right live "workflow feed" Slack mockup for real estate).
-   - Section 2: Pain section (Dark `bg-signature-forest` card, left problem framing, right 7 visceral real estate pains in `card-luminous` grid).
-   - Section 3: "Manual vs. automated" flowchart (Adapting `FromChaosToClarity` pattern using `FlowCanvas`/`FlowNode`/`FlowEdge` as specified in Explorer 2's handoff).
-   - Section 4: How it works (3-step process using `card-luminous` step cards).
-   - Section 5: Workflows showcase (6 real estate automations grid with alternating cream/mint/peach backgrounds: `bg-signature-cream`, `bg-signature-mint`, `bg-signature-peach`).
-   - Section 6: Proof / metrics strip (4 `TiltCard` metric cards: speed-to-lead `< 2 min`, first workflow live `48h`, `Friday` delivery cadence, `100%` code ownership).
-   - Section 7: Closing CTA (Full-width gradient banner `from-signature-cream via-canvas to-signature-mint/30` with headline + `Magnetic`-wrapped primary CTA button).
-5. Ensure design system exact match:
-   - Only existing global CSS classes (`bg-canvas`, `text-ink`, `text-body`, `text-muted`, `bg-signature-forest`, `bg-signature-cream`, `bg-signature-mint`, `bg-signature-peach`, `border-hairline`, `btn-primary`, `btn-secondary`, `eyebrow`, `dot`, `signature-card`, `card-luminous`, `section-air`, `container-air`, `text-display-xl`, `text-display-lg`, `text-display-md`, `text-title-lg`, `text-title-sm`, `text-body-md`, `text-caption`, `focus-ring`).
-   - DO NOT add new CSS files or Tailwind config.
-   - Framer-motion scroll reveals via `whileInView` with `viewport={{ once: true, margin: "-80px" }}` and ease `[0.2, 0.8, 0.2, 1]`.
-   - Re-use motion components (`TiltCard`, `Magnetic`, `RevealWords`, `ScrollProgress`, `CursorBlob`), `Icons.tsx`, `FlowPrimitives.tsx`, `BOOK_DEMO_URL`, `absoluteUrl`.
-6. TypeScript strict compliance:
-   - Ensure clean compilation. `strokeWidth` on SVG props must be numeric (`number | undefined`).
+Tasks:
+1. In `src/app/real-estate-services/RealEstateLandingContent.tsx`:
+   - Import `Image` from `"next/image"`.
+   - Replace all 5 standard `<img>` tags with Next.js `<Image>`:
+     a) Hero background (around lines 116-120):
+        `<Image src="/images/real-estate/hero.jpg" alt="Luxury property" fill priority sizes="100vw" className="object-cover object-center" />`
+     b) Accent photo (around lines 239-243):
+        `<Image src="/images/real-estate/agent-desk.jpg" alt="Real estate agent at work" fill sizes="(min-width: 1024px) 420px, 100vw" className="object-cover object-center" />`
+     c) Pain grid cards loop (around lines 285-289):
+        `<Image src={pain.img} alt={pain.sub} fill sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />`
+     d) Workflow cards loop (around lines 407-411):
+        `<Image src={wf.img} alt={wf.title} fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />`
+     e) Closing CTA background (around lines 425-429):
+        `<Image src="/images/real-estate/interior.jpg" alt="Modern property interior" fill sizes="100vw" className="object-cover object-center" />`
 
-Verification requirement:
-After implementing the code, execute build and lint verification commands (`npm run build` / `npx tsc --noEmit` / `npm run lint`).
-Write a complete handoff report to `/Users/ranjeetratan/Desktop/limedock-website/.agents/teamwork_preview_worker_m2_1/handoff.md` including exact files created/modified and build verification results.
-Update `progress.md` in your working directory and notify the parent orchestrator when done.
-</USER_REQUEST>
+2. In `src/app/law-firms/LawFirmsLandingContent.tsx`:
+   - Import `Image` from `"next/image"`.
+   - Replace all 5 standard `<img>` tags with Next.js `<Image>`:
+     a) Hero background (around lines 100-104):
+        `<Image src="/images/law-firms/hero.jpg" alt="Luxury modern law firm boardroom" fill priority sizes="100vw" className="object-cover object-center" />`
+     b) Accent photo (around lines 218-222):
+        `<Image src="/images/law-firms/partner.jpg" alt="Law partner at desk" fill sizes="(min-width: 1024px) 420px, 100vw" className="object-cover object-center" />`
+     c) Pain grid cards loop (around lines 264-268):
+        `<Image src={pain.img} alt={pain.sub} fill sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />`
+     d) Workflow cards loop (around lines 385-389):
+        `<Image src={wf.img} alt={wf.title} fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />`
+     e) Closing CTA background (around lines 404-408):
+        `<Image src="/images/law-firms/team.jpg" alt="Law team walking" fill sizes="100vw" className="object-cover object-center" />`
+
+3. Verify:
+   - Run `npm run build` on `/Users/ranjeetratan/Desktop/limedock-website` and capture the exact terminal output.
+   - Confirm zero standard `<img>` tags remain in either file.
+
+4. Write handoff report:
+   - Save report to `/Users/ranjeetratan/Desktop/limedock-website/.agents/teamwork_preview_worker_m2_1/handoff.md`.
+   - Include modified files, verification commands, and full build output.
+   - Send summary message back to orchestrator.
