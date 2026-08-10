@@ -237,11 +237,15 @@ export function catalogStats() {
   };
 }
 
-/** Formats 228045 as "228k" for card chrome. */
+/** Formats 228045 as "228k" and 4227000 as "4.2M" for card chrome. */
 export function formatStars(stars: number): string {
+  if (stars >= 1_000_000) {
+    const m = stars / 1_000_000;
+    return `${(m >= 10 ? Math.round(m) : Number(m.toFixed(1))).toString()}M`;
+  }
   if (stars >= 1000) {
     const k = stars / 1000;
-    return `${k >= 100 ? Math.round(k) : k.toFixed(1).replace(/\.0$/, "")}k`;
+    return `${k >= 100 ? Math.round(k) : Number(k.toFixed(1))}k`;
   }
   return String(stars);
 }

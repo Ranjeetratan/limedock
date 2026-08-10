@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import CategoryIcon from "./CategoryIcon";
 import {
   AUDIENCE_LABELS,
   CATEGORY_LABELS,
@@ -282,14 +283,16 @@ function AgentCard({ agent }: { agent: TrendingAgent }) {
   return (
     <Link
       href={`/trending-agents/${agent.slug}`}
-      className="group flex h-full flex-col rounded-md border border-hairline bg-canvas p-5 transition-all hover:border-border-strong hover:bg-surface-soft focus-ring"
+      className="group relative flex h-full flex-col overflow-hidden rounded-md border border-hairline bg-canvas transition-all hover:border-border-strong hover:shadow-[0_1px_0_rgba(24,29,38,0.05)] focus-ring"
     >
-      <div className="flex items-start justify-between gap-3">
-        <span className="text-caption uppercase tracking-[0.08em] text-muted">
-          {agent.owner}
+      {/* Category strip — gives the grid a scannable colour rhythm */}
+      <div className="flex items-center justify-between gap-3 border-b border-hairline bg-signature-cream/50 px-5 py-2.5">
+        <span className="inline-flex items-center gap-1.5 text-caption uppercase tracking-[0.08em] text-ink/70">
+          <CategoryIcon category={agent.categories[0]} size={14} />
+          {CATEGORY_LABELS[agent.categories[0]]}
         </span>
-        <span className="inline-flex shrink-0 items-center gap-1 text-caption text-muted tabular-nums">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden>
+        <span className="inline-flex shrink-0 items-center gap-1 text-caption text-ink/60 tabular-nums">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden>
             <path
               d="M12 3l2.7 5.5 6.1.9-4.4 4.3 1 6-5.4-2.8-5.4 2.8 1-6-4.4-4.3 6.1-.9z"
               stroke="currentColor"
@@ -301,26 +304,45 @@ function AgentCard({ agent }: { agent: TrendingAgent }) {
         </span>
       </div>
 
-      <h3 className="mt-2 text-title-sm text-ink group-hover:underline decoration-1 underline-offset-4">
-        {agent.name}
-      </h3>
-
-      <p className="mt-2 flex-1 text-body-md text-body leading-[1.5] line-clamp-3">
-        {agent.tagline}
-      </p>
-
-      <div className="mt-4 flex flex-wrap items-center gap-1.5">
-        <span className="rounded-sm bg-signature-cream px-2 py-1 text-caption text-ink">
-          {CATEGORY_LABELS[agent.categories[0]]}
+      <div className="flex flex-1 flex-col p-5">
+        <span className="text-caption text-muted font-mono truncate">
+          {agent.owner}
         </span>
-        {agent.stats.language && (
-          <span className="rounded-sm border border-hairline px-2 py-1 text-caption text-muted">
-            {agent.stats.language}
+        <h3 className="mt-1 text-title-sm text-ink group-hover:underline decoration-1 underline-offset-4">
+          {agent.name}
+        </h3>
+        <p className="mt-2 flex-1 text-body-md text-body leading-[1.5] line-clamp-3">
+          {agent.tagline}
+        </p>
+
+        <div className="mt-4 flex items-center justify-between gap-3 border-t border-hairline pt-3.5">
+          <span className="flex flex-wrap items-center gap-1.5">
+            {agent.stats.language && (
+              <span className="rounded-sm border border-hairline px-2 py-0.5 text-caption text-muted">
+                {agent.stats.language}
+              </span>
+            )}
+            <span className="rounded-sm border border-hairline px-2 py-0.5 text-caption text-muted">
+              {DIFFICULTY_LABELS[agent.difficulty]}
+            </span>
           </span>
-        )}
-        <span className="rounded-sm border border-hairline px-2 py-1 text-caption text-muted">
-          {DIFFICULTY_LABELS[agent.difficulty]}
-        </span>
+          <svg
+            width="15"
+            height="15"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden
+            className="shrink-0 text-muted transition-all group-hover:translate-x-0.5 group-hover:text-ink"
+          >
+            <path
+              d="M5 12h14M13 6l6 6-6 6"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </div>
       </div>
     </Link>
   );
