@@ -35,8 +35,8 @@ type PageProps = {
   searchParams: Promise<{ type?: string }>;
 };
 
-function parseType(value?: string): EntryType | "all" {
-  if (value === "skill" || value === "agent") return value;
+function parseType(value?: string): EntryType | "all" | "github" {
+  if (value === "skill" || value === "agent" || value === "github") return value;
   return "all";
 }
 
@@ -104,6 +104,9 @@ export default async function DirectoriesPage({ searchParams }: PageProps) {
               </span>
               <span className="inline-flex min-h-8 items-center rounded-sm bg-signature-coral px-3 text-caption uppercase tracking-[0.08em] text-on-dark">
                 {counts.agent} Agents
+              </span>
+              <span className="inline-flex min-h-8 items-center rounded-sm bg-ink px-3 text-caption uppercase tracking-[0.08em] text-on-primary">
+                {counts.github} GitHub
               </span>
             </div>
           </div>

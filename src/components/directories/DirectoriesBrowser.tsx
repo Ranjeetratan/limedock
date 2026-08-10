@@ -7,6 +7,8 @@ import {
   INDUSTRY_LABELS,
   countByType,
   filterEntries,
+  githubUrlFor,
+  isGithubEntry,
   type DirectoryEntry,
   type EntryType,
 } from "@/lib/directories";
@@ -17,13 +19,13 @@ import DirectoriesConversionStrip from "./DirectoriesConversionStrip";
 
 type Props = {
   entries: DirectoryEntry[];
-  initialType?: EntryType | "all";
+  initialType?: EntryType | "all" | "github";
 };
 
 const PAGE_SIZE = 12;
 
 const TYPE_STYLES: Record<
-  EntryType,
+  EntryType | "github",
   {
     sectionBorder: string;
     badge: string;
@@ -48,6 +50,12 @@ const TYPE_STYLES: Record<
     badge: "bg-signature-mustard text-ink",
     chip: "bg-signature-mustard/20 text-ink",
     eyebrow: "Composable skill architectures",
+  },
+  github: {
+    sectionBorder: "border-ink/20 bg-signature-cream/60",
+    badge: "bg-ink text-on-primary",
+    chip: "bg-ink/10 text-ink",
+    eyebrow: "Open-source repositories",
   },
 };
 
@@ -82,7 +90,12 @@ export default function DirectoriesBrowser({
     () => visible.filter((e) => e.type === "agent"),
     [visible]
   );
+  const githubEntries = useMemo(
+    () => visible.filter((e) => isGithubEntry(e)),
+    [visible]
+  );
 
+  const showGithubOnly = filters.type === "github";
   const showSkills = filters.type === "all" || filters.type === "skill";
   const showAgents = filters.type === "all" || filters.type === "agent";
 
@@ -105,25 +118,38 @@ export default function DirectoriesBrowser({
         </div>
       ) : (
         <div className="space-y-14">
-          {showSkills && (
+          {showGithubOnly ? (
             <EntrySection
-              key={`skills-${filters.category}-${filters.industry}-${filters.query}`}
-              kind="skill"
-              title="Skills"
-              description="Focused playbooks and GitHub resources — plain-language examples so you know how you’d actually use them."
-              entries={skills}
-              emptyLabel="No skills match these filters."
+              key={`github-${filters.category}-${filters.industry}-${filters.query}`}
+              kind="github"
+              title="GitHub"
+              description="Open-source repos with live GitHub links — skills, agents, and tools you can open and use."
+              entries={githubEntries}
+              emptyLabel="No GitHub resources match these filters."
             />
-          )}
-          {showAgents && (
-            <EntrySection
-              key={`agents-${filters.category}-${filters.industry}-${filters.query}`}
-              kind="agent"
-              title="Agents"
-              description="Multi-step workers that plan, review, or orchestrate work across tools and personas."
-              entries={agents}
-              emptyLabel="No agents match these filters."
-            />
+          ) : (
+            <>
+              {showSkills && (
+                <EntrySection
+                  key={`skills-${filters.category}-${filters.industry}-${filters.query}`}
+                  kind="skill"
+                  title="Skills"
+                  description="Focused playbooks — plain-language examples so you know how you’d actually use them."
+                  entries={skills}
+                  emptyLabel="No skills match these filters."
+                />
+              )}
+              {showAgents && (
+                <EntrySection
+                  key={`agents-${filters.category}-${filters.industry}-${filters.query}`}
+                  kind="agent"
+                  title="Agents"
+                  description="Multi-step workers that plan, review, or orchestrate work across tools and personas."
+                  entries={agents}
+                  emptyLabel="No agents match these filters."
+                />
+              )}
+            </>
           )}
         </div>
       )}
@@ -138,7 +164,7 @@ function EntrySection({
   entries,
   emptyLabel,
 }: {
-  kind: EntryType;
+  kind: EntryType | "github";
   title: string;
   description: string;
   entries: DirectoryEntry[];
@@ -175,7 +201,7 @@ function EntrySection({
   }, [hasMore, entries.length]);
 
   return (
-    <section>
+    <section id={kind === "github" ? "directory-github" : undefined}>
       <div
         className={`rounded-md border px-5 py-5 md:px-7 md:py-6 ${styles.sectionBorder}`}
       >
@@ -229,37 +255,40 @@ function DirectoryCard({ entry }: { entry: DirectoryEntry }) {
       : entry.type === "agent"
         ? "Agent"
         : "System";
+  const githubUrl = githubUrlFor(entry);
 
   return (
-    <Link
-      href={`/directories/${entry.slug}`}
-      className="group flex h-full flex-col rounded-md border border-hairline bg-canvas p-5 transition-colors hover:border-border-strong hover:bg-surface-soft focus-ring"
-    >
-      <div className="flex items-start justify-between gap-3">
-        <span
-          className={`inline-flex min-h-7 items-center rounded-sm px-2.5 text-caption uppercase tracking-[0.08em] ${styles.chip}`}
-        >
-          {label}
-        </span>
-        <span className="text-caption text-link opacity-0 transition-opacity group-hover:opacity-100">
-          View →
-        </span>
-      </div>
+    <div className="group flex h-full flex-col rounded-md border border-hairline bg-canvas p-5 transition-colors hover:border-border-strong hover:bg-surface-soft">
+      <Link
+        href={`/directories/${entry.slug}`}
+        className="flex flex-1 flex-col focus-ring rounded-sm"
+      >
+        <div className="flex items-start justify-between gap-3">
+          <span
+            className={`inline-flex min-h-7 items-center rounded-sm px-2.5 text-caption uppercase tracking-[0.08em] ${styles.chip}`}
+          >
+            {label}
+          </span>
+          <span className="text-caption text-link opacity-0 transition-opacity group-hover:opacity-100">
+            View →
+          </span>
+        </div>
 
-      <h3 className="text-title-sm text-ink mt-4 line-clamp-2 transition-colors group-hover:text-link">
-        {entry.name}
-      </h3>
-      {entry.githubRepo ? (
-        <p className="mt-1 font-mono text-[12px] text-muted line-clamp-1">
-          {entry.githubRepo}
+        <h3 className="text-title-sm text-ink mt-4 line-clamp-2 transition-colors group-hover:text-link">
+          {entry.name}
+        </h3>
+        {entry.githubRepo ? (
+          <p className="mt-1 font-mono text-[12px] text-muted line-clamp-1">
+            {entry.githubRepo}
+          </p>
+        ) : null}
+
+        <p className="mt-3 flex-1 text-body-md leading-[1.55] text-body line-clamp-4">
+          {entry.summary}
         </p>
-      ) : null}
+      </Link>
 
-      <p className="mt-3 flex-1 text-body-md leading-[1.55] text-body line-clamp-4">
-        {entry.summary}
-      </p>
-
-      <div className="mt-5 flex flex-wrap gap-1.5 border-t border-hairline pt-4">
+      <div className="mt-5 flex flex-wrap items-center gap-1.5 border-t border-hairline pt-4">
         {entry.categories.slice(0, 2).map((c) => (
           <span
             key={c}
@@ -276,7 +305,17 @@ function DirectoryCard({ entry }: { entry: DirectoryEntry }) {
             {INDUSTRY_LABELS[i]}
           </span>
         ))}
+        {githubUrl ? (
+          <a
+            href={githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ml-auto inline-flex min-h-8 items-center rounded-sm border border-ink/15 bg-ink px-2.5 text-caption uppercase tracking-[0.06em] text-on-primary focus-ring"
+          >
+            GitHub ↗
+          </a>
+        ) : null}
       </div>
-    </Link>
+    </div>
   );
 }

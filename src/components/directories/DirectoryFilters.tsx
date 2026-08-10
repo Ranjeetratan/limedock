@@ -11,7 +11,7 @@ import {
 } from "@/lib/directories";
 
 export type DirectoryFilterState = {
-  type: EntryType | "all";
+  type: EntryType | "all" | "github";
   category: Category | "all";
   industry: Industry | "all";
   query: string;
@@ -20,12 +20,12 @@ export type DirectoryFilterState = {
 type Props = {
   value: DirectoryFilterState;
   onChange: (next: DirectoryFilterState) => void;
-  counts: Record<EntryType | "all", number>;
+  counts: Record<EntryType | "all" | "github", number>;
   resultCount: number;
 };
 
 const TYPE_TABS: Array<{
-  id: EntryType | "all";
+  id: EntryType | "all" | "github";
   label: string;
   hint: string;
   activeClass: string;
@@ -33,7 +33,7 @@ const TYPE_TABS: Array<{
   {
     id: "all",
     label: "All",
-    hint: "Skills + Agents",
+    hint: "Skills + Agents + GitHub",
     activeClass: "border-ink bg-ink text-on-primary",
   },
   {
@@ -48,6 +48,12 @@ const TYPE_TABS: Array<{
     hint: "Multi-step workers",
     activeClass: "border-signature-coral bg-signature-coral text-on-dark",
   },
+  {
+    id: "github",
+    label: "GitHub",
+    hint: "Open-source repos",
+    activeClass: "border-ink bg-ink text-on-primary",
+  },
 ];
 
 export default function DirectoryFilters({
@@ -58,7 +64,7 @@ export default function DirectoryFilters({
 }: Props) {
   return (
     <div className="space-y-8">
-      <div className="grid gap-3 sm:grid-cols-3">
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {TYPE_TABS.map((tab) => {
           const active = value.type === tab.id;
           return (
@@ -103,7 +109,7 @@ export default function DirectoryFilters({
             type="search"
             value={value.query}
             onChange={(e) => onChange({ ...value, query: e.target.value })}
-            placeholder="Search by name, use case, or category"
+            placeholder="Search by name, GitHub repo, or use case"
             className="mt-2 w-full min-h-12 rounded-md border border-hairline bg-canvas px-4 text-body-md text-ink outline-none focus:border-ink"
           />
         </label>

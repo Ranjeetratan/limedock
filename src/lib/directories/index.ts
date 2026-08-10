@@ -83,6 +83,24 @@ function entrySearchHaystack(entry: DirectoryEntry): string {
     .toLowerCase();
 }
 
+export function isGithubEntry(entry: DirectoryEntry): boolean {
+  if (entry.githubRepo) return true;
+  if (entry.resourceUrl?.includes("github.com")) return true;
+  if (entry.link && entry.link !== "#" && entry.link.includes("github.com")) {
+    return true;
+  }
+  return false;
+}
+
+export function githubUrlFor(entry: DirectoryEntry): string | null {
+  if (entry.resourceUrl?.includes("github.com")) return entry.resourceUrl;
+  if (entry.link && entry.link !== "#" && entry.link.includes("github.com")) {
+    return entry.link;
+  }
+  if (entry.githubRepo) return `https://github.com/${entry.githubRepo}`;
+  return null;
+}
+
 export function filterEntries(filters: DirectoryFilters = {}): DirectoryEntry[] {
   const type = filters.type ?? "all";
   const category = filters.category ?? "all";
@@ -90,7 +108,11 @@ export function filterEntries(filters: DirectoryFilters = {}): DirectoryEntry[] 
   const query = (filters.query ?? "").trim().toLowerCase();
 
   return getAllEntries().filter((entry) => {
-    if (type !== "all" && entry.type !== type) return false;
+    if (type === "github") {
+      if (!isGithubEntry(entry)) return false;
+    } else if (type !== "all" && entry.type !== type) {
+      return false;
+    }
     if (category !== "all" && !entry.categories.includes(category)) return false;
     if (industry !== "all" && !entry.industries.includes(industry)) return false;
     if (!query) return true;
@@ -98,15 +120,17 @@ export function filterEntries(filters: DirectoryFilters = {}): DirectoryEntry[] 
   });
 }
 
-export function countByType(): Record<EntryType | "all", number> {
+export function countByType(): Record<EntryType | "all" | "github", number> {
   const skills = DIRECTORY_ENTRIES.filter((e) => e.type === "skill").length;
   const agents = DIRECTORY_ENTRIES.filter((e) => e.type === "agent").length;
   const systems = DIRECTORY_ENTRIES.filter((e) => e.type === "system").length;
+  const github = DIRECTORY_ENTRIES.filter((e) => isGithubEntry(e)).length;
   return {
     all: DIRECTORY_ENTRIES.length,
     skill: skills,
     agent: agents,
     system: systems,
+    github,
   };
 }
 

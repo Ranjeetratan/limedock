@@ -57,7 +57,7 @@ export type DirectoryEntry = {
 };
 
 export type DirectoryFilters = {
-  type?: EntryType | "all";
+  type?: EntryType | "all" | "github";
   category?: Category | "all";
   industry?: Industry | "all";
   query?: string;

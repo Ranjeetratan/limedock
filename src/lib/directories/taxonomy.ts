@@ -1,10 +1,11 @@
 import type { Category, EntryType, Industry } from "./types";
 
-export const ENTRY_TYPE_LABELS: Record<EntryType | "all", string> = {
+export const ENTRY_TYPE_LABELS: Record<EntryType | "all" | "github", string> = {
   all: "All",
   skill: "Skills",
   agent: "Agents",
   system: "Systems",
+  github: "GitHub",
 };
 
 export const CATEGORY_LABELS: Record<Category, string> = {
