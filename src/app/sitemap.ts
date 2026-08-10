@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getEntrySlugs } from "@/lib/directories";
+import { getAllEntries, getEntrySlugs } from "@/lib/directories";
 import { getPosts } from "@/lib/massblogger";
 import { absoluteUrl } from "@/lib/site";
 
@@ -69,12 +69,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
+  const githubSlugs = new Set(
+    getAllEntries()
+      .filter((entry) => Boolean(entry.githubRepo || entry.resourceUrl))
+      .map((entry) => entry.slug)
+  );
+
   const directoryRoutes: MetadataRoute.Sitemap = getEntrySlugs().map(
     (slug) => ({
       url: absoluteUrl(`/directories/${slug}`),
       lastModified: now,
-      changeFrequency: "monthly" as const,
-      priority: 0.65,
+      changeFrequency: (githubSlugs.has(slug) ? "weekly" : "monthly") as
+        | "weekly"
+        | "monthly",
+      priority: githubSlugs.has(slug) ? 0.75 : 0.65,
     })
   );
 

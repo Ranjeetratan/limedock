@@ -33,7 +33,7 @@ const TYPE_TABS: Array<{
   {
     id: "all",
     label: "All",
-    hint: "Skills + Agents + Systems",
+    hint: "Skills + Agents",
     activeClass: "border-ink bg-ink text-on-primary",
   },
   {
@@ -48,12 +48,6 @@ const TYPE_TABS: Array<{
     hint: "Multi-step workers",
     activeClass: "border-signature-coral bg-signature-coral text-on-dark",
   },
-  {
-    id: "system",
-    label: "Systems",
-    hint: "Skill architectures",
-    activeClass: "border-signature-mustard bg-signature-mustard text-ink",
-  },
 ];
 
 export default function DirectoryFilters({
@@ -64,7 +58,7 @@ export default function DirectoryFilters({
 }: Props) {
   return (
     <div className="space-y-8">
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-3 sm:grid-cols-3">
         {TYPE_TABS.map((tab) => {
           const active = value.type === tab.id;
           return (
@@ -82,11 +76,7 @@ export default function DirectoryFilters({
                 <span className="text-title-sm">{tab.label}</span>
                 <span
                   className={`text-caption tabular-nums ${
-                    active
-                      ? tab.id === "system"
-                        ? "text-ink/70"
-                        : "text-white/75"
-                      : "text-muted"
+                    active ? "text-white/75" : "text-muted"
                   }`}
                 >
                   {counts[tab.id]}
@@ -94,11 +84,7 @@ export default function DirectoryFilters({
               </div>
               <p
                 className={`mt-1 text-caption ${
-                  active
-                    ? tab.id === "system"
-                      ? "text-ink/65"
-                      : "text-white/70"
-                    : "text-muted"
+                  active ? "text-white/70" : "text-muted"
                 }`}
               >
                 {tab.hint}
@@ -117,7 +103,7 @@ export default function DirectoryFilters({
             type="search"
             value={value.query}
             onChange={(e) => onChange({ ...value, query: e.target.value })}
-            placeholder="Search by name, use case, system, or category"
+            placeholder="Search by name, use case, or category"
             className="mt-2 w-full min-h-12 rounded-md border border-hairline bg-canvas px-4 text-body-md text-ink outline-none focus:border-ink"
           />
         </label>

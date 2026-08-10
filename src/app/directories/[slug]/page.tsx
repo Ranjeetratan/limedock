@@ -78,13 +78,28 @@ export async function generateMetadata({
       : entry.type === "agent"
         ? "Agent"
         : "Skill";
-  const title = `${entry.name} — ${typeLabel} for SaaS Automation`;
-  const description = `${entry.summary} Explore in LimeDock Directories, then book LimeDock to implement owned marketing, sales, and ops automations for your SaaS team.`;
+
+  const title = entry.githubRepo
+    ? `${entry.githubRepo} GitHub — ${entry.name} guide | LimeDock`
+    : `${entry.name} — ${typeLabel} for SaaS Automation`;
+  const description = entry.githubRepo
+    ? `${entry.summary} Plain-English guide to ${entry.githubRepo} (${entry.resourceUrl ?? `https://github.com/${entry.githubRepo}`}) — how teams use it, examples, and prompts. LimeDock Directories.`
+    : `${entry.summary} Explore in LimeDock Directories, then book LimeDock to implement owned marketing, sales, and ops automations for your SaaS team.`;
   const url = absoluteUrl(`/directories/${entry.slug}`);
+  const keywords = entry.githubRepo
+    ? [
+        entry.githubRepo,
+        entry.name,
+        `${entry.githubRepo} GitHub`,
+        `github.com/${entry.githubRepo}`,
+        "LimeDock Directories",
+      ]
+    : undefined;
 
   return {
     title,
     description,
+    keywords,
     alternates: {
       canonical: `/directories/${entry.slug}`,
     },
@@ -118,23 +133,33 @@ export default async function DirectoryEntryPage({ params }: PageProps) {
     entry.type === "system" ? "Skills in this system" : "Used in systems";
   const pageUrl = absoluteUrl(`/directories/${entry.slug}`);
   const schemaType =
-    entry.type === "system"
-      ? "TechArticle"
-      : entry.type === "agent"
-        ? "SoftwareApplication"
+    entry.githubRepo || entry.type === "agent"
+      ? "SoftwareApplication"
+      : entry.type === "system"
+        ? "TechArticle"
         : "CreativeWork";
 
   const entryJsonLd = {
     "@context": "https://schema.org",
     "@type": schemaType,
-    name: entry.name,
+    name: entry.githubRepo ? `${entry.name} (${entry.githubRepo})` : entry.name,
+    alternateName: entry.githubRepo ? [entry.githubRepo, entry.name] : undefined,
     description: entry.summary,
     url: pageUrl,
-    ...(entry.type === "agent"
-      ? { applicationCategory: "BusinessApplication", operatingSystem: "Web" }
+    ...(entry.resourceUrl || entry.githubRepo
+      ? {
+          sameAs: [
+            entry.resourceUrl ?? `https://github.com/${entry.githubRepo}`,
+          ],
+          codeRepository:
+            entry.resourceUrl ?? `https://github.com/${entry.githubRepo}`,
+        }
+      : {}),
+    ...(entry.type === "agent" || entry.githubRepo
+      ? { applicationCategory: "DeveloperApplication", operatingSystem: "Web" }
       : {}),
     ...(entry.type === "system" || entry.type === "skill"
-      ? { about: "SaaS workflow automation" }
+      ? { about: entry.githubRepo ?? "SaaS workflow automation" }
       : {}),
     isPartOf: {
       "@type": "CollectionPage",
@@ -163,7 +188,7 @@ export default async function DirectoryEntryPage({ params }: PageProps) {
       <article className="pt-28 md:pt-32 pb-24">
         <div className="container-air">
           <div
-            className={`relative overflow-hidden rounded-lg border min-h-[280px] p-8 md:p-12 ${meta.hero}`}
+            className={`relative overflow-hidden rounded-lg border p-6 md:p-8 ${meta.hero}`}
           >
             <Link
               href="/directories"
@@ -181,40 +206,56 @@ export default async function DirectoryEntryPage({ params }: PageProps) {
               All directories
             </Link>
 
-            <div className="mt-8 flex flex-wrap gap-2">
+            <div className="mt-5 flex flex-wrap gap-2">
               <span
-                className={`inline-flex min-h-8 items-center rounded-sm px-3 text-caption uppercase tracking-[0.08em] ${meta.badge}`}
+                className={`inline-flex min-h-7 items-center rounded-sm px-2.5 text-caption uppercase tracking-[0.08em] ${meta.badge}`}
               >
                 {meta.label}
               </span>
-              {entry.categories.map((c) => (
+              {entry.categories.slice(0, 2).map((c) => (
                 <span
                   key={c}
-                  className="inline-flex min-h-8 items-center rounded-sm border border-hairline bg-canvas/80 px-3 text-caption text-muted"
+                  className="inline-flex min-h-7 items-center rounded-sm border border-hairline bg-canvas/80 px-2.5 text-caption text-muted"
                 >
                   {CATEGORY_LABELS[c]}
                 </span>
               ))}
             </div>
 
-            <h1 className="text-display-xl text-ink mt-6 max-w-3xl">
+            <h1 className="text-display-md text-ink mt-4 max-w-3xl">
               {entry.name}
             </h1>
-            <p className="text-label-md text-body mt-5 max-w-2xl leading-[1.5]">
+            {entry.githubRepo ? (
+              <p className="mt-2 font-mono text-[13px] text-muted">
+                {entry.githubRepo}
+              </p>
+            ) : null}
+            <p className="text-body-md text-body mt-3 max-w-2xl leading-[1.5]">
               {entry.summary}
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-3">
-              {entry.link && entry.link !== "#" ? (
-                <a
-                  href={entry.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-primary inline-flex !min-h-11 !px-5"
-                >
-                  Open source link
-                </a>
-              ) : null}
+            <div className="mt-6 flex flex-wrap gap-3">
+              {(() => {
+                const href =
+                  entry.link && entry.link !== "#"
+                    ? entry.link
+                    : entry.resourceUrl ||
+                      (entry.githubRepo
+                        ? `https://github.com/${entry.githubRepo}`
+                        : null);
+                return href ? (
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-primary inline-flex !min-h-11 !px-5"
+                  >
+                    {href.includes("github.com")
+                      ? "Open on GitHub"
+                      : "Open source"}
+                  </a>
+                ) : null;
+              })()}
               <Link
                 href={backHref}
                 className="inline-flex min-h-11 items-center rounded-sm border border-hairline bg-canvas px-5 text-body-md text-ink focus-ring"
@@ -226,9 +267,30 @@ export default async function DirectoryEntryPage({ params }: PageProps) {
         </div>
 
         <div className="container-air max-w-[920px] mt-14 space-y-12">
+          {entry.resourceUrl || entry.githubRepo ? (
+            <section>
+              <SectionHeading index="00" title="GitHub repository" />
+              <a
+                href={
+                  entry.resourceUrl ??
+                  `https://github.com/${entry.githubRepo}`
+                }
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-5 block rounded-md border border-hairline bg-surface-soft px-4 py-3 font-mono text-[14px] text-link break-all focus-ring"
+              >
+                {entry.resourceUrl ??
+                  `https://github.com/${entry.githubRepo}`}
+              </a>
+            </section>
+          ) : null}
+
           {related.length > 0 && (
             <section>
-              <SectionHeading index="00" title={relatedTitle} />
+              <SectionHeading
+                index={entry.resourceUrl || entry.githubRepo ? "01" : "00"}
+                title={relatedTitle}
+              />
               <ul className="mt-5 grid gap-3 sm:grid-cols-2">
                 {related.map((relatedEntry) => (
                   <li key={relatedEntry.slug}>

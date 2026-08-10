@@ -47,6 +47,13 @@ export type DirectoryEntry = {
    * Only slugs that exist in the catalog should be listed.
    */
   skillSlugs?: string[];
+  /**
+   * GitHub `owner/repo` path — used for SEO titles, schema sameAs,
+   * and on-page copy so searches for the repo can rank this guide.
+   */
+  githubRepo?: string;
+  /** Canonical GitHub (or article) URL shown as copy/paste text when link is muted */
+  resourceUrl?: string;
 };
 
 export type DirectoryFilters = {

@@ -1,8 +1,10 @@
 import type { DirectoryEntry } from "./types";
 
 /**
- * Directory Systems — small skill architectures for Sales, Marketing, Growth, etc.
- * skillSlugs must reference existing catalog entries (validated at runtime by getRelatedEntries).
+ * Directory Systems — archived skill architectures.
+ * Not exported into the live Directories catalog (Systems hub removed).
+ * Kept for reference / possible restore. Live GitHub resources live in
+ * `github-resources.ts`.
  */
 export const DIRECTORY_SYSTEMS: DirectoryEntry[] = [
   {

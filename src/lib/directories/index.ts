@@ -69,6 +69,8 @@ function entrySearchHaystack(entry: DirectoryEntry): string {
     entry.overview,
     entry.howToUse,
     entry.installation,
+    entry.githubRepo,
+    entry.resourceUrl,
     ...entry.useCases,
     ...entry.examplePrompts,
     ...entry.tips,

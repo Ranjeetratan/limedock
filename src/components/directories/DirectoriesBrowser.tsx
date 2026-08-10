@@ -82,26 +82,9 @@ export default function DirectoriesBrowser({
     () => visible.filter((e) => e.type === "agent"),
     [visible]
   );
-  const systems = useMemo(
-    () => visible.filter((e) => e.type === "system"),
-    [visible]
-  );
 
   const showSkills = filters.type === "all" || filters.type === "skill";
   const showAgents = filters.type === "all" || filters.type === "agent";
-  const showSystems = filters.type === "all" || filters.type === "system";
-  const [pendingSystemsScroll, setPendingSystemsScroll] = useState(false);
-
-  useEffect(() => {
-    if (!pendingSystemsScroll || !showSystems) return;
-    const timer = window.setTimeout(() => {
-      document
-        .getElementById("directory-systems")
-        ?.scrollIntoView({ behavior: "smooth", block: "start" });
-      setPendingSystemsScroll(false);
-    }, 50);
-    return () => window.clearTimeout(timer);
-  }, [pendingSystemsScroll, showSystems, systems.length]);
 
   return (
     <div className="space-y-12">
@@ -112,12 +95,7 @@ export default function DirectoriesBrowser({
         resultCount={visible.length}
       />
 
-      <DirectoriesConversionStrip
-        onBrowseSystems={() => {
-          setFilters((prev) => ({ ...prev, type: "system" }));
-          setPendingSystemsScroll(true);
-        }}
-      />
+      <DirectoriesConversionStrip />
 
       {visible.length === 0 ? (
         <div className="border border-hairline bg-signature-cream/40 px-8 py-16 text-center">
@@ -127,22 +105,12 @@ export default function DirectoriesBrowser({
         </div>
       ) : (
         <div className="space-y-14">
-          {showSystems && (
-            <EntrySection
-              key={`systems-${filters.category}-${filters.industry}-${filters.query}`}
-              kind="system"
-              title="Systems"
-              description="Small architectures that combine skills and agents for Sales, Marketing, Growth, Design, Engineering, Ops, and Product."
-              entries={systems}
-              emptyLabel="No systems match these filters."
-            />
-          )}
           {showSkills && (
             <EntrySection
               key={`skills-${filters.category}-${filters.industry}-${filters.query}`}
               kind="skill"
               title="Skills"
-              description="Focused playbooks Claude loads on demand — install once, reuse on every matching task."
+              description="Focused playbooks and GitHub resources — plain-language examples so you know how you’d actually use them."
               entries={skills}
               emptyLabel="No skills match these filters."
             />
@@ -207,10 +175,7 @@ function EntrySection({
   }, [hasMore, entries.length]);
 
   return (
-    <section
-      id={kind === "system" ? "directory-systems" : undefined}
-      className={kind === "system" ? "scroll-mt-28" : undefined}
-    >
+    <section>
       <div
         className={`rounded-md border px-5 py-5 md:px-7 md:py-6 ${styles.sectionBorder}`}
       >
@@ -284,6 +249,11 @@ function DirectoryCard({ entry }: { entry: DirectoryEntry }) {
       <h3 className="text-title-sm text-ink mt-4 line-clamp-2 transition-colors group-hover:text-link">
         {entry.name}
       </h3>
+      {entry.githubRepo ? (
+        <p className="mt-1 font-mono text-[12px] text-muted line-clamp-1">
+          {entry.githubRepo}
+        </p>
+      ) : null}
 
       <p className="mt-3 flex-1 text-body-md leading-[1.55] text-body line-clamp-4">
         {entry.summary}
@@ -306,11 +276,6 @@ function DirectoryCard({ entry }: { entry: DirectoryEntry }) {
             {INDUSTRY_LABELS[i]}
           </span>
         ))}
-        {entry.type === "system" && entry.skillSlugs?.length ? (
-          <span className="rounded-sm border border-signature-mustard/50 px-2 py-1 text-caption text-ink">
-            {entry.skillSlugs.length} skills
-          </span>
-        ) : null}
       </div>
     </Link>
   );

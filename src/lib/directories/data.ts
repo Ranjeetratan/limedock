@@ -2,10 +2,12 @@ import type { DirectoryEntry } from "./types";
 import { ANTI_SLOP_SKILLS } from "./anti-slop-skills";
 import { GROWTH_ARCHITECTURE_SKILLS } from "./growth-architecture-skills";
 import { REAL_ESTATE_SKILLS } from "./real-estate-skills";
-import { DIRECTORY_SYSTEMS } from "./systems";
+import { GITHUB_RESOURCES } from "./github-resources";
+import { GITHUB_CATALOG_RESOURCES } from "./github-catalog-resources";
+import { AI_AGENTS_CATALOG } from "./ai-agents-catalog";
 
 /** Seeded from Claude skills roundup articles. Update via chat when new links are shared. */
-export const DIRECTORY_ENTRIES: DirectoryEntry[] = [
+const DIRECTORY_ENTRIES_RAW: DirectoryEntry[] = [
   {
     slug: "ab-testing",
     name: "A/B Testing Frameworks",
@@ -3138,5 +3140,29 @@ export const DIRECTORY_ENTRIES: DirectoryEntry[] = [
   ...ANTI_SLOP_SKILLS,
   ...GROWTH_ARCHITECTURE_SKILLS,
   ...REAL_ESTATE_SKILLS,
-  ...DIRECTORY_SYSTEMS,
+  ...GITHUB_RESOURCES,
+  ...GITHUB_CATALOG_RESOURCES,
+  ...AI_AGENTS_CATALOG,
 ];
+
+/** Prefer the first entry for a slug; merge GitHub SEO fields from later duplicates. */
+function dedupeDirectoryEntries(entries: DirectoryEntry[]): DirectoryEntry[] {
+  const bySlug = new Map<string, DirectoryEntry>();
+  for (const entry of entries) {
+    const existing = bySlug.get(entry.slug);
+    if (!existing) {
+      bySlug.set(entry.slug, entry);
+      continue;
+    }
+    bySlug.set(entry.slug, {
+      ...existing,
+      githubRepo: existing.githubRepo ?? entry.githubRepo,
+      resourceUrl: existing.resourceUrl ?? entry.resourceUrl,
+    });
+  }
+  return [...bySlug.values()];
+}
+
+export const DIRECTORY_ENTRIES: DirectoryEntry[] = dedupeDirectoryEntries(
+  DIRECTORY_ENTRIES_RAW
+);
