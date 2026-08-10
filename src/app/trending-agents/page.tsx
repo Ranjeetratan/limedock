@@ -289,7 +289,7 @@ export default async function TrendingAgentsPage({ searchParams }: PageProps) {
               <div className="flex flex-wrap items-baseline justify-between gap-3">
                 <SectionLabel
                   index="02"
-                  title={`Week of ${formatWeek(latestWeek)}`}
+                  title="Top Trending Github repos this week"
                   flush
                 />
                 <span className="text-caption uppercase tracking-[0.1em] text-muted">
@@ -302,9 +302,9 @@ export default async function TrendingAgentsPage({ searchParams }: PageProps) {
                   <li key={agent.slug} className="border-b border-hairline">
                     <Link
                       href={`/trending-agents/${agent.slug}`}
-                      className="group flex items-baseline gap-4 py-3.5 focus-ring"
+                      className="group flex items-start gap-4 py-3.5 focus-ring"
                     >
-                      <span className="text-caption text-signature-coral tabular-nums shrink-0">
+                      <span className="mt-0.5 text-caption text-signature-coral tabular-nums shrink-0">
                         {String(index + 1).padStart(2, "0")}
                       </span>
                       <span className="min-w-0 flex-1">
@@ -315,7 +315,7 @@ export default async function TrendingAgentsPage({ searchParams }: PageProps) {
                           {agent.tagline}
                         </span>
                       </span>
-                      <span className="shrink-0 text-caption text-muted tabular-nums">
+                      <span className="mt-0.5 shrink-0 text-caption text-muted tabular-nums">
                         ★ {formatStars(agent.stats.stars)}
                       </span>
                     </Link>
@@ -346,12 +346,12 @@ export default async function TrendingAgentsPage({ searchParams }: PageProps) {
                     <span className="mt-0.5 shrink-0 rounded-sm border border-hairline bg-signature-cream/70 p-2 text-ink transition-colors group-hover:bg-signature-mint/50">
                       <CategoryIcon category={category} size={20} />
                     </span>
-                    <span className="min-w-0">
-                      <span className="flex items-baseline justify-between gap-3">
+                    <span className="min-w-0 flex-1">
+                      <span className="flex items-start justify-between gap-3">
                         <span className="text-title-sm text-ink group-hover:underline decoration-1 underline-offset-4">
                           {CATEGORY_LABELS[category]}
                         </span>
-                        <span className="text-caption text-muted tabular-nums shrink-0">
+                        <span className="mt-0.5 text-caption text-muted tabular-nums shrink-0">
                           {count}
                         </span>
                       </span>
