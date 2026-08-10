@@ -4,7 +4,6 @@ import Link from "next/link";
 import { Logo } from "./Logo";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import StartExperienceButton from "./StartExperienceButton";
 
 const NAV_LINKS = [
   { href: "#collapse", label: "The math" },
@@ -54,11 +53,14 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
-            <Link href="/real-estate-services" className="focus-ring rounded-sm">
-              Real Estate
+            <Link href="/trending-agents" className="focus-ring rounded-sm">
+              Trending Agents
             </Link>
             <Link href="/directories" className="focus-ring rounded-sm">
               Directories
+            </Link>
+            <Link href="/works" className="focus-ring rounded-sm">
+              Works
             </Link>
             <Link href="/blog" className="focus-ring rounded-sm">
               Blog
@@ -66,7 +68,6 @@ export default function Navbar() {
           </div>
 
           <div className="hidden md:flex items-center gap-3">
-            <StartExperienceButton variant="ghost" label="View all works" />
             <a
               href="https://cal.com/limedock-admin-nb05ck/30min"
               target="_blank"
@@ -116,8 +117,9 @@ export default function Navbar() {
             >
               {[
                 ...NAV_LINKS,
-                { href: "/real-estate-services", label: "Real Estate" },
+                { href: "/trending-agents", label: "Trending Agents" },
                 { href: "/directories", label: "Directories" },
+                { href: "/works", label: "Works" },
                 { href: "/blog", label: "Blog" },
               ].map((link) => (
                 <Link
@@ -130,11 +132,6 @@ export default function Navbar() {
                 </Link>
               ))}
               <div className="pt-8 grid gap-3">
-                <StartExperienceButton
-                  variant="ghost"
-                  label="View all works"
-                  className="w-full justify-center"
-                />
                 <a
                   href="https://cal.com/limedock-admin-nb05ck/30min"
                   target="_blank"

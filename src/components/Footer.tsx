@@ -30,9 +30,10 @@ const footerGroups = [
   {
     title: "Resources",
     links: [
+      ["Trending Agents", "/trending-agents"],
       ["Directories", "/directories"],
+      ["Works", "/works"],
       ["Blog", "/blog"],
-      ["FAQs", "#faqs"],
       ["Book a call", "https://cal.com/limedock-admin-nb05ck/30min"],
     ],
   },

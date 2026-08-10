@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getAllEntries, getEntrySlugs } from "@/lib/directories";
+import { getAgentSlugs } from "@/lib/trending-agents";
 import { getPosts } from "@/lib/massblogger";
 import { absoluteUrl } from "@/lib/site";
 
@@ -18,6 +19,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: now,
       changeFrequency: "weekly",
       priority: 0.9,
+    },
+    {
+      url: absoluteUrl("/trending-agents"),
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.95,
+    },
+    {
+      url: absoluteUrl("/works"),
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
     },
     {
       url: absoluteUrl("/law-firms"),
@@ -86,6 +99,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })
   );
 
+  // Detail pages carry the long-tail keywords, so they sit above blog posts.
+  const trendingRoutes: MetadataRoute.Sitemap = getAgentSlugs().map((slug) => ({
+    url: absoluteUrl(`/trending-agents/${slug}`),
+    lastModified: now,
+    changeFrequency: "weekly" as const,
+    priority: 0.75,
+  }));
+
   let blogRoutes: MetadataRoute.Sitemap = [];
   try {
     const posts = await getPosts();
@@ -103,5 +124,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     blogRoutes = [];
   }
 
-  return [...staticRoutes, ...directoryRoutes, ...blogRoutes];
+  return [
+    ...staticRoutes,
+    ...trendingRoutes,
+    ...directoryRoutes,
+    ...blogRoutes,
+  ];
 }
