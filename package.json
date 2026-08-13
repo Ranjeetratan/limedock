@@ -6,7 +6,13 @@
     "dev": "next dev",
     "build": "next build --webpack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "playwright test --config=e2e/config/playwright.config.ts",
+    "test:e2e": "playwright test --config=e2e/config/playwright.config.ts",
+    "test:tier1": "playwright test e2e/specs/tier1_feature_coverage.spec.ts --config=e2e/config/playwright.config.ts",
+    "test:tier2": "playwright test e2e/specs/tier2_boundary_corner.spec.ts --config=e2e/config/playwright.config.ts",
+    "test:tier3": "playwright test e2e/specs/tier3_combinations.spec.ts --config=e2e/config/playwright.config.ts",
+    "test:tier4": "playwright test e2e/specs/tier4_real_world.spec.ts --config=e2e/config/playwright.config.ts"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",
@@ -21,6 +27,7 @@
     "three": "^0.184.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.50.0",
     "@tailwindcss/postcss": "^4",
     "@tailwindcss/typography": "^0.5.19",
     "@types/node": "^20",

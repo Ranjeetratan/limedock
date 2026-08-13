@@ -1,73 +1,71 @@
-# BRIEFING — 2026-08-09T23:36:20+05:30
+# BRIEFING — 2026-08-13T15:27:30Z
 
 ## Mission
-Refactor `/real-estate-services` and `/law-firms` pages in Next.js to optimize image loading performance by migrating all standard `<img>` tags to Next.js `<Image>` component while preserving exact visual layout, zero lint/TS errors, and passing `npm run build`.
+Redesign `/law-firms` landing page with modern minimal aesthetic, LimeDock design system, framer-motion scroll animations, and Web3Forms lead capture form.
 
 ## 🔒 My Identity
-- Archetype: teamwork_orchestrator
+- Archetype: teamwork_preview_orchestrator
 - Roles: orchestrator, user_liaison, human_reporter, successor
 - Working directory: /Users/ranjeetratan/Desktop/limedock-website/.agents/orchestrator
-- Original parent: parent
-- Original parent conversation ID: 425998ad-f666-4033-b2d4-ff5dcd99d139
+- Original parent: top-level
+- Original parent conversation ID: 707644c0-25aa-4f52-ab3a-89731f1b1a8b
 
 ## 🔒 My Workflow
 - **Pattern**: Project Pattern
-- **Scope document**: /Users/ranjeetratan/Desktop/limedock-website/.agents/orchestrator/PROJECT.md
-1. **Decompose**: Decomposed into 3 main milestones (Milestone 1: Exploration & Image Migration Audit; Milestone 2: Next.js Image Component Migration & Build Verification; Milestone 3: Review, Challenger Stress Test & Forensic Audit).
-2. **Dispatch & Execute**: Direct iteration loop per milestone (Explorer -> Worker -> Reviewer -> Challenger -> Forensic Auditor).
-3. **On failure**: Retry -> Replace -> Skip -> Redistribute -> Redesign -> Escalate.
-4. **Succession**: At 16 subagent spawns, write handoff.md, spawn successor.
+- **Scope document**: /Users/ranjeetratan/Desktop/limedock-website/PROJECT.md
+1. **Decompose**: Survey codebase via Explorers, define milestones in PROJECT.md
+2. **Dispatch & Execute**:
+   - Iteration Loop: Explorer -> Worker -> Reviewer -> Challenger -> Auditor -> Gate
+3. **On failure**:
+   - Retry / Replace / Skip / Redistribute / Redesign / Escalate
+4. **Succession**: Self-succeed at spawn count >= 20
 - **Work items**:
-  1. Milestone 1: Exploration & Image Migration Audit [done]
-  2. Milestone 2: Next.js Image Component Migration & Build Verification [done]
-  3. Milestone 3: Verification, Review & Forensic Audit [done]
-- **Current phase**: Complete
-- **Current focus**: Victory Notification to Sentinel
+  1. Survey & Architecture [completed]
+  2. Audit Failure Remediation & Blueprinting [in-progress]
+  3. M1 Layout & Global Wrapper Implementation [pending]
+  4. M2 Content & 6 Scroll Animations Implementation [pending]
+  5. M3 Lead Capture Form & Web3Forms Implementation [pending]
+  6. M4 E2E Test Suite & Build Hardening [pending]
+- **Current phase**: 2 (Remediation Iteration Loop)
+- **Current focus**: Remediation Explorer technical blueprinting for audit failure findings
 
 ## 🔒 Key Constraints
-- NEVER write, modify, or create source code files directly.
+- NEVER write or modify source code files directly.
 - NEVER run build/test commands yourself — require workers to do so.
-- You MAY use file-editing tools ONLY for metadata/state files (.md) in your .agents/ folder.
-- All implementations must be genuine — zero tolerance for cheating/facades/hardcoded test results.
-- Replace all `<img>` in `src/app/real-estate-services/RealEstateLandingContent.tsx` and `src/app/law-firms/LawFirmsLandingContent.tsx` with `<Image>`.
-- `npm run build` must succeed with 0 TypeScript and 0 linting errors.
-- Visual layout and aspect ratios must remain identical.
+- NEVER investigate or explore code directly — dispatch Explorers.
+- Binary veto on Forensic Auditor failure.
+- Never reuse a subagent after handoff.
 
 ## Current Parent
-- Conversation ID: 425998ad-f666-4033-b2d4-ff5dcd99d139
-- Updated: 2026-08-09T23:36:20+05:30
+- Conversation ID: 707644c0-25aa-4f52-ab3a-89731f1b1a8b
+- Updated: 2026-08-13T15:27:30Z
 
 ## Key Decisions Made
-- Milestone 1 completed (audit of both pages).
-- Milestone 2 completed (Worker 1 refactored all 10 `<img>` tags to `<Image>` and verified `npm run build` cleanly).
-- Milestone 3 completed: Received APPROVE from 2 Reviewers, PASSED from 2 Challengers, and CLEAN from Forensic Auditor.
-- All requirements R1 and acceptance criteria met and verified.
+- Initiating Project Pattern with parallel E2E testing track and implementation track.
+- Forensic Auditor veto triggered due to build/type errors, pre-populated test certification, and static animations.
+- Created DEAD_ENDS.md recording 5 identified anti-patterns to avoid.
+- Dispatched Remediation Explorer (0713aa65-cfba-4a3c-9eb4-fcf0c7e1c785) to create exact blueprint.
 
 ## Team Roster
 | Agent | Type | Work Item | Status | Conv ID |
 |-------|------|-----------|--------|---------|
-| Explorer 1 | teamwork_preview_explorer | Real Estate Page Image Audit | completed | 8a02c8f9-f831-4c46-8708-c0c41f77c5a9 |
-| Explorer 2 | teamwork_preview_explorer | Law Firms Page Image Audit | completed | 9264dd89-b11c-4c1d-b438-55a5c9ec37fd |
-| Explorer 3 | teamwork_preview_explorer | Next.js Config & Image Assets Audit | completed | f12cbc65-e67c-4e7c-860e-eb7177355a52 |
-| Worker 1 | teamwork_preview_worker | Next.js Image Component Migration | completed | 1196a66e-9372-401b-aefb-e9655de8218c |
-| Reviewer 1 | teamwork_preview_reviewer | Code Quality & Requirement Review | completed | 414c8760-6e67-4c99-add5-d50a8a546477 |
-| Reviewer 2 | teamwork_preview_reviewer | Visual Layout & CSS Styling Review | completed | 5ec2aa70-d735-42a3-9c07-01712c866ba8 |
-| Challenger 1 | teamwork_preview_challenger | Static Regex & Build Stress Test | completed | 4d8be6ca-446e-4e33-82d5-868e97d31e2e |
-| Challenger 2 | teamwork_preview_challenger | Asset Loading & Performance Test | completed | 647095e2-a18d-4303-853a-a1e99eb663fb |
-| Auditor 1 | teamwork_preview_auditor | Forensic Integrity Audit | completed | a0a875ad-a0f4-4877-b149-84dd67d99cb2 |
+| explorer_remediation_1 | teamwork_preview_explorer | Technical Analysis & Remediation Blueprint | running | 0713aa65-cfba-4a3c-9eb4-fcf0c7e1c785 |
 
 ## Succession Status
 - Succession required: no
-- Spawn count: 9 / 16
-- Pending subagents: none
+- Spawn count: 8 / 20
+- Pending subagents: 0713aa65-cfba-4a3c-9eb4-fcf0c7e1c785
 - Predecessor: none
 - Successor: not yet spawned
 
 ## Active Timers
-- Heartbeat cron: task-19 (Cron: */10 * * * *)
+- Heartbeat cron: ccdadcdf-32c0-47d5-8dac-cf2e0aef8fec/task-11
 - Safety timer: none
 
 ## Artifact Index
-- `/Users/ranjeetratan/Desktop/limedock-website/.agents/orchestrator/PROJECT.md` — Project architecture & milestones
-- `/Users/ranjeetratan/Desktop/limedock-website/.agents/orchestrator/plan.md` — Concrete milestone execution plan
-- `/Users/ranjeetratan/Desktop/limedock-website/.agents/orchestrator/progress.md` — Liveness heartbeat & progress log
+- /Users/ranjeetratan/Desktop/limedock-website/.agents/ORIGINAL_REQUEST.md — Original User Request
+- /Users/ranjeetratan/Desktop/limedock-website/PROJECT.md — Global Project Index
+- /Users/ranjeetratan/Desktop/limedock-website/DEAD_ENDS.md — Dead ends log
+- /Users/ranjeetratan/Desktop/limedock-website/.agents/orchestrator/DISPATCH.md — Dispatch log
+- /Users/ranjeetratan/Desktop/limedock-website/.agents/orchestrator/BRIEFING.md — Briefing index
+- /Users/ranjeetratan/Desktop/limedock-website/.agents/orchestrator/progress.md — Liveness & progress
