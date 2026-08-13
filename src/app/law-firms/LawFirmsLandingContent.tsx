@@ -1,429 +1,310 @@
 "use client";
 
+import React, { useState } from "react";
 import { motion } from "framer-motion";
-import Link from "next/link";
-import Image from "next/image";
 import { BOOK_DEMO_URL } from "@/lib/site";
 
-const EASE = [0.2, 0.8, 0.2, 1] as const;
-
-const fadeUp = {
-  initial: { opacity: 0, y: 28 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true as const, margin: "-80px" },
-  transition: { duration: 0.65, ease: EASE },
+const sectionVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { duration: 0.7, ease: [0.2, 0.8, 0.2, 1] }
+  }
 };
 
-const pains = [
-  {
-    line: "New-matter intake. Missing 3 fields. 4 emails to fix it.",
-    sub: "Intake Friction",
-    img: "/images/law-firms/courthouse.jpg",
-    overlay: "rgba(22, 32, 45, 0.75)", // Deep navy/slate
-  },
-  {
-    line: "Client status update. 45 minutes of associate archaeology.",
-    sub: "Client Communication",
-    img: "/images/law-firms/associate.jpg",
-    overlay: "rgba(45, 55, 72, 0.65)", // Slate
-  },
-  {
-    line: "Referral sent. Thank you forgotten. Pipeline blind.",
-    sub: "Business Development",
-    img: "/images/law-firms/handshake.jpg",
-    overlay: "rgba(15, 23, 42, 0.8)", // Darkest slate
-  },
-  {
-    line: "Outstanding documents. Nudge delayed until the deadline.",
-    sub: "Matter Follow-up",
-    img: "/images/law-firms/documents.jpg",
-    overlay: "rgba(71, 85, 105, 0.4)", // Lighter slate
-  },
-  {
-    line: "Partner meeting. CRM pipeline is 3 weeks out of date.",
-    sub: "Firm Visibility",
-    img: "/images/law-firms/lobby.jpg",
-    overlay: "rgba(22, 32, 45, 0.75)",
-  },
-  {
-    line: "Monthly newsletter. Built by hand by a senior associate.",
-    sub: "Marketing Ops",
-    img: "/images/law-firms/stairs.jpg",
-    overlay: "rgba(15, 23, 42, 0.7)",
-  },
-];
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15
+    }
+  }
+};
 
-const workflows = [
-  {
-    num: "01",
-    title: "Intake → CRM matter + Slack channel",
-    desc: "Web form or email inquiry becomes a structured matter record, triggers a missing-field chase, and opens a dedicated Slack thread for the team.",
-    trigger: "Trigger: new intake form",
-    img: "/images/law-firms/gavel.jpg",
-  },
-  {
-    num: "02",
-    title: "Matter follow-up sequences",
-    desc: "Outstanding docs, conflict checks, and engagement-letter reminders fire on schedule with clear owners in Slack.",
-    trigger: "Trigger: status change",
-    img: "/images/law-firms/briefcase.jpg",
-  },
-  {
-    num: "03",
-    title: "Client status digests",
-    desc: "Weekly or on-demand summaries generated from CRM and calendar so client updates don’t require a full matter archaeology session.",
-    trigger: "Trigger: weekly cron / slash command",
-    img: "/images/law-firms/library.jpg",
-  },
-  {
-    num: "04",
-    title: "Referral tracking loop",
-    desc: "Capture the source, auto-draft a thank you to the referrer, schedule a BD follow-up, and report on which relationships actually convert.",
-    trigger: "Trigger: matter won",
-    img: "/images/law-firms/meeting.jpg",
-  },
-];
-
-const befores = [
-  ["Intake forms sit as PDFs in a shared inbox", "Intake auto-creates CRM matters and notifies the team in Slack"],
-  ["Associates dig through emails to update clients", "Client status digests are generated automatically from case data"],
-  ["Matter follow-ups depend on calendar reminders", "Automated sequences chase missing documents and engagement letters"],
-  ["Referrals are tracked in a partner's personal spreadsheet", "Referral sources are logged, tracked, and thanked systematically"],
-  ["Marketing ops steal billable hours from associates", "Newsletters, event lists, and CRM hygiene run on autopilot"],
-];
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut" }
+  }
+};
 
 export default function LawFirmsLandingContent() {
+  const [formStatus, setFormStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setFormStatus("submitting");
+    const formData = new FormData(e.currentTarget);
+    formData.append("access_key", "YOUR_WEB3FORMS_ACCESS_KEY_HERE"); // Placeholder key
+    
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
+      if (response.ok) {
+        setFormStatus("success");
+      } else {
+        setFormStatus("error");
+      }
+    } catch {
+      setFormStatus("error");
+    }
+  }
+
   return (
-    <div>
-      {/* ── SECTION 1: HERO — full-bleed boardroom photo ── */}
-      <section className="relative min-h-screen flex items-end pb-20 md:pb-28 overflow-hidden">
-        {/* Background photo */}
-        <Image src="/images/law-firms/hero.jpg" alt="Luxury modern law firm boardroom" fill priority sizes="100vw" className="object-cover object-center" />
-        {/* Dark overlay */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to top, rgba(15,23,42,0.95) 0%, rgba(15,23,42,0.6) 50%, rgba(15,23,42,0.3) 100%)",
-          }}
-        />
-
-        <motion.div
-          initial={{ opacity: 0, y: 32 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, ease: [0.2, 0.8, 0.2, 1] }}
-          className="container-air relative z-10"
-        >
-          <span className="inline-flex items-center gap-2 text-caption text-white/60 tracking-[0.06em] uppercase mb-6">
-            <span className="h-px w-8 bg-white/40" />
-            Workflow automation for law firms
-          </span>
-
-          <h1
-            className="text-white max-w-3xl leading-[1.1] tracking-tight"
-            style={{ fontSize: "clamp(2.4rem, 5.5vw, 4.2rem)", fontWeight: 600 }}
+    <div className="bg-canvas text-body overflow-hidden">
+      {/* ── SECTION 1: Hero ── */}
+      <section className="pt-32 pb-24 relative overflow-hidden bg-canvas">
+        <div className="absolute inset-0 bg-gradient-to-b from-signature-cream/40 to-transparent pointer-events-none" />
+        <div className="container-air relative z-10">
+          <motion.div 
+            className="max-w-3xl"
+            initial="hidden"
+            animate="visible"
+            variants={staggerContainer}
           >
-            We build the automation layer your law firm is missing.
-          </h1>
-
-          <p className="text-white/70 mt-6 text-lg max-w-xl leading-[1.65]">
-            LimeDock designs and deploys custom, owned workflow systems for law firms — automated intake, client updates, matter follow-ups, and referral tracking. Wired into your Slack, CRM, and practice management tools. You own the code, forever.
-          </p>
-
-          <div className="mt-10 flex flex-wrap items-center gap-4">
-            <a
-              href={BOOK_DEMO_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-primary"
-            >
-              Book a workflow call
-            </a>
-            <Link
-              href="/"
-              className="text-white/60 hover:text-white text-body-md transition-colors"
-            >
-              See how LimeDock works →
-            </Link>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* ── SECTION 2: YOUR TUESDAY MORNING — editorial story ── */}
-      <section className="py-24 md:py-32" style={{ backgroundColor: "#f8fafc" }}>
-        <div className="container-air">
-          <motion.div {...fadeUp} className="max-w-xl mb-14">
-            <span className="eyebrow" style={{ color: "#334155" }}>
-              <span className="dot" style={{ backgroundColor: "#0f172a" }} />
-              A Partner's Tuesday
-            </span>
-            <h2 className="text-display-md text-ink mt-5">
-              Here's what a typical Tuesday looks like without automation.
-            </h2>
-          </motion.div>
-
-          <div className="grid lg:grid-cols-[1fr_420px] gap-16 items-start">
-            <div className="space-y-12">
-              {/* Scene 1 */}
-              <motion.div {...fadeUp} className="border-l-2 pl-7" style={{ borderColor: "#475569" }}>
-                <p className="text-caption font-mono text-muted tracking-widest">9:00 AM</p>
-                <p className="text-title-sm text-ink mt-2 mb-3">Intake is stalled.</p>
-                <p className="text-body-md text-body leading-[1.65]">
-                  A high-value prospect filled out the web form last night. It's sitting in a generic `info@` inbox. The form is missing key details. A paralegal will eventually find it and start an email chain to get the rest of the information. By the time it hits the CRM, it's 3 PM.
-                </p>
-              </motion.div>
-
-              {/* Scene 2 */}
-              <motion.div {...fadeUp} className="border-l-2 pl-7" style={{ borderColor: "#64748b" }}>
-                <p className="text-caption font-mono text-muted tracking-widest">1:30 PM</p>
-                <p className="text-title-sm text-ink mt-2 mb-3">The client update fire drill.</p>
-                <p className="text-body-md text-body leading-[1.65]">
-                  A key client calls asking for a status update on their matter. You ping your senior associate. They spend 45 minutes digging through email threads, Slack DMs, and calendar events to piece together a summary. That's 45 minutes of non-billable archaeology.
-                </p>
-              </motion.div>
-
-              {/* Scene 3 */}
-              <motion.div {...fadeUp} className="border-l-2 border-hairline pl-7">
-                <p className="text-caption font-mono text-muted tracking-widest">6:00 PM</p>
-                <p className="text-title-sm text-ink mt-2 mb-3">The invisible pipeline.</p>
-                <p className="text-body-md text-body leading-[1.65]">
-                  You successfully closed a matter. The referring attorney is top of mind, but there is no system to trigger a thank you note, track the referral source, or schedule a follow-up lunch. The relationship is left to chance and memory.
-                </p>
-              </motion.div>
-
-              {/* Pull quote */}
-              <motion.blockquote
-                {...fadeUp}
-                className="border-l-4 pl-6 py-2"
-                style={{ borderColor: "#0f172a" }}
-              >
-                <p
-                  className="text-ink leading-[1.4] italic"
-                  style={{ fontSize: "clamp(1.25rem, 2.5vw, 1.6rem)", fontWeight: 500 }}
-                >
-                  "The billable hour is sacred. Your admin overhead is bleeding it dry."
-                </p>
-              </motion.blockquote>
-            </div>
-
-            {/* Photo accent */}
-            <motion.div
-              {...fadeUp}
-              className="hidden lg:block sticky top-28"
-            >
-              <div className="relative rounded-2xl overflow-hidden aspect-[4/5]">
-                <Image src="/images/law-firms/partner.jpg" alt="Law partner at desk" fill sizes="(min-width: 1024px) 420px, 100vw" className="object-cover object-center" />
-                <div
-                  className="absolute inset-0"
-                  style={{ background: "linear-gradient(to top, rgba(15,23,42,0.6) 0%, transparent 60%)" }}
-                />
-                <div className="absolute bottom-5 left-5 right-5">
-                  <p className="text-white text-caption font-mono tracking-widest opacity-70">
-                    THE REALITY WITHOUT AUTOMATION
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── SECTION 3: PAIN MOMENTS — photo card grid ── */}
-      <section className="py-24 md:py-32 overflow-hidden" style={{ backgroundColor: "#0f172a" }}>
-        <div className="container-air">
-          <motion.div {...fadeUp} className="max-w-2xl mb-16">
-            <span className="eyebrow !text-white/60">
-              <span className="dot !bg-white" />
-              The 6 moments you lose time and trust
-            </span>
-            <h2 className="text-display-md text-white mt-5">
-              Every week. Same leaks. Different matters.
-            </h2>
-            <p className="text-white/60 text-body-md mt-4 leading-[1.55] max-w-lg">
-              These aren't edge cases. They're Monday through Friday at every firm running without automation.
-            </p>
-          </motion.div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {pains.map((pain, i) => (
-              <motion.div
-                key={pain.line}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.55, delay: i * 0.07, ease: [0.2, 0.8, 0.2, 1] }}
-                className="relative rounded-xl overflow-hidden aspect-[4/3] group"
-              >
-                <Image src={pain.img} alt={pain.sub} fill sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />
-                <div
-                  className="absolute inset-0"
-                  style={{ background: pain.overlay }}
-                />
-                <div className="absolute inset-0 p-6 flex flex-col justify-end">
-                  <p className="text-caption font-mono text-white/50 tracking-widest uppercase mb-2">
-                    {pain.sub}
-                  </p>
-                  <p className="text-white font-medium leading-[1.3]" style={{ fontSize: "1.05rem" }}>
-                    {pain.line}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── SECTION 4: BEFORE / AFTER transformation ── */}
-      <section className="py-24 md:py-32 bg-canvas">
-        <div className="container-air">
-          <motion.div {...fadeUp} className="max-w-xl mb-16">
-            <span className="eyebrow">
-              <span className="dot" style={{ backgroundColor: "#334155" }} />
-              The transformation
-            </span>
-            <h2 className="text-display-md text-ink mt-5">
-              What changes when your firm runs on owned automation.
-            </h2>
-          </motion.div>
-
-          <motion.div
-            {...fadeUp}
-            className="grid md:grid-cols-2 gap-0 rounded-2xl overflow-hidden border border-hairline"
-          >
-            {/* Before column */}
-            <div className="p-8 md:p-10 border-b md:border-b-0 md:border-r border-hairline bg-canvas">
-              <p className="text-caption font-mono text-muted tracking-widest mb-8">WITHOUT LIMEDOCK</p>
-              <ul className="space-y-7">
-                {befores.map(([before]) => (
-                  <li key={before} className="flex items-start gap-4">
-                    <span className="mt-1.5 h-1.5 w-1.5 rounded-full shrink-0" style={{ backgroundColor: "#94a3b8" }} />
-                    <p className="text-body-md text-body leading-[1.5]">{before}</p>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* After column */}
-            <div className="p-8 md:p-10" style={{ backgroundColor: "#f1f5f9" }}>
-              <p className="text-caption font-mono tracking-widest mb-8" style={{ color: "#0f172a" }}>
-                WITH LIMEDOCK
-              </p>
-              <ul className="space-y-7">
-                {befores.map(([, after]) => (
-                  <li key={after} className="flex items-start gap-4">
-                    <span className="mt-1.5 h-1.5 w-1.5 rounded-full shrink-0" style={{ backgroundColor: "#0f172a" }} />
-                    <p className="text-body-md leading-[1.5]" style={{ color: "#0f172a" }}>{after}</p>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ── SECTION 5: WORKFLOWS — vertical numbered timeline ── */}
-      <section className="py-24 md:py-32" style={{ backgroundColor: "#f8fafc" }}>
-        <div className="container-air">
-          <motion.div {...fadeUp} className="max-w-xl mb-20">
-            <span className="eyebrow" style={{ color: "#334155" }}>
-              <span className="dot" style={{ backgroundColor: "#334155" }} />
-              The automations
-            </span>
-            <h2 className="text-display-md text-ink mt-5">
-              Pick the workflow costing you the most hours.
-            </h2>
-            <p className="text-body-md text-body mt-4 leading-[1.55]">
-              We ship the first one in 48 hours. Then one every week. You own the code.
-            </p>
-          </motion.div>
-
-          <div className="space-y-20">
-            {workflows.map((wf, i) => (
-              <motion.div
-                key={wf.num}
-                initial={{ opacity: 0, y: 32 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.6, ease: [0.2, 0.8, 0.2, 1] }}
-                className={`grid md:grid-cols-2 gap-12 md:gap-20 items-center ${
-                  i % 2 === 1 ? "md:[direction:rtl]" : ""
-                }`}
-              >
-                {/* Text side */}
-                <div className={i % 2 === 1 ? "md:[direction:ltr]" : ""}>
-                  <p
-                    className="font-mono leading-none mb-5"
-                    style={{ fontSize: "clamp(3rem, 7vw, 5.5rem)", color: "rgba(15,23,42,0.1)", fontWeight: 700 }}
-                  >
-                    {wf.num}
-                  </p>
-                  <h3 className="text-title-lg text-ink leading-[1.25] -mt-4 md:-mt-6">
-                    {wf.title}
-                  </h3>
-                  <p className="text-body-md text-body mt-4 leading-[1.65] max-w-md">
-                    {wf.desc}
-                  </p>
-                  <p className="text-caption font-mono text-muted mt-5 tracking-widest">
-                    {wf.trigger}
-                  </p>
-                </div>
-
-                {/* Photo side */}
-                <div className={i % 2 === 1 ? "md:[direction:ltr]" : ""}>
-                  <div className="relative rounded-2xl overflow-hidden aspect-[4/3] shadow-[0_20px_60px_-20px_rgba(15,23,42,0.15)]">
-                    <Image src={wf.img} alt={wf.title} fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
-                    <div
-                      className="absolute inset-0"
-                      style={{ background: "linear-gradient(135deg, rgba(15,23,42,0.15) 0%, transparent 60%)" }}
-                    />
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── SECTION 6: CLOSING CTA — full-bleed photo ── */}
-      <section className="relative py-32 md:py-44 overflow-hidden flex items-center">
-        <Image src="/images/law-firms/team.jpg" alt="Law team walking" fill sizes="100vw" className="object-cover object-center" />
-        <div
-          className="absolute inset-0"
-          style={{ background: "linear-gradient(to right, rgba(15,23,42,0.92) 0%, rgba(15,23,42,0.6) 60%, rgba(15,23,42,0.3) 100%)" }}
-        />
-
-        <motion.div {...fadeUp} className="container-air relative z-10">
-          <div className="max-w-2xl">
-            <span className="inline-flex items-center gap-2 text-caption text-white/50 tracking-[0.06em] uppercase mb-6">
-              <span className="h-px w-8 bg-white/30" />
-              Get started
-            </span>
-            <h2
-              className="text-white leading-[1.15] tracking-tight"
-              style={{ fontSize: "clamp(2rem, 4.5vw, 3.4rem)", fontWeight: 600 }}
-            >
-              Map one workflow bleeding hours.{" "}
-              <span className="text-white/60">30 minutes.</span>
-            </h2>
-            <p className="text-white/65 mt-5 text-lg leading-[1.55] max-w-lg">
-              Bring your intake process, client updates, or referral tracking. We'll sketch the fastest path to a live automation your firm owns.
-            </p>
-            <div className="mt-10 flex flex-wrap items-center gap-4">
-              <a
-                href={BOOK_DEMO_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-primary"
-              >
-                Book a workflow call
+            <motion.span variants={itemVariants} className="eyebrow">
+              <span className="dot !bg-signature-forest" />
+              Modern Legal Operations
+            </motion.span>
+            <motion.h1 variants={itemVariants} className="text-display-xl text-ink mt-6 font-display">
+              A Custom AI Infrastructure for your firm
+            </motion.h1>
+            <motion.p variants={itemVariants} className="text-body-md text-muted mt-6 text-lg max-w-xl leading-[1.65]">
+              AI built around how your firm actually works. Connect your everyday tools, run AI across your employees&apos; devices, and give it the context of your people, cases, clients, and workflows. Your AI gets smarter as your firm works — and grows with you.
+            </motion.p>
+            <motion.div variants={itemVariants} className="mt-10 flex flex-wrap items-center gap-4">
+              <a href="#lead-form" className="btn-primary">
+                Get Customized Workflow
               </a>
-              <span className="text-white/40 text-body-md">
-                No pitch. Just your workflow on a whiteboard.
-              </span>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── SECTION 2: Win More Business ── */}
+      <motion.section 
+        className="section-air bg-surface-soft border-t border-hairline"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={sectionVariants}
+      >
+        <div className="container-air">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="max-w-xl">
+              <h2 className="text-display-lg text-ink font-display">
+                That Helps you to Win More of the Right Business
+              </h2>
+              <p className="text-body-md text-body mt-6 leading-[1.65]">
+                Find the right opportunities and move on them faster. Capture, qualify, research, and follow up with potential clients without relying on your team to chase every lead manually.
+              </p>
+            </div>
+            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
+              <div className="absolute inset-0 bg-signature-forest/10" />
+              <img src="/images/law-firms/law_hero_boardroom_1786200758128.jpg" alt="Boardroom" className="object-cover w-full h-full" />
             </div>
           </div>
-        </motion.div>
-      </section>
+        </div>
+      </motion.section>
+
+      {/* ── SECTION 3: Do Your Best Legal Work ── */}
+      <motion.section 
+        className="section-air bg-canvas border-t border-hairline"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={sectionVariants}
+      >
+        <div className="container-air">
+          <div className="grid lg:grid-cols-2 gap-12 items-center flex-col-reverse lg:flex-row-reverse">
+            <div className="max-w-xl">
+              <h2 className="text-display-lg text-ink font-display">
+                Do your best legal work
+              </h2>
+              <p className="text-body-md text-body mt-6 leading-[1.65]">
+                Spend less time searching and more time doing the work that matters. Research cases, review documents, draft faster, and work with AI that understands your firm&apos;s knowledge, previous work, and the matter you&apos;re working on.
+              </p>
+            </div>
+            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
+              <div className="absolute inset-0 bg-signature-cream/20" />
+              <img src="/images/law-firms/law_library_modern_1786200793996.jpg" alt="Modern Library" className="object-cover w-full h-full" />
+            </div>
+          </div>
+        </div>
+      </motion.section>
+
+      {/* ── SECTION 4: Sync Employee Devices ── */}
+      <motion.section 
+        className="section-air bg-surface-dark text-on-dark border-t border-hairline relative"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={sectionVariants}
+      >
+        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-white via-transparent to-transparent pointer-events-none" />
+        <div className="container-air relative z-10">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="max-w-xl">
+              <h2 className="text-display-lg text-white font-display">
+                Sync all your Employee Devices
+              </h2>
+              <p className="text-white/70 text-body-md mt-6 leading-[1.65]">
+                Give every employee instant access to the company context they need — meetings, case research, documents, tasks, and deadlines — across their laptop and phone. Keep your entire team connected and organized from one centralized workspace, while giving admins complete visibility and control.
+              </p>
+            </div>
+            <div className="relative aspect-video rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+              <div className="absolute inset-0 bg-gradient-to-tr from-signature-mint/30 to-transparent mix-blend-overlay" />
+              <img src="/images/law-firms/law_partner_desk_1786200770412.jpg" alt="Partner Desk" className="object-cover w-full h-full" />
+            </div>
+          </div>
+        </div>
+      </motion.section>
+
+      {/* ── SECTION 5: Run Firm Without Busywork ── */}
+      <motion.section 
+        className="section-air bg-surface-soft border-t border-hairline"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={sectionVariants}
+      >
+        <div className="container-air">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-display-lg text-ink font-display">
+              Run the Firm Without the Busywork
+            </h2>
+            <p className="text-body-md text-body mt-6 leading-[1.65]">
+              Keep matters, deadlines, bills, meetings, and follow-ups moving without someone having to remember everything. AI handles the routine work in the background, so your team can focus on clients and the work that needs human judgment.
+            </p>
+          </div>
+        </div>
+      </motion.section>
+
+      {/* ── SECTION 6: And Much More ── */}
+      <motion.section 
+        className="section-air bg-canvas border-t border-hairline"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={sectionVariants}
+      >
+        <div className="container-air">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
+              <img src="/images/law-firms/law_client_meeting_1786200815407.jpg" alt="Client Meeting" className="object-cover w-full h-full" />
+            </div>
+            <div className="max-w-xl lg:pl-10">
+              <h2 className="text-display-lg text-ink font-display">
+                And Much More
+              </h2>
+              <p className="text-body-md text-body mt-6 leading-[1.65]">
+                Your firm already has the tools, people, and knowledge it needs. We connect them into one intelligent system — with the setup, training, support, and security needed to make it work for your firm.
+              </p>
+            </div>
+          </div>
+        </div>
+      </motion.section>
+
+      {/* ── SECTION 7: Lead Capture Form ── */}
+      <motion.section 
+        id="lead-form" 
+        className="section-air bg-surface-soft border-t border-hairline py-24"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-50px" }}
+        variants={sectionVariants}
+      >
+        <div className="container-air">
+          <div className="max-w-xl mx-auto bg-canvas p-8 md:p-12 rounded-2xl border border-hairline shadow-sm">
+            <div className="text-center mb-8">
+              <h2 className="text-display-md text-ink font-display">
+                Get Customized Workflow
+              </h2>
+              <p className="text-body-md text-muted mt-3">
+                See how LimeDock can transform your firm&apos;s operations.
+              </p>
+            </div>
+
+            {formStatus === "success" ? (
+              <div className="text-center py-10">
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-signature-mint/20 text-signature-forest mb-4">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <h3 className="text-title-lg text-ink">Request Submitted</h3>
+                <p className="text-body mt-2">We will be in touch shortly to discuss your custom workflow.</p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <input type="hidden" name="subject" value="New Law Firm Workflow Request" />
+                <input type="hidden" name="to_email" value="limedockadmn@gmail.com" />
+                
+                <div>
+                  <label htmlFor="companyWebsite" className="block text-caption text-ink font-medium mb-1.5 uppercase tracking-wide">Company Website</label>
+                  <input required type="text" id="companyWebsite" name="Company Website" className="w-full px-4 py-3 rounded-md border border-hairline bg-surface-soft focus:outline-none focus:border-ink/50 transition-colors" placeholder="www.yourfirm.com" />
+                </div>
+
+                <div>
+                  <label htmlFor="areaOfPractice" className="block text-caption text-ink font-medium mb-1.5 uppercase tracking-wide">Area of Practice</label>
+                  <select required id="areaOfPractice" name="Area of Practice" className="w-full px-4 py-3 rounded-md border border-hairline bg-surface-soft focus:outline-none focus:border-ink/50 transition-colors appearance-none">
+                    <option value="" disabled defaultValue="">Select your practice area...</option>
+                    {[
+                      "Administrative Law", "Bankruptcy Law", "Business & Compliance", 
+                      "Civil Litigation Law", "Criminal Law", "Elder Law", "Employment Law", 
+                      "Estate Planning Law", "Family Law", "General Practice", "Government Law", 
+                      "Immigration Law", "In-House Counsel", "Intellectual Property Law", 
+                      "Personal Injury Law", "Real Estate Law"
+                    ].map(opt => <option key={opt} value={opt}>{opt}</option>)}
+                  </select>
+                </div>
+
+                <div>
+                  <label htmlFor="firmSize" className="block text-caption text-ink font-medium mb-1.5 uppercase tracking-wide">Firm Size</label>
+                  <select required id="firmSize" name="Firm Size" className="w-full px-4 py-3 rounded-md border border-hairline bg-surface-soft focus:outline-none focus:border-ink/50 transition-colors appearance-none">
+                    <option value="" disabled defaultValue="">Select firm size...</option>
+                    {["Solo", "Small", "Mid-Sized", "Enterprise"].map(opt => <option key={opt} value={opt}>{opt}</option>)}
+                  </select>
+                </div>
+
+                <div>
+                  <label htmlFor="role" className="block text-caption text-ink font-medium mb-1.5 uppercase tracking-wide">Roles</label>
+                  <select required id="role" name="Role" className="w-full px-4 py-3 rounded-md border border-hairline bg-surface-soft focus:outline-none focus:border-ink/50 transition-colors appearance-none">
+                    <option value="" disabled defaultValue="">Select your role...</option>
+                    {[
+                      "Associate Attorney", "Billing Manager", "IT Manager", 
+                      "Legal Administrator", "Managing Partner", "Paralegal", "Solo Lawyer"
+                    ].map(opt => <option key={opt} value={opt}>{opt}</option>)}
+                  </select>
+                </div>
+
+                <div>
+                  <label htmlFor="email" className="block text-caption text-ink font-medium mb-1.5 uppercase tracking-wide">Email</label>
+                  <input required type="email" id="email" name="Email" className="w-full px-4 py-3 rounded-md border border-hairline bg-surface-soft focus:outline-none focus:border-ink/50 transition-colors" placeholder="you@firm.com" />
+                </div>
+
+                {formStatus === "error" && (
+                  <p className="text-signature-coral text-sm">Something went wrong. Please try again.</p>
+                )}
+
+                <button 
+                  type="submit" 
+                  disabled={formStatus === "submitting"}
+                  className="w-full btn-primary mt-2 disabled:opacity-50"
+                >
+                  {formStatus === "submitting" ? "Submitting..." : "Get Customized Workflow"}
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
+      </motion.section>
     </div>
   );
 }
