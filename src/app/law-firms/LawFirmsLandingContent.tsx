@@ -264,23 +264,56 @@ export default function LawFirmsLandingContent() {
       {/* ── SECTION 5 & 6: Run Firm Without Busywork & And Much More ── */}
       <section className="py-32 bg-canvas relative">
         <div className="container-air">
-          <div className="grid md:grid-cols-2 gap-12">
-            <FadeInText>
-              <div className="bg-surface-soft p-12 md:p-16 rounded-[2rem] h-full border border-hairline hover:border-ink/20 transition-colors duration-500">
-                <h3 className="text-3xl font-display text-ink leading-tight">Run the Firm Without the Busywork</h3>
-                <p className="mt-6 text-lg text-body leading-relaxed">
-                  Keep matters, deadlines, bills, meetings, and follow-ups moving without someone having to remember everything. AI handles the routine work in the background, so your team can focus on clients and the work that needs human judgment.
-                </p>
-              </div>
-            </FadeInText>
-            <FadeInText delay={0.1}>
-              <div className="bg-surface-soft p-12 md:p-16 rounded-[2rem] h-full border border-hairline hover:border-ink/20 transition-colors duration-500">
-                <h3 className="text-3xl font-display text-ink leading-tight">And Much More</h3>
-                <p className="mt-6 text-lg text-body leading-relaxed">
-                  Your firm already has the tools, people, and knowledge it needs. We connect them into one intelligent system — with the setup, training, support, and security needed to make it work for your firm.
-                </p>
-              </div>
-            </FadeInText>
+          <div className="grid md:grid-cols-12 gap-8 items-stretch">
+            {/* Main Feature Card */}
+            <div className="md:col-span-7 h-full">
+              <FadeInText className="h-full">
+                <div className="relative group overflow-hidden rounded-[2rem] h-full min-h-[400px] border border-hairline shadow-lg">
+                  {/* Background Image with Parallax-like scale */}
+                  <Image 
+                    src="/images/law-firms/law_documents_1786201539710.jpg" 
+                    alt="Legal Documents" 
+                    fill 
+                    className="object-cover opacity-90 transition-transform duration-1000 group-hover:scale-105"
+                  />
+                  {/* Rich Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
+                  
+                  {/* Content */}
+                  <div className="absolute inset-0 p-10 md:p-14 flex flex-col justify-end">
+                    <span className="inline-block px-4 py-1.5 rounded-full border border-white/20 bg-white/10 backdrop-blur-md text-white/90 text-xs uppercase tracking-[0.2em] mb-6 w-fit">
+                      Operational Efficiency
+                    </span>
+                    <h3 className="text-3xl md:text-4xl font-display text-white leading-tight">Run the Firm Without the Busywork</h3>
+                    <p className="mt-4 text-lg text-white/80 leading-relaxed max-w-lg">
+                      Keep matters, deadlines, bills, meetings, and follow-ups moving without someone having to remember everything. AI handles the routine work in the background, so your team can focus on clients and the work that needs human judgment.
+                    </p>
+                  </div>
+                </div>
+              </FadeInText>
+            </div>
+
+            {/* Secondary Feature Card */}
+            <div className="md:col-span-5 h-full">
+              <FadeInText delay={0.1} className="h-full">
+                <div className="relative group overflow-hidden bg-signature-forest rounded-[2rem] h-full min-h-[400px] border border-hairline shadow-lg flex flex-col justify-between p-10 md:p-12">
+                  <div className="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-signature-mint/20 rounded-full blur-3xl pointer-events-none" />
+                  <div className="relative z-10 flex-1 flex flex-col">
+                    <div className="mb-auto">
+                      <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center backdrop-blur-md border border-white/20 mb-8">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 10.5L21 3m0 0h-5.25M21 3v5.25m-1.5 11.25l-7.5-7.5m0 0v5.25m0-5.25h-5.25" />
+                        </svg>
+                      </div>
+                      <h3 className="text-3xl font-display text-white leading-tight">And Much More</h3>
+                      <p className="mt-6 text-lg text-white/80 leading-relaxed">
+                        Your firm already has the tools, people, and knowledge it needs. We connect them into one intelligent system — with the setup, training, support, and security needed to make it work for your firm.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </FadeInText>
+            </div>
           </div>
         </div>
       </section>
