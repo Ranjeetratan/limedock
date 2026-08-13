@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import JsonLd from "@/components/JsonLd";
-import { BOOK_DEMO_URL, absoluteUrl } from "@/lib/site";
+import ScrollProgress from "@/components/motion/ScrollProgress";
+import CursorBlob from "@/components/motion/CursorBlob";
 import LawFirmsLandingContent from "./LawFirmsLandingContent";
+import { BOOK_DEMO_URL, absoluteUrl } from "@/lib/site";
 
-const title = "Law Firm Workflow Automation";
+const title = "Law Firm Workflow Automation & AI Systems | LimeDock";
 const description =
-  "LimeDock automates intake, client updates, matter follow-ups, and referral tracking for law firms — live workflows in Slack and your CRM that partners and associates own.";
+  "Custom owned workflow automations and AI infrastructure for law firms. Automate intake, client updates, matter follow-ups, and referral tracking in Slack & CRM.";
 
 export const metadata: Metadata = {
   title,
@@ -40,25 +42,30 @@ const jsonLd = {
   },
   about: {
     "@type": "Service",
-    name: "Law firm workflow automation",
+    name: "Law Firm Workflow Automation",
     provider: {
       "@type": "Organization",
       name: "LimeDock",
       url: absoluteUrl("/"),
     },
+    description:
+      "Owned workflow automations for law firms including intake processing, client updates, matter follow-ups, and referral tracking.",
   },
   offers: {
     "@type": "Offer",
-    name: "Book a LimeDock demo",
+    name: "Book a Law Firm Workflow Call",
     url: BOOK_DEMO_URL,
   },
 };
 
 export default function LawFirmsPage() {
   return (
-    <>
+    <main className="min-h-screen bg-canvas text-body">
       <JsonLd data={jsonLd} />
+      <ScrollProgress />
+      <CursorBlob />
       <LawFirmsLandingContent />
-    </>
+    </main>
   );
 }
+
