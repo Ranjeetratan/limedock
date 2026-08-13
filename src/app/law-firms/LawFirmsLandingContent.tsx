@@ -1,8 +1,27 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
+
+// Helper function to send silent notifications
+const sendNotification = async (type: "Page View" | "Form Touched") => {
+  try {
+    const formData = new FormData();
+    formData.append("access_key", "YOUR_WEB3FORMS_ACCESS_KEY_HERE"); 
+    formData.append("subject", `New Activity: Law Firm Page ${type}`);
+    formData.append("message", `A user has just triggered a ${type} event on the Law Firms landing page at ${new Date().toLocaleString()}.`);
+    
+    // We send this silently without waiting for or displaying the result
+    fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      body: formData,
+      keepalive: true // Ensures the request finishes even if they navigate away
+    });
+  } catch (error) {
+    // Fail silently so it doesn't impact the user experience
+  }
+};
 
 function FadeInText({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
   const ref = useRef(null);
@@ -23,6 +42,14 @@ function FadeInText({ children, className = "", delay = 0 }: { children: React.R
 
 function LeadCaptureForm({ compact = false }: { compact?: boolean }) {
   const [formStatus, setFormStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [hasTouched, setHasTouched] = useState(false);
+
+  const handleInteraction = () => {
+    if (!hasTouched) {
+      setHasTouched(true);
+      sendNotification("Form Touched");
+    }
+  };
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -60,7 +87,7 @@ function LeadCaptureForm({ compact = false }: { compact?: boolean }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className={`space-y-6 ${compact ? 'text-left' : ''}`}>
+    <form onSubmit={handleSubmit} className={`space-y-6 ${compact ? 'text-left' : ''}`} onFocus={handleInteraction} onClick={handleInteraction}>
       <input type="hidden" name="subject" value="New Law Firm Workflow Request" />
       <input type="hidden" name="to_email" value="limedockadmn@gmail.com" />
       
@@ -129,6 +156,11 @@ export default function LawFirmsLandingContent() {
   const { scrollYProgress: heroScroll } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const yBg = useTransform(heroScroll, [0, 1], ["0%", "20%"]);
   const opacityText = useTransform(heroScroll, [0, 0.8], [1, 0]);
+
+  // Hidden tracking code: triggers when the page is opened
+  useEffect(() => {
+    sendNotification("Page View");
+  }, []);
 
   return (
     <div className="bg-canvas text-body overflow-hidden">
