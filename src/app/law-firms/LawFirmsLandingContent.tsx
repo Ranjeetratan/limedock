@@ -54,14 +54,20 @@ function LeadCaptureForm({ compact = false }: { compact?: boolean }) {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setFormStatus("submitting");
+    
+    // Extract form data into a plain object
     const formData = new FormData(e.currentTarget);
-    formData.append("access_key", "YOUR_WEB3FORMS_ACCESS_KEY_HERE"); 
+    const data = Object.fromEntries(formData.entries());
     
     try {
-      const response = await fetch("https://api.web3forms.com/submit", {
+      const response = await fetch("/api/leads", {
         method: "POST",
-        body: formData
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
       });
+      
       if (response.ok) {
         setFormStatus("success");
       } else {
@@ -88,9 +94,6 @@ function LeadCaptureForm({ compact = false }: { compact?: boolean }) {
 
   return (
     <form onSubmit={handleSubmit} className={`space-y-6 ${compact ? 'text-left' : ''}`} onFocus={handleInteraction} onClick={handleInteraction}>
-      <input type="hidden" name="subject" value="New Law Firm Workflow Request" />
-      <input type="hidden" name="to_email" value="limedockadmn@gmail.com" />
-      
       <div className={compact ? 'grid grid-cols-1 md:grid-cols-2 gap-4' : 'space-y-6'}>
         <div className={compact ? 'md:col-span-2' : ''}>
           <label htmlFor={`companyWebsite-${compact}`} className={`block text-xs font-semibold mb-2 uppercase tracking-widest ${compact ? 'text-white/80' : 'text-ink'}`}>Company Website</label>

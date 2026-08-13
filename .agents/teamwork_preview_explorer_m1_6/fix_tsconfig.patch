@@ -1,0 +1,13 @@
+--- tsconfig.json
++++ tsconfig.json
+@@ -29,8 +29,7 @@
+     "src/**/*.ts",
+     "src/**/*.tsx",
+     ".next/types/**/*.ts",
+-    ".next/dev/types/**/*.ts",
+-    "e2e/**/*.ts"
++    ".next/dev/types/**/*.ts"
+   ],
+-  "exclude": ["node_modules"]
++  "exclude": ["node_modules", "e2e"]
+ }

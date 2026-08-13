@@ -1,0 +1,23 @@
+--- a/tsconfig.json
++++ b/tsconfig.json
+@@ -29,8 +29,7 @@
+     "src/**/*.ts",
+     "src/**/*.tsx",
+     ".next/types/**/*.ts",
+-    ".next/dev/types/**/*.ts",
+-    "e2e/**/*.ts"
+   ],
+-  "exclude": ["node_modules"]
++  "exclude": ["node_modules", "e2e"]
+ }
+
+--- a/src/app/law-firms/LawFirmsLandingContent.tsx
++++ b/src/app/law-firms/LawFirmsLandingContent.tsx
+@@ -28,4 +28,4 @@ const itemVariants = {
+   visible: { 
+     opacity: 1, 
+     y: 0,
+-    transition: { duration: 0.6, ease: "easeOut" }
++    transition: { duration: 0.6, ease: "easeOut" as const }
+   }
+ };
