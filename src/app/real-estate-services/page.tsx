@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import JsonLd from "@/components/JsonLd";
@@ -63,6 +64,11 @@ const jsonLd = {
 export default function RealEstateServicesPage() {
   return (
     <main className="min-h-screen bg-canvas text-body">
+      <Script
+        id="limedock-real-estate-pixel"
+        src="https://lead-management-tracking.vercel.app/limedock-real-estate-pixel.js"
+        strategy="afterInteractive"
+      />
       <JsonLd data={jsonLd} />
       <ScrollProgress />
       <CursorBlob />

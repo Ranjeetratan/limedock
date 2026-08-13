@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import VerticalLanding from "@/components/VerticalLanding";
 import JsonLd from "@/components/JsonLd";
 import { BOOK_DEMO_URL, absoluteUrl } from "@/lib/site";
@@ -57,6 +58,11 @@ const jsonLd = {
 export default function RealEstatePage() {
   return (
     <>
+      <Script
+        id="limedock-real-estate-pixel"
+        src="https://lead-management-tracking.vercel.app/limedock-real-estate-pixel.js"
+        strategy="afterInteractive"
+      />
       <JsonLd data={jsonLd} />
       <VerticalLanding
         eyebrow="For real estate teams"
