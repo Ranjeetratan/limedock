@@ -3,7 +3,6 @@
 import React, { useState, useRef } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
-import { BOOK_DEMO_URL } from "@/lib/site";
 
 function FadeInText({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
   const ref = useRef(null);
@@ -22,12 +21,8 @@ function FadeInText({ children, className = "", delay = 0 }: { children: React.R
   );
 }
 
-export default function LawFirmsLandingContent() {
+function LeadCaptureForm({ compact = false }: { compact?: boolean }) {
   const [formStatus, setFormStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
-  const heroRef = useRef(null);
-  const { scrollYProgress: heroScroll } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
-  const yBg = useTransform(heroScroll, [0, 1], ["0%", "20%"]);
-  const opacityText = useTransform(heroScroll, [0, 0.8], [1, 0]);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -50,10 +45,95 @@ export default function LawFirmsLandingContent() {
     }
   }
 
+  if (formStatus === "success") {
+    return (
+      <div className={`text-center ${compact ? 'py-4' : 'py-12'}`}>
+        <div className={`inline-flex items-center justify-center rounded-full bg-signature-mint/20 text-signature-forest ${compact ? 'w-12 h-12 mb-4' : 'w-20 h-20 mb-6'}`}>
+          <svg width={compact ? "24" : "40"} height={compact ? "24" : "40"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        <h3 className={`${compact ? 'text-xl text-white' : 'text-2xl text-ink'} font-display`}>Request Submitted</h3>
+        <p className={`${compact ? 'text-white/80' : 'text-body'} mt-2`}>We will be in touch shortly to discuss your custom workflow.</p>
+      </div>
+    );
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className={`space-y-6 ${compact ? 'text-left' : ''}`}>
+      <input type="hidden" name="subject" value="New Law Firm Workflow Request" />
+      <input type="hidden" name="to_email" value="limedockadmn@gmail.com" />
+      
+      <div className={compact ? 'grid grid-cols-1 md:grid-cols-2 gap-4' : 'space-y-6'}>
+        <div className={compact ? 'md:col-span-2' : ''}>
+          <label htmlFor={`companyWebsite-${compact}`} className={`block text-xs font-semibold mb-2 uppercase tracking-widest ${compact ? 'text-white/80' : 'text-ink'}`}>Company Website</label>
+          <input required type="text" id={`companyWebsite-${compact}`} name="Company Website" className={`w-full px-5 py-3 rounded-xl border focus:outline-none focus:ring-2 transition-all ${compact ? 'bg-white/10 border-white/20 text-white placeholder-white/40 focus:ring-white/50 backdrop-blur-sm' : 'bg-surface-soft border-hairline text-ink focus:ring-ink/20'}`} placeholder="www.yourfirm.com" />
+        </div>
+
+        <div>
+          <label htmlFor={`areaOfPractice-${compact}`} className={`block text-xs font-semibold mb-2 uppercase tracking-widest ${compact ? 'text-white/80' : 'text-ink'}`}>Area of Practice</label>
+          <select required id={`areaOfPractice-${compact}`} name="Area of Practice" className={`w-full px-5 py-3 rounded-xl border focus:outline-none focus:ring-2 transition-all appearance-none ${compact ? 'bg-white/10 border-white/20 text-white focus:ring-white/50 backdrop-blur-sm [&>option]:text-ink' : 'bg-surface-soft border-hairline text-ink focus:ring-ink/20'}`}>
+            <option value="" disabled defaultValue="" className={compact ? 'text-ink' : ''}>Select your practice area...</option>
+            {[
+              "Administrative Law", "Bankruptcy Law", "Business & Compliance", 
+              "Civil Litigation Law", "Criminal Law", "Elder Law", "Employment Law", 
+              "Estate Planning Law", "Family Law", "General Practice", "Government Law", 
+              "Immigration Law", "In-House Counsel", "Intellectual Property Law", 
+              "Personal Injury Law", "Real Estate Law"
+            ].map(opt => <option key={opt} value={opt} className={compact ? 'text-ink' : ''}>{opt}</option>)}
+          </select>
+        </div>
+
+        <div>
+          <label htmlFor={`firmSize-${compact}`} className={`block text-xs font-semibold mb-2 uppercase tracking-widest ${compact ? 'text-white/80' : 'text-ink'}`}>Firm Size</label>
+          <select required id={`firmSize-${compact}`} name="Firm Size" className={`w-full px-5 py-3 rounded-xl border focus:outline-none focus:ring-2 transition-all appearance-none ${compact ? 'bg-white/10 border-white/20 text-white focus:ring-white/50 backdrop-blur-sm [&>option]:text-ink' : 'bg-surface-soft border-hairline text-ink focus:ring-ink/20'}`}>
+            <option value="" disabled defaultValue="" className={compact ? 'text-ink' : ''}>Select firm size...</option>
+            {["Solo", "Small", "Mid-Sized", "Enterprise"].map(opt => <option key={opt} value={opt} className={compact ? 'text-ink' : ''}>{opt}</option>)}
+          </select>
+        </div>
+
+        <div className={compact ? 'md:col-span-2' : ''}>
+          <label htmlFor={`role-${compact}`} className={`block text-xs font-semibold mb-2 uppercase tracking-widest ${compact ? 'text-white/80' : 'text-ink'}`}>Roles</label>
+          <select required id={`role-${compact}`} name="Role" className={`w-full px-5 py-3 rounded-xl border focus:outline-none focus:ring-2 transition-all appearance-none ${compact ? 'bg-white/10 border-white/20 text-white focus:ring-white/50 backdrop-blur-sm [&>option]:text-ink' : 'bg-surface-soft border-hairline text-ink focus:ring-ink/20'}`}>
+            <option value="" disabled defaultValue="" className={compact ? 'text-ink' : ''}>Select your role...</option>
+            {[
+              "Associate Attorney", "Billing Manager", "IT Manager", 
+              "Legal Administrator", "Managing Partner", "Paralegal", "Solo Lawyer"
+            ].map(opt => <option key={opt} value={opt} className={compact ? 'text-ink' : ''}>{opt}</option>)}
+          </select>
+        </div>
+
+        <div className={compact ? 'md:col-span-2' : ''}>
+          <label htmlFor={`email-${compact}`} className={`block text-xs font-semibold mb-2 uppercase tracking-widest ${compact ? 'text-white/80' : 'text-ink'}`}>Email</label>
+          <input required type="email" id={`email-${compact}`} name="Email" className={`w-full px-5 py-3 rounded-xl border focus:outline-none focus:ring-2 transition-all ${compact ? 'bg-white/10 border-white/20 text-white placeholder-white/40 focus:ring-white/50 backdrop-blur-sm' : 'bg-surface-soft border-hairline text-ink focus:ring-ink/20'}`} placeholder="you@firm.com" />
+        </div>
+      </div>
+
+      {formStatus === "error" && (
+        <p className="text-signature-coral text-sm text-center font-medium mt-2">Something went wrong. Please try again.</p>
+      )}
+
+      <button 
+        type="submit" 
+        disabled={formStatus === "submitting"}
+        className={`w-full py-4 rounded-xl font-medium tracking-wide transition-colors disabled:opacity-50 mt-6 ${compact ? 'bg-white text-black hover:bg-white/90' : 'bg-ink text-white hover:bg-black'}`}
+      >
+        {formStatus === "submitting" ? "Submitting..." : "Get Free Customized Workflow"}
+      </button>
+    </form>
+  );
+}
+
+export default function LawFirmsLandingContent() {
+  const heroRef = useRef(null);
+  const { scrollYProgress: heroScroll } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const yBg = useTransform(heroScroll, [0, 1], ["0%", "20%"]);
+  const opacityText = useTransform(heroScroll, [0, 0.8], [1, 0]);
+
   return (
     <div className="bg-canvas text-body overflow-hidden">
       {/* ── SECTION 1: Hero ── */}
-      <section ref={heroRef} className="relative h-screen min-h-[800px] flex items-center justify-center overflow-hidden bg-black">
+      <section ref={heroRef} className="relative min-h-screen pt-32 pb-24 flex items-center justify-center overflow-hidden bg-black">
         <motion.div style={{ y: yBg }} className="absolute inset-0 w-full h-full">
           <Image 
             src="/images/law-firms/hero.jpg" 
@@ -65,30 +145,39 @@ export default function LawFirmsLandingContent() {
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
         </motion.div>
         
-        <motion.div style={{ opacity: opacityText }} className="container-air relative z-10 text-center max-w-4xl mx-auto pt-20">
-          <FadeInText>
-            <span className="inline-block px-4 py-1.5 rounded-full border border-white/20 bg-white/5 backdrop-blur-md text-white/90 text-sm uppercase tracking-[0.2em] mb-8">
-              Modern Legal Operations
-            </span>
-          </FadeInText>
-          <FadeInText delay={0.1}>
-            <h1 className="text-[3.5rem] md:text-[5rem] leading-[1.05] tracking-tight text-white font-display font-medium">
-              A Custom AI Infrastructure <br/>
-              <span className="text-white/60 font-serif italic">for your firm</span>
-            </h1>
-          </FadeInText>
-          <FadeInText delay={0.2}>
-            <p className="text-xl md:text-2xl text-white/70 mt-8 max-w-2xl mx-auto leading-relaxed font-light">
-              AI built around how your firm actually works. Connect your everyday tools, run AI across your employees&apos; devices, and give it the context of your people, cases, clients, and workflows.
-            </p>
-          </FadeInText>
-          <FadeInText delay={0.3}>
-            <div className="mt-12 flex justify-center">
-              <a href="#lead-form" className="px-8 py-4 bg-white text-black rounded-full font-medium tracking-wide hover:scale-105 transition-transform duration-300 shadow-[0_0_40px_rgba(255,255,255,0.2)]">
-                Get Customized Workflow
-              </a>
+        <motion.div style={{ opacity: opacityText }} className="container-air relative z-10 w-full pt-10">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="text-left">
+              <FadeInText>
+                <span className="inline-block px-4 py-1.5 rounded-full border border-white/20 bg-white/5 backdrop-blur-md text-white/90 text-sm uppercase tracking-[0.2em] mb-8">
+                  Modern Legal Operations
+                </span>
+              </FadeInText>
+              <FadeInText delay={0.1}>
+                <h1 className="text-[3.5rem] md:text-[4.5rem] leading-[1.05] tracking-tight text-white font-display font-medium">
+                  A Custom AI Infrastructure <br/>
+                  <span className="text-white/60 font-serif italic">for your firm</span>
+                </h1>
+              </FadeInText>
+              <FadeInText delay={0.2}>
+                <p className="text-xl md:text-2xl text-white/70 mt-8 max-w-xl leading-relaxed font-light">
+                  AI built around how your firm actually works. Connect your everyday tools, run AI across your employees&apos; devices, and give it the context of your people, cases, clients, and workflows.
+                </p>
+              </FadeInText>
             </div>
-          </FadeInText>
+            
+            <div className="w-full max-w-lg ml-auto relative">
+              <FadeInText delay={0.3}>
+                <div className="bg-white/5 backdrop-blur-xl border border-white/10 p-8 rounded-[2rem] shadow-2xl relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-50 pointer-events-none" />
+                  <div className="relative z-10">
+                    <h3 className="text-2xl text-white font-display mb-6">Request Your Workflow</h3>
+                    <LeadCaptureForm compact={true} />
+                  </div>
+                </div>
+              </FadeInText>
+            </div>
+          </div>
         </motion.div>
       </section>
 
@@ -210,77 +299,7 @@ export default function LawFirmsLandingContent() {
                 </p>
               </div>
 
-              {formStatus === "success" ? (
-                <div className="text-center py-12">
-                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-signature-mint/20 text-signature-forest mb-6">
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <h3 className="text-2xl text-ink font-display">Request Submitted</h3>
-                  <p className="text-body mt-3">We will be in touch shortly to discuss your custom workflow.</p>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <input type="hidden" name="subject" value="New Law Firm Workflow Request" />
-                  <input type="hidden" name="to_email" value="limedockadmn@gmail.com" />
-                  
-                  <div>
-                    <label htmlFor="companyWebsite" className="block text-xs text-ink font-semibold mb-2 uppercase tracking-widest">Company Website</label>
-                    <input required type="text" id="companyWebsite" name="Company Website" className="w-full px-5 py-4 rounded-xl border border-hairline bg-surface-soft focus:outline-none focus:ring-2 focus:ring-ink/20 transition-all text-ink" placeholder="www.yourfirm.com" />
-                  </div>
-
-                  <div>
-                    <label htmlFor="areaOfPractice" className="block text-xs text-ink font-semibold mb-2 uppercase tracking-widest">Area of Practice</label>
-                    <select required id="areaOfPractice" name="Area of Practice" className="w-full px-5 py-4 rounded-xl border border-hairline bg-surface-soft focus:outline-none focus:ring-2 focus:ring-ink/20 transition-all text-ink appearance-none">
-                      <option value="" disabled defaultValue="">Select your practice area...</option>
-                      {[
-                        "Administrative Law", "Bankruptcy Law", "Business & Compliance", 
-                        "Civil Litigation Law", "Criminal Law", "Elder Law", "Employment Law", 
-                        "Estate Planning Law", "Family Law", "General Practice", "Government Law", 
-                        "Immigration Law", "In-House Counsel", "Intellectual Property Law", 
-                        "Personal Injury Law", "Real Estate Law"
-                      ].map(opt => <option key={opt} value={opt}>{opt}</option>)}
-                    </select>
-                  </div>
-
-                  <div>
-                    <label htmlFor="firmSize" className="block text-xs text-ink font-semibold mb-2 uppercase tracking-widest">Firm Size</label>
-                    <select required id="firmSize" name="Firm Size" className="w-full px-5 py-4 rounded-xl border border-hairline bg-surface-soft focus:outline-none focus:ring-2 focus:ring-ink/20 transition-all text-ink appearance-none">
-                      <option value="" disabled defaultValue="">Select firm size...</option>
-                      {["Solo", "Small", "Mid-Sized", "Enterprise"].map(opt => <option key={opt} value={opt}>{opt}</option>)}
-                    </select>
-                  </div>
-
-                  <div>
-                    <label htmlFor="role" className="block text-xs text-ink font-semibold mb-2 uppercase tracking-widest">Roles</label>
-                    <select required id="role" name="Role" className="w-full px-5 py-4 rounded-xl border border-hairline bg-surface-soft focus:outline-none focus:ring-2 focus:ring-ink/20 transition-all text-ink appearance-none">
-                      <option value="" disabled defaultValue="">Select your role...</option>
-                      {[
-                        "Associate Attorney", "Billing Manager", "IT Manager", 
-                        "Legal Administrator", "Managing Partner", "Paralegal", "Solo Lawyer"
-                      ].map(opt => <option key={opt} value={opt}>{opt}</option>)}
-                    </select>
-                  </div>
-
-                  <div>
-                    <label htmlFor="email" className="block text-xs text-ink font-semibold mb-2 uppercase tracking-widest">Email</label>
-                    <input required type="email" id="email" name="Email" className="w-full px-5 py-4 rounded-xl border border-hairline bg-surface-soft focus:outline-none focus:ring-2 focus:ring-ink/20 transition-all text-ink" placeholder="you@firm.com" />
-                  </div>
-
-                  {formStatus === "error" && (
-                    <p className="text-signature-coral text-sm text-center font-medium">Something went wrong. Please try again.</p>
-                  )}
-
-                  <button 
-                    type="submit" 
-                    disabled={formStatus === "submitting"}
-                    className="w-full bg-ink text-white py-5 rounded-xl font-medium tracking-wide hover:bg-black transition-colors disabled:opacity-50 mt-4"
-                  >
-                    {formStatus === "submitting" ? "Submitting..." : "Get Customized Workflow"}
-                  </button>
-                </form>
-              )}
+              <LeadCaptureForm />
             </div>
           </FadeInText>
         </div>

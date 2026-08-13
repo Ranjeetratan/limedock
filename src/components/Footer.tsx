@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Logo } from "./Logo";
+import { usePathname } from "next/navigation";
 import Magnetic from "./motion/Magnetic";
 import MarqueeBig from "./motion/MarqueeBig";
 import PlatformStack from "./illustrations/PlatformStack";
@@ -55,6 +56,9 @@ const alsoFromUs = [
 ] as const;
 
 export default function Footer() {
+  const pathname = usePathname();
+  const isLawFirms = pathname === "/law-firms";
+
   return (
     <footer className="bg-canvas pb-10">
       <div className="container-air">
@@ -71,7 +75,9 @@ export default function Footer() {
                 Start the conversation
               </span>
               <h2 className="text-display-md text-ink mt-5 max-w-xl">
-                Start building a platform your SaaS team actually owns.
+                {isLawFirms 
+                  ? "Start building a platform your law firm actually owns."
+                  : "Start building a platform your SaaS team actually owns."}
               </h2>
               <p className="text-body-md text-body mt-4 max-w-lg leading-[1.55]">
                 Bring the workflows your team runs by hand every week —
