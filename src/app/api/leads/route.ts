@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { kv } from "@vercel/kv";
+import { createClient } from "@vercel/kv";
 import fs from "fs/promises";
 import path from "path";
 
@@ -14,8 +14,13 @@ export type Lead = {
   email: string;
 };
 
-// Check if we have KV credentials
-const hasKV = !!process.env.KV_REST_API_URL && !!process.env.KV_REST_API_TOKEN;
+// Check for either Vercel KV or Upstash Redis credentials
+const kvUrl = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
+const kvToken = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+const hasKV = !!kvUrl && !!kvToken;
+
+// Create the KV client manually so we can support Upstash
+const kv = hasKV ? createClient({ url: kvUrl as string, token: kvToken as string }) : null;
 
 // Local fallback file path (use /tmp for serverless environment compatibility)
 const localFilePath = path.join("/tmp", ".leads-local.json");
@@ -24,7 +29,7 @@ const localFilePath = path.join("/tmp", ".leads-local.json");
  * Retrieves all leads from the database or local file
  */
 async function getLeads(): Promise<Lead[]> {
-  if (hasKV) {
+  if (hasKV && kv) {
     const leads = await kv.get<Lead[]>("law_firm_leads");
     return leads || [];
   } else {
@@ -44,7 +49,7 @@ async function saveLead(lead: Lead) {
   const currentLeads = await getLeads();
   const updatedLeads = [lead, ...currentLeads]; // Newest first
 
-  if (hasKV) {
+  if (hasKV && kv) {
     await kv.set("law_firm_leads", updatedLeads);
   } else {
     await fs.writeFile(localFilePath, JSON.stringify(updatedLeads, null, 2), "utf8");

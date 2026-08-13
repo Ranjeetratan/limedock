@@ -53,10 +53,10 @@ export default function LeadsDashboard() {
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
             <div>
-              <h3 className="font-semibold text-lg">Vercel KV Database Not Connected</h3>
+              <h3 className="font-semibold text-lg">Serverless Database Not Connected</h3>
               <p className="mt-1 opacity-90">
                 You are currently running without a database connection. Leads are being saved temporarily, but will be lost when the server restarts. 
-                To fix this, go to your Vercel Dashboard, select your project, click the &quot;Storage&quot; tab, and create a free KV database.
+                To fix this, go to your Vercel Dashboard, select your project, click the &quot;Storage&quot; tab, and click <strong>Create Database &rarr; Upstash (Serverless DB Redis)</strong>. It is free and takes just 1 click!
               </p>
             </div>
           </div>
