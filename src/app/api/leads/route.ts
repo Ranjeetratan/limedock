@@ -14,9 +14,9 @@ export type Lead = {
   email: string;
 };
 
-// Check for either Vercel KV or Upstash Redis credentials
-const kvUrl = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
-const kvToken = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+// Check for either Vercel KV or Upstash Redis credentials, including the user's custom prefix
+const kvUrl = process.env.LAWFIRMSLEADS_KV_REST_API_URL || process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
+const kvToken = process.env.LAWFIRMSLEADS_KV_REST_API_TOKEN || process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
 const hasKV = !!kvUrl && !!kvToken;
 
 // Create the KV client manually so we can support Upstash
