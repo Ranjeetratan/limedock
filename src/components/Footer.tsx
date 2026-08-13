@@ -100,7 +100,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className="btn-primary group"
               >
-                Book a workflow call
+                {isLawFirms ? "Book a Law Firm Demo" : "Book a workflow call"}
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
                   <path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>

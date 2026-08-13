@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import JsonLd from "@/components/JsonLd";
 import ScrollProgress from "@/components/motion/ScrollProgress";
 import CursorBlob from "@/components/motion/CursorBlob";
@@ -64,7 +66,9 @@ export default function LawFirmsPage() {
       <JsonLd data={jsonLd} />
       <ScrollProgress />
       <CursorBlob />
+      <Navbar />
       <LawFirmsLandingContent />
+      <Footer />
     </main>
   );
 }
