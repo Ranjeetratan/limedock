@@ -292,7 +292,7 @@ export default function LawFirmsLandingContent() {
             <div className="max-w-xl mx-auto bg-canvas p-10 md:p-14 rounded-[2rem] border border-hairline shadow-xl">
               <div className="text-center mb-10">
                 <h2 className="text-4xl text-ink font-display tracking-tight">
-                  Get Customized Workflow
+                  Get Free Customized Workflow
                 </h2>
                 <p className="text-body-md text-muted mt-4">
                   See how LimeDock can transform your firm&apos;s operations.
