@@ -161,7 +161,7 @@ export default function LawFirmsLandingContent() {
               </FadeInText>
               <FadeInText delay={0.2}>
                 <p className="text-xl md:text-2xl text-white/70 mt-8 max-w-xl leading-relaxed font-light">
-                  AI built around how your firm actually works. Connect your everyday tools, run AI across your employees&apos; devices, and give it the context of your people, cases, clients, and workflows.
+                  AI that adapts to your law firm. Connect your existing tools, seamlessly sync across your team&apos;s devices, and securely automate your casework, client communications, and daily workflows.
                 </p>
               </FadeInText>
             </div>
