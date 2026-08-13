@@ -17,8 +17,8 @@ export type Lead = {
 // Check if we have KV credentials
 const hasKV = !!process.env.KV_REST_API_URL && !!process.env.KV_REST_API_TOKEN;
 
-// Local fallback file path (only used if Vercel KV is not configured)
-const localFilePath = path.join(process.cwd(), ".leads-local.json");
+// Local fallback file path (use /tmp for serverless environment compatibility)
+const localFilePath = path.join("/tmp", ".leads-local.json");
 
 /**
  * Retrieves all leads from the database or local file
@@ -54,7 +54,7 @@ async function saveLead(lead: Lead) {
 export async function GET() {
   try {
     const leads = await getLeads();
-    return NextResponse.json({ success: true, data: leads });
+    return NextResponse.json({ success: true, data: leads, hasKV });
   } catch (error) {
     console.error("Failed to fetch leads:", error);
     return NextResponse.json({ success: false, error: "Failed to fetch leads" }, { status: 500 });

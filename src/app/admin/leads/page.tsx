@@ -8,6 +8,7 @@ export default function LeadsDashboard() {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [hasKV, setHasKV] = useState(true);
 
   useEffect(() => {
     async function fetchLeads() {
@@ -17,6 +18,7 @@ export default function LeadsDashboard() {
         
         if (json.success) {
           setLeads(json.data);
+          setHasKV(json.hasKV !== false);
         } else {
           setError(json.error || "Failed to load leads");
         }
@@ -44,6 +46,21 @@ export default function LeadsDashboard() {
             Total Leads: {leads.length}
           </div>
         </div>
+
+        {!hasKV && (
+          <div className="bg-signature-coral/10 border border-signature-coral/20 text-signature-coral p-4 rounded-xl mb-8 flex items-start gap-3">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="shrink-0 mt-0.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+            <div>
+              <h3 className="font-semibold text-lg">Vercel KV Database Not Connected</h3>
+              <p className="mt-1 opacity-90">
+                You are currently running without a database connection. Leads are being saved temporarily, but will be lost when the server restarts. 
+                To fix this, go to your Vercel Dashboard, select your project, click the &quot;Storage&quot; tab, and create a free KV database.
+              </p>
+            </div>
+          </div>
+        )}
 
         {error && (
           <div className="bg-signature-coral/10 border border-signature-coral/20 text-signature-coral p-4 rounded-xl mb-8">
