@@ -80,9 +80,9 @@ export default function Footer() {
                   : "Start building a platform your SaaS team actually owns."}
               </h2>
               <p className="text-body-md text-body mt-4 max-w-lg leading-[1.55]">
-                Bring the workflows your team runs by hand every week —
-                marketing, sales, or management. We&apos;ll map the fastest
-                path to a live automation you own.
+                {isLawFirms 
+                  ? "See exactly how custom AI and automated workflows can eliminate busywork for your attorneys and staff."
+                  : "Bring the workflows your team runs by hand every week — marketing, sales, or management. We'll map the fastest path to a live automation you own."}
               </p>
             </div>
 
@@ -100,7 +100,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className="btn-primary group"
               >
-                {isLawFirms ? "Book a Law Firm Demo" : "Book a workflow call"}
+                {isLawFirms ? "Book a Demo" : "Book a workflow call"}
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
                   <path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
