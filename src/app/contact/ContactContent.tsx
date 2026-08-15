@@ -7,6 +7,9 @@ export default function ContactContent() {
   const [formStatus, setFormStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    // protect.js preventDefaults bot submissions; don't send those to the API.
+    if (e.defaultPrevented) return;
+
     e.preventDefault();
     setFormStatus("submitting");
     
@@ -53,10 +56,10 @@ export default function ContactContent() {
             </div>
             
             <h1 className="text-display-lg text-ink font-display tracking-tight leading-[1.05] mb-6">
-              Let's map out your next automation.
+              Let&apos;s map out your next automation.
             </h1>
             <p className="text-body-lg text-body max-w-xl leading-relaxed mb-10">
-              Whether you have a specific workflow in mind or just want to explore how custom AI can save your team hours every week, we're here to help.
+              Whether you have a specific workflow in mind or just want to explore how custom AI can save your team hours every week, we&apos;re here to help.
             </p>
 
             <div className="space-y-6">
@@ -104,7 +107,7 @@ export default function ContactContent() {
                   </svg>
                 </div>
                 <h3 className="text-2xl font-display text-ink mb-3">Message Sent!</h3>
-                <p className="text-body">We've received your inquiry and will get back to you shortly.</p>
+                <p className="text-body">We&apos;ve received your inquiry and will get back to you shortly.</p>
                 <button 
                   onClick={() => setFormStatus("idle")}
                   className="mt-8 btn-secondary"
@@ -113,7 +116,12 @@ export default function ContactContent() {
                 </button>
               </motion.div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
+              <form
+                action="https://www.limedock.com/contact"
+                method="post"
+                onSubmit={handleSubmit}
+                className="space-y-6 relative z-10"
+              >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="name" className="block text-xs font-semibold mb-2 uppercase tracking-widest text-ink">Name</label>
@@ -169,7 +177,7 @@ export default function ContactContent() {
 
                 <button 
                   type="submit" 
-                  disabled={formStatus === "submitting"}
+                  {...(formStatus === "submitting" ? { disabled: true } : {})}
                   className="w-full btn-primary flex items-center justify-center gap-2 group"
                 >
                   {formStatus === "submitting" ? "Sending..." : "Send Message"}
