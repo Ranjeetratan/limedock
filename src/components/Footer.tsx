@@ -41,6 +41,7 @@ const footerGroups = [
   {
     title: "Company",
     links: [
+      ["Contact", "/contact"],
       ["Twitter", "https://x.com/limedock"],
       ["LinkedIn", "https://www.linkedin.com/company/limedock/"],
       ["Instagram", "https://www.instagram.com/limedock_agency/"],

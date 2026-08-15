@@ -65,6 +65,9 @@ export default function Navbar() {
             <Link href="/blog" className="focus-ring rounded-sm">
               Blog
             </Link>
+            <Link href="/contact" className="focus-ring rounded-sm">
+              Contact
+            </Link>
           </div>
 
           <div className="hidden md:flex items-center gap-3">
@@ -121,6 +124,7 @@ export default function Navbar() {
                 { href: "/directories", label: "Directories" },
                 { href: "/works", label: "Works" },
                 { href: "/blog", label: "Blog" },
+                { href: "/contact", label: "Contact" },
               ].map((link) => (
                 <Link
                   key={link.href}
