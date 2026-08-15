@@ -44,8 +44,8 @@ const footerGroups = [
       ["Contact", "/contact"],
       ["Twitter", "https://x.com/limedock"],
       ["LinkedIn", "https://www.linkedin.com/company/limedock/"],
-      ["Instagram", "https://www.instagram.com/limedock_agency/"],
-      ["Email", "mailto:ranjeet@limedock.com"],
+      ["Support", "mailto:support@limedock.com"],
+      ["Founder", "mailto:ranjeet@limedock.com"],
     ],
   },
 ] as const;

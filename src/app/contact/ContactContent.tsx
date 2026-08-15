@@ -69,9 +69,14 @@ export default function ContactContent() {
                 </div>
                 <div>
                   <div className="text-sm font-semibold text-ink uppercase tracking-widest mb-1">Email Us</div>
-                  <a href="mailto:hello@limedock.com" className="text-body hover:text-signature-forest transition-colors">
-                    hello@limedock.com
-                  </a>
+                  <div className="flex flex-col gap-1">
+                    <a href="mailto:support@limedock.com" className="text-body hover:text-signature-forest transition-colors">
+                      support@limedock.com
+                    </a>
+                    <a href="mailto:ranjeet@limedock.com" className="text-body hover:text-signature-forest transition-colors">
+                      ranjeet@limedock.com
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
