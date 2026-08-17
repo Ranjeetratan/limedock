@@ -1,24 +1,32 @@
-# Execution Plan: Next.js Image Optimization Refactoring
+# Orchestration Plan: Navbar Refactoring & Unified Hub Page
 
-## Overview
-Refactor the `/real-estate-services` and `/law-firms` landing page components to replace all HTML `<img>` elements with Next.js `<Image>` components, ensuring faster load times, proper lazy loading, automatic webp/avif format conversion, zero visual regressions, zero `<img>` tags remaining in target files, and a passing `npm run build`.
+## Objective
+Refactor the website navbar to consolidate "Trending Agents" and "Directories" into a single unified landing page hub (e.g. `/resources` or `/explore`), fulfilling all acceptance criteria in `ORIGINAL_REQUEST.md`.
 
-## Milestones & Execution Steps
+## Execution Phases
 
-### Milestone 1: Exploration & Image Migration Audit (DONE)
-- [x] Step 1.1: Initialize orchestrator tracking files (`plan.md`, `progress.md`, `BRIEFING.md`, `PROJECT.md`, `ORIGINAL_REQUEST.md`).
-- [x] Step 1.2: Dispatch 3 `teamwork_preview_explorer` subagents:
-  - Explorer 1: Inspect `src/app/real-estate-services/RealEstateLandingContent.tsx` for all `<img>` elements, attributes, parent classes, image asset paths.
-  - Explorer 2: Inspect `src/app/law-firms/LawFirmsLandingContent.tsx` for all `<img>` elements, attributes, parent classes, image asset paths.
-  - Explorer 3: Inspect Next.js config (`next.config.js` / `next.config.mjs` / `next.config.ts`), image imports, public directory assets, and overall build check commands.
-- [x] Step 1.3: Synthesize Explorer findings into detailed migration plan for Worker.
+### Phase 0: Survey & Scoping (Parallel Explorers)
+- Dispatch 3 Explorers in parallel:
+  1. `teamwork_preview_explorer_survey_1`: Investigate current navbar implementation, routes, links, and structure.
+  2. `teamwork_preview_explorer_survey_2`: Investigate existing pages, components, design system, Tailwind/CSS classes, trending agents & directories pages.
+  3. `teamwork_preview_explorer_survey_3`: Investigate build system, Next.js configuration, routing mechanism (App router vs Pages router), and testing setup.
+- Merge Explorer findings into `PROJECT.md` at project root with Feature Inventory, Milestones, and Interface Contracts.
 
-### Milestone 2: Image Optimization Implementation (DONE)
-- [x] Step 2.1: Dispatch `teamwork_preview_worker` to migrate all standard `<img>` tags in `RealEstateLandingContent.tsx` and `LawFirmsLandingContent.tsx` to Next.js `<Image>`.
-- [x] Step 2.2: Worker executes `npm run build` and verifies 0 TypeScript/ESLint errors and 0 remaining standard `<img>` tags in target files.
+### Phase 1: Dual Track Setup (E2E Testing Track)
+- Create `TEST_INFRA.md`.
+- Dispatch E2E test writers to create comprehensive opaque-box test suite (Tiers 1-4) validating routing, navbar links, landing page rendering, and Next.js build.
+- Publish `TEST_READY.md`.
 
-### Milestone 3: Verification, Review, Stress Test & Forensic Audit (DONE)
-- [x] Step 3.1: Dispatch 2 `teamwork_preview_reviewer` subagents to check code quality, layout preservation, prop correctness (`fill`, `sizes`, `priority`, `alt`, `className`).
-- [x] Step 3.2: Dispatch 2 `teamwork_preview_challenger` subagents to perform static regex scan for `<img>` tags and test build stability.
-- [x] Step 3.3: Dispatch `teamwork_preview_auditor` to conduct forensic integrity verification.
-- [x] Step 3.4: Synthesize verdicts and notify Sentinel of victory.
+### Phase 2: Implementation Track
+- M1: Create Unified Hub Page component at chosen route (`/resources` or `/explore`) matching site aesthetic and linking to `/trending-agents` and `/directories`.
+- M2: Update `src/components/Navbar.tsx` to consolidate links into a single link pointing to the new hub page.
+
+### Phase 3: Verification & Auditing Gate
+- Run E2E Test Suite (Tiers 1-4).
+- 2 Reviewers (`teamwork_preview_reviewer`) review code quality, UX/UI match, and acceptance criteria.
+- 2 Challengers (`teamwork_preview_challenger`) run adversarial / edge cases.
+- 1 Forensic Auditor (`teamwork_preview_auditor`) performs integrity checks (zero tolerance for hardcoded tests/facades).
+- Record gate status in `GATE_STATUS.md`.
+
+### Phase 4: Final Victory Report
+- Synthesize all findings and report to user/parent agent via `send_message`.

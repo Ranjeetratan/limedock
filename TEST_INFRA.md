@@ -1,72 +1,45 @@
-# E2E Test Infrastructure & Manual
+# E2E Test Infra: Limedock Website Navbar Refactoring
 
-## Architecture Overview
-The test infrastructure for the `/law-firms` landing page redesign is built on **Playwright** (`@playwright/test`). It provides opaque-box End-to-End testing across 4 comprehensive tiers without mutating application source code.
+## Test Philosophy
+- Opaque-box, requirement-driven. No internal private state dependencies.
+- Methodology: Category-Partition + Boundary Value Analysis + Pairwise Combinatorial + Real-World Workload Testing.
+- Execution Environment: Node.js / Playwright / Jest / React Testing Library or programmatic verification harness.
 
-```
-/Users/ranjeetratan/Desktop/limedock-website/
-├── e2e/
-│   ├── config/
-│   │   └── playwright.config.ts         # Playwright runner configuration & WebServer setup
-│   ├── harness/
-│   │   ├── selectors.ts                 # Centralized DOM selectors & option enumerations
-│   │   ├── web3forms.mock.ts            # Network route interceptor for Web3Forms API
-│   │   ├── scroll.helper.ts             # Framer-motion scroll animation test helper
-│   │   └── test.fixture.ts              # Custom test fixture extending base test
-│   └── specs/
-│       ├── tier1_feature_coverage.spec.ts  # Tier 1: Feature Structural Coverage
-│       ├── tier2_boundary_corner.spec.ts   # Tier 2: Boundary & Corner Cases
-│       ├── tier3_combinations.spec.ts      # Tier 3: Cross-Feature Combinations
-│       └── tier4_real_world.spec.ts        # Tier 4: Real-World End-to-End Journey
-```
+## Feature Inventory & Test Mapping
+| # | Feature | Requirement Source | Tier 1 (Coverage) | Tier 2 (Boundary) | Tier 3 (Pairwise) | Tier 4 (Scenario) |
+|---|---------|-------------------|:-----------------:|:-----------------:|:-----------------:|:-----------------:|
+| 1 | Top-Level Navigation Count (<= 5) | ORIGINAL_REQUEST §R1 | ≥5 cases | ≥5 cases | ✓ | ✓ |
+| 2 | Platform Grouping & Destinations | ORIGINAL_REQUEST §R2 | ≥5 cases | ≥5 cases | ✓ | ✓ |
+| 3 | Solutions Grouping & Destinations | ORIGINAL_REQUEST §R2 | ≥5 cases | ≥5 cases | ✓ | ✓ |
+| 4 | Resources Grouping & Destinations | ORIGINAL_REQUEST §R2, §R3 | ≥5 cases | ≥5 cases | ✓ | ✓ |
+| 5 | Works Direct Link | ORIGINAL_REQUEST §R3 | ≥5 cases | ≥5 cases | ✓ | ✓ |
+| 6 | Contact Direct Link & CTA | ORIGINAL_REQUEST §R3 | ≥5 cases | ≥5 cases | ✓ | ✓ |
+| 7 | Accessibility (ARIA, Keyboard) | UX / A11y Standards | ≥5 cases | ≥5 cases | ✓ | ✓ |
+| 8 | Mobile Responsive Menu & Accordions | ORIGINAL_REQUEST §Acceptance | ≥5 cases | ≥5 cases | ✓ | ✓ |
+| 9 | Preserved Reachability (All 10 links) | ORIGINAL_REQUEST §R3 | ≥5 cases | ≥5 cases | ✓ | ✓ |
+| 10| Subpage Root-Relative Anchors | Codebase Survey | ≥5 cases | ≥5 cases | ✓ | ✓ |
 
----
+## Test Architecture
+- Test Runner: Programmatic test script / runner executed via `npm test` or `npx tsx scripts/verify-navbar.ts` / `tests/navbar-e2e.test.ts`.
+- Verification Mechanics:
+  1. Desktop top-level nav item count validation (assert === 4 or 5).
+  2. Complete destination presence validation (assert all 10 original targets: `/#collapse`, `/#services`, `/#capabilities`, `/#system`, `/#how-we-work`, `/trending-agents`, `/directories`, `/works`, `/blog`, `/contact` are present and reachable in the navigation tree).
+  3. Dropdown expansion state validation (`aria-expanded`, hover/click toggle, focus management).
+  4. Mobile menu open/close toggle and accordion expansion validation.
+  5. Build verification: `npm run build` succeeds with zero errors.
 
-## Centralized Harness Modules
+## Real-World Application Scenarios (Tier 4)
+| # | Scenario | Features Exercised | Complexity |
+|---|----------|--------------------|------------|
+| 1 | Desktop User explores Enterprise AI Platform (clicks Platform dropdown -> navigates to Approach `/#collapse` and The Math `/#capabilities`) | F1, F2, F7, F10 | Medium |
+| 2 | Industry Prospect explores Solutions (opens Solutions dropdown -> clicks Law Firms) | F1, F3, F7, F10 | Medium |
+| 3 | Ecosystem User searches Resources (opens Resources dropdown -> navigates to `/trending-agents`, `/directories`, and `/blog`) | F1, F4, F7, F9 | High |
+| 4 | Portfolio Reviewer & Direct Inquirer (clicks Works `/works` -> then Contact `/contact` -> clicks "Book demo" CTA) | F1, F5, F6, F7 | Medium |
+| 5 | Mobile User Navigation (opens hamburger menu -> expands Platform accordion -> expands Resources accordion -> clicks Blog -> verifies mobile drawer closes on navigation) | F8, F9, F10 | High |
 
-### 1. `e2e/harness/selectors.ts`
-- Provides centralized `data-testid` selectors for Navbar, Footer, ScrollProgress, CursorBlob, 6 landing page sections, and 5 form input fields.
-- Enumerates 16 practice area options, 4 firm sizes (`Solo`, `Small`, `Mid-Sized`, `Enterprise`), and 7 roles (`Associate Attorney`, `Billing Manager`, `IT Manager`, `Legal Administrator`, `Managing Partner`, `Paralegal`, `Solo Lawyer`).
-- Defines API target constants: `https://api.web3forms.com/submit` and target email `limedockadmn@gmail.com`.
-
-### 2. `e2e/harness/web3forms.mock.ts`
-- Network interceptor using Playwright `page.route` targeting `https://api.web3forms.com/submit`.
-- Supports 200 OK success responses, 400 Bad Request, 500 Internal Error, network delays, request aborts, and payload verification.
-- Enforces recipient verification against `limedockadmn@gmail.com`.
-
-### 3. `e2e/harness/scroll.helper.ts`
-- Handles page scrolling and framer-motion `whileInView` animation triggers.
-- Utility methods: `scrollToElement`, `scrollThroughAllSections`, `scrollToBottom`, `scrollToTop`.
-
-### 4. `e2e/harness/test.fixture.ts`
-- Extends standard `@playwright/test` with pre-configured `web3formsMock` and `scrollHelper` fixtures.
-
----
-
-## Test Tier Breakdown
-
-| Tier | File | Description | Features Covered |
-|------|------|-------------|------------------|
-| **Tier 1** | `tier1_feature_coverage.spec.ts` | Structural Feature Coverage | Page metadata, Navbar, Footer, 6 section headings, 5 form fields, 16 practice options, 4 firm sizes, 7 roles, submit handler wiring |
-| **Tier 2** | `tier2_boundary_corner.spec.ts` | Boundary & Corner Cases | Empty inputs, malformed email formats, HTTP 500/400 error handling, network timeouts, rapid double-click protection |
-| **Tier 3** | `tier3_combinations.spec.ts` | Cross-Feature Combinations | Multi-field dropdown selection matrices, scroll state interactions, validation recovery & re-submission |
-| **Tier 4** | `tier4_real_world.spec.ts` | Real-World End-to-End Journey | Full user walkthrough: page arrival -> section scrolling -> form completion -> lead submission dispatch |
-
----
-
-## CLI Execution Commands
-
-### Run Full Test Suite
-```bash
-npx playwright test --config=e2e/config/playwright.config.ts
-# or via npm script
-npm run test:e2e
-```
-
-### Run Specific Tiers
-```bash
-npm run test:tier1
-npm run test:tier2
-npm run test:tier3
-npm run test:tier4
-```
+## Coverage Thresholds
+- Tier 1: ≥5 test cases per feature (≥50 test cases total)
+- Tier 2: ≥5 boundary/edge test cases per feature (≥50 test cases total)
+- Tier 3: Pairwise interaction tests (≥10 test cases)
+- Tier 4: Realistic end-to-end user application scenarios (≥5 scenarios)
+- Total: ≥115 test cases across Tiers 1-4

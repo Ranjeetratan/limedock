@@ -71,3 +71,38 @@ The form must be configured using a free external service like Web3Forms or Form
 - [ ] The page features at least 3 distinct types of `framer-motion` scroll animations across the different sections.
 - [ ] The lead form contains all 5 required fields and correctly structured dropdown options.
 - [ ] The form contains a submit handler wired to an external submission service (e.g., Web3Forms `https://api.web3forms.com/submit`).
+
+## 2026-08-17T09:38:05Z
+
+# Teamwork Project Prompt — Draft
+
+> Status: Launched
+> Goal: Craft prompt → get user approval → delegate to teamwork_preview
+
+Refactor the main website navbar to improve UI/UX by reducing the current 10 scattered links down to a maximum of 4-5 high-level links. Group the existing content (hash links, Agents, Directories, Blog, Works, Contact) logically using dropdown menus or unified landing pages.
+
+Working directory: /Users/ranjeetratan/Desktop/limedock-website
+Integrity mode: development
+
+## Requirements
+
+### R1. Minimal Top-Level Navigation
+Overhaul the `src/components/Navbar.tsx` component so that it displays exactly 4 to 5 top-level navigational items, drastically reducing visual clutter.
+
+### R2. Logical Grouping & UX Autonomy
+The agent team has full autonomy to determine the best categorization strategy. Group existing destinations into accessible dropdown menus, mega-menus, or new unified hub pages based on modern UI/UX principles.
+
+### R3. Preserved Reachability
+No existing destinations (e.g., Blog, Directories, Contact, Trending Agents) should be removed from the site's accessibility tree. They must all remain reachable via the new grouped structure.
+
+## Acceptance Criteria
+
+### Implementation
+- [ ] The `Navbar.tsx` component is updated and renders no more than 5 top-level links on desktop view.
+- [ ] All previous destinations are still accessible through the newly implemented navigation structure (dropdowns/hubs).
+- [ ] The mobile menu is updated to reflect the new grouped hierarchy cleanly.
+
+### Validation
+- [ ] The project builds successfully (`npm run build`) with no Next.js compilation or routing errors.
+- [ ] An agent-as-judge script confirms the top-level link count is ≤ 5 and that all original routes are represented in the new structure.
+

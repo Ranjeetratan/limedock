@@ -1,18 +1,24 @@
-## 2026-08-13T09:21:43Z
-You are Explorer 2 for the law-firms landing page redesign.
+# Task Assignment: Survey Explorer 2 - Pages, Design System & Target Routes
 
-Working Directory: /Users/ranjeetratan/Desktop/limedock-website/.agents/explorer_survey_2
-Original Request Path: /Users/ranjeetratan/Desktop/limedock-website/.agents/ORIGINAL_REQUEST.md
+## Original User Request
+Read `/Users/ranjeetratan/Desktop/limedock-website/.agents/ORIGINAL_REQUEST.md` carefully.
 
-Your Focus:
-1. Read `/Users/ranjeetratan/Desktop/limedock-website/.agents/ORIGINAL_REQUEST.md`.
-2. Investigate framer-motion usage across the codebase. Are framer-motion components already installed/used? What animation patterns, hooks, or framer-motion variants exist?
-3. Requirements state: Implement distinct framer-motion scroll animations (at least 3 distinct animation types across sections) for the 6 sections:
-   - "A Custom AI Infrastructure for your firm"
-   - "That Helps you to Win More of the Right Business"
-   - "Do your best legal work"
-   - "Sync all your Employee Devices"
-   - "Run the Firm Without the Busywork"
-   - "And Much More"
-4. Propose clean framer-motion scroll animation patterns (e.g. `whileInView`, `initial`, `viewport`, staggered children, fade-up, scale-reveal, slide-in) that fit Next.js App Router client components ("use client").
-5. Write your findings to `/Users/ranjeetratan/Desktop/limedock-website/.agents/explorer_survey_2/handoff.md` and send a message back with your key discoveries.
+## Objective
+Investigate the existing pages, design system, styling patterns, and target destination pages:
+1. Locate and inspect the pages for Trending Agents (e.g. `/trending-agents` or similar) and Directories (e.g. `/directories` or similar).
+2. Inspect the global design system (Tailwind CSS classes, colors, fonts, card components, buttons, icons, dark mode support if any).
+3. Recommend the best route name (e.g., `/resources` or `/explore`), component structure, and visual layout/cards for the unified landing page hub to match existing site aesthetics.
+4. Document all findings and recommendations in `/Users/ranjeetratan/Desktop/limedock-website/.agents/explorer_survey_2/handoff.md`.
+
+## 2026-08-17T08:55:47Z
+You are teamwork_preview_explorer_survey_2.
+Working directory: /Users/ranjeetratan/Desktop/limedock-website/.agents/explorer_survey_2
+Original Request: /Users/ranjeetratan/Desktop/limedock-website/.agents/ORIGINAL_REQUEST.md
+Dispatch Instructions: /Users/ranjeetratan/Desktop/limedock-website/.agents/explorer_survey_2/DISPATCH.md
+
+Investigate existing pages, design system, styling patterns, and target destination pages:
+1. Locate and inspect the pages for Trending Agents (e.g. `/trending-agents`) and Directories (e.g. `/directories`).
+2. Inspect the global design system (Tailwind CSS classes, colors, fonts, card components, buttons, icons, dark mode support if any).
+3. Recommend the best route name (e.g., `/resources` or `/explore`), component structure, and visual layout/cards for the unified landing page hub to match existing site aesthetics.
+4. Document all findings and recommendations in `/Users/ranjeetratan/Desktop/limedock-website/.agents/explorer_survey_2/handoff.md`.
+Use send_message to report when done with your handoff path.

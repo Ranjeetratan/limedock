@@ -1,61 +1,95 @@
-# Project: Law Firms Landing Page Redesign
+# Project: Limedock Website Navbar UI/UX Refactoring
 
 ## Architecture
-Next.js App Router landing page for `/law-firms` (`src/app/law-firms/page.tsx` and `src/app/law-firms/LawFirmsLandingContent.tsx`).
-Utilizes LimeDock design system tokens (`globals.css`), `framer-motion` for scroll animations, and Web3Forms (`https://api.web3forms.com/submit`) for lead capture form submissions.
+Limedock is a Next.js 16 (App Router) modern web application built with React 19, Tailwind CSS v4, and Framer Motion.
+The navigation architecture consists of:
+- `src/components/Navbar.tsx`: Global navigation header rendering the brand logo, desktop navigation links/dropdowns, CTA action button ("Book demo"), and mobile hamburger toggle & slide-over/accordion menu.
+- Desktop Navigation: Reduced from 10 scattered top-level links to exactly 5 high-level items (`Platform`, `Solutions`, `Works`, `Resources`, `Contact`) with accessible dropdown menus.
+- Mobile Navigation: Responsive grouped drawer with collapsible accordion sections for dropdown categories and direct links for single destinations.
+- Subpage Link Safety: Anchors prefixed with `/#` so that navigation works consistently from both homepage (`/`) and subpages (`/blog`, `/directories`, `/trending-agents`, `/works`, `/contact`).
 
 ## Feature Inventory
-| # | Feature | Description | Milestone | Source |
-|---|---------|-------------|-----------|--------|
-| 1 | Global Layout Integration | `src/app/law-firms/page.tsx` wrapper with Navbar, Footer, ScrollProgress, CursorBlob | M1 | Survey |
-| 2 | LimeDock Design Tokens & Layout | Modern minimal aesthetic using Mona-Sans, Inter, SFMono fonts, LimeDock colors & container classes | M1 | Survey |
-| 3 | Section 1: Custom AI Infrastructure | Copy "A Custom AI Infrastructure for your firm" + Hero Stagger & Word Reveal framer-motion scroll animation | M2 | Survey |
-| 4 | Section 2: Win More Business | Copy "That Helps you to Win More of the Right Business" + Split Horizontal Slide-In scroll animation | M2 | Survey |
-| 5 | Section 3: Best Legal Work | Copy "Do your best legal work" + Spring Scale-Reveal Grid Cards scroll animation | M2 | Survey |
-| 6 | Section 4: Sync Employee Devices | Copy "Sync all your Employee Devices" + Device Node Cascade & Animated SVG Beam Line scroll animation | M2 | Survey |
-| 7 | Section 5: Run Firm Without Busywork | Copy "Run the Firm Without the Busywork" + Vertical Timeline Scroll Tracker animation | M2 | Survey |
-| 8 | Section 6: And Much More | Copy "And Much More" + Luminous Pulse & Staggered Field Reveal animation | M2 | Survey |
-| 9 | Lead Form: Company Website | Text input for Company Website (`type="url"` or `type="text"`) | M3 | Survey |
-| 10 | Lead Form: Area of Practice | Dropdown with 16 legal practice area options | M3 | Survey |
-| 11 | Lead Form: Firm Size | Dropdown with 4 options (Solo, Small, Mid-Sized, Enterprise) | M3 | Survey |
-| 12 | Lead Form: Roles | Dropdown with 7 options (Associate Attorney, Billing Manager, IT Manager, Legal Administrator, Managing Partner, Paralegal, Solo Lawyer) | M3 | Survey |
-| 13 | Lead Form: Email | Email input (`type="email"`, required) | M3 | Survey |
-| 14 | Lead Form: Submit Button | Submit button labeled "Get Customized Workflow" | M3 | Survey |
-| 15 | Web3Forms Integration | Submit handler posting to `https://api.web3forms.com/submit` configured for `limedockadmn@gmail.com` | M3 | Survey |
-| 16 | E2E & Build Verification | Pass 100% E2E test suite and `npm run build` with zero TypeScript or lint errors | M4 | Survey |
+Every destination and navigation requirement is enumerated below and mapped to its milestone:
+| # | Feature | Description | Target Destination | Milestone | Status | Source |
+|---|---------|-------------|--------------------|-----------|--------|--------|
+| 1 | Top-Level Constraint | Desktop navbar renders exactly 5 top-level nav items | `src/components/Navbar.tsx` | M2 | DONE | ORIGINAL_REQUEST §R1 |
+| 2 | Platform Grouping | Accessible dropdown containing in-page platform anchors (Approach, Capabilities, Math, System, Process) | `/#collapse`, `/#services`, `/#capabilities`, `/#system`, `/#how-we-work` | M2 | DONE | ORIGINAL_REQUEST §R2 |
+| 3 | Solutions Grouping | Accessible dropdown for industry solutions (Law Firms, Real Estate, Custom Workflows) | `/#services` | M2 | DONE | ORIGINAL_REQUEST §R2 |
+| 4 | Resources Grouping | Accessible dropdown for content & ecosystem hubs (Trending Agents, Directories, Blog) | `/trending-agents`, `/directories`, `/blog` | M2 | DONE | ORIGINAL_REQUEST §R2, §R3 |
+| 5 | Works Direct Link | Direct top-level navigation link to the Works portfolio page | `/works` | M2 | DONE | ORIGINAL_REQUEST §R3 |
+| 6 | Contact Direct Link | Direct top-level navigation link to Contact page | `/contact` | M2 | DONE | ORIGINAL_REQUEST §R3 |
+| 7 | CTA & Logo | Brand logo linking to `/` and "Book demo" CTA button | `/` and `/contact` | M2 | DONE | Codebase Survey |
+| 8 | WAI-ARIA & Keyboard A11y | `aria-expanded`, `aria-haspopup="menu"`, `role="menu"`, Enter/Space/Escape/Arrow/Home/End navigation | `src/components/Navbar.tsx` | M2 | DONE | UX Survey |
+| 9 | Mobile Grouped Accordion | Mobile menu with smooth collapsible accordion sections for Platform, Solutions, Resources | `src/components/Navbar.tsx` | M3 | DONE | ORIGINAL_REQUEST §Acceptance |
+| 10 | Preserved Reachability | 100% of all 10 original destinations reachable across desktop & mobile | All routes/anchors | M2, M3 | DONE | ORIGINAL_REQUEST §R3 |
+| 11 | Tablet Responsive Fix | Viewport 768px-1024px displays desktop nav cleanly (`md:flex`) without layout clipping | `src/components/Navbar.tsx` | M2, M3 | DONE | Survey Findings |
+| 12 | E2E Testing Suite (Tiers 1-4)| Comprehensive automated test suite verifying top-level link count, dropdown visibility, mobile menu, and all route reachability | `scripts/verify-navbar.ts` / `tests/navbar-e2e.test.ts` | M1 | DONE | Dual Track E2E |
+| 13 | Final Verification & Hardening | 100% pass of E2E suite, production build (`npm run build`), and adversarial coverage hardening (Tier 5) | Full project | M4 | DONE | Dual Track Final |
 
 ## Milestones
 | # | Name | Scope | Dependencies | Status |
 |---|------|-------|-------------|--------|
-| E2E | E2E Testing Track | Design & create E2E test suite for /law-firms redesign (Tiers 1-4) | None | IN_PROGRESS |
-| M1 | Layout & Global Wrapper | Refactor `page.tsx` & skeleton `LawFirmsLandingContent.tsx` with LimeDock layout tokens | None | IN_PROGRESS |
-| M2 | Content & 6 Scroll Animations | Implement 6 sections with exact copy and distinct framer-motion scroll animations | M1 | PLANNED |
-| M3 | Lead Capture Form & Web3Forms | Implement 5-field lead capture form and Web3Forms submit handler | M1 | PLANNED |
-| M4 | Integration & Hardening | Pass E2E test suite, `npm run build`, and Tier 5 adversarial coverage hardening | M2, M3, E2E | PLANNED |
+| 1 | E2E Test Suite Creation (Testing Track) | Build comprehensive test harness & test cases (Tiers 1-4) verifying top-level link count <= 5, all 10 destinations reachable, mobile navigation, keyboard a11y, and publish `TEST_READY.md`. | none | DONE |
+| 2 | Desktop Navbar Refactoring (Implementation Track) | Refactor `Navbar.tsx` desktop navigation to exactly 5 high-level items (Platform, Solutions, Works, Resources, Contact) with Framer Motion dropdowns, accessible WAI-ARIA attributes, and `/#` root-relative hash anchors. | none | DONE |
+| 3 | Mobile Navigation & Accordion Refactoring | Update mobile menu drawer with interactive accordions for grouped categories, preserving all destinations, touch friendliness, and clean transitions. | M2 | DONE |
+| 4 | Final E2E Pass & Adversarial Hardening | Verify 100% E2E test pass, production build verification (`npm run build`), and execute Tier 5 adversarial edge-case stress testing with Challenger & Auditor. | M1, M2, M3 | DONE |
 
 ## Interface Contracts
-### `src/app/law-firms/page.tsx` ↔ `src/app/law-firms/LawFirmsLandingContent.tsx`
-- `LawFirmsLandingContent` is a client component (`"use client"`) rendering the complete landing page body inside page wrapper.
-- Exports standard React component `default function LawFirmsLandingContent()`.
+### Navbar Navigation Structure Contract
+```typescript
+export interface NavItem {
+  label: string;
+  href?: string;
+  children?: {
+    label: string;
+    href: string;
+    description?: string;
+  }[];
+}
 
-### Lead Capture Form ↔ Web3Forms API
-- Endpoint: `POST https://api.web3forms.com/submit`
-- Headers: `Content-Type: application/json`, `Accept: application/json`
-- Payload Body:
-  ```json
+export const NAV_ITEMS: NavItem[] = [
   {
-    "access_key": "YOUR_WEB3FORMS_ACCESS_KEY",
-    "to_email": "limedockadmn@gmail.com",
-    "subject": "New Law Firm Lead Capture Submission",
-    "from_name": "LimeDock Law Firms Landing",
-    "website": "string",
-    "practice_area": "string",
-    "firm_size": "Solo | Small | Mid-Sized | Enterprise",
-    "role": "Associate Attorney | Billing Manager | IT Manager | Legal Administrator | Managing Partner | Paralegal | Solo Lawyer",
-    "email": "string"
-  }
-  ```
+    label: "Platform",
+    children: [
+      { label: "Approach", href: "/#collapse", description: "The collapse of traditional SaaS" },
+      { label: "Capabilities", href: "/#services", description: "Autonomous AI enterprise agents" },
+      { label: "The Math", href: "/#capabilities", description: "Unit economics and efficiency" },
+      { label: "System", href: "/#system", description: "Integrated agentic infrastructure" },
+      { label: "Process", href: "/#how-we-work", description: "From discovery to deployment" },
+    ],
+  },
+  {
+    label: "Solutions",
+    children: [
+      { label: "Law Firms", href: "/#services", description: "Legal document analysis and automation" },
+      { label: "Real Estate", href: "/#services", description: "Portfolio intelligence and processing" },
+      { label: "Custom Workflows", href: "/#services", description: "Tailored enterprise solutions" },
+    ],
+  },
+  {
+    label: "Works",
+    href: "/works",
+  },
+  {
+    label: "Resources",
+    children: [
+      { label: "Trending Agents", href: "/trending-agents", description: "Top performing AI workforce" },
+      { label: "Directories", href: "/directories", description: "Ecosystem and tool integrations" },
+      { label: "Blog", href: "/blog", description: "Insights, updates, and research" },
+    ],
+  },
+  {
+    label: "Contact",
+    href: "/contact",
+  },
+];
+```
 
 ## Code Layout
-- `src/app/law-firms/page.tsx`: Server component metadata & global layout wrapper (Navbar, Footer, ScrollProgress, CursorBlob).
-- `src/app/law-firms/LawFirmsLandingContent.tsx`: Client component containing section components, framer-motion scroll animations, and LeadCaptureForm component.
+- `src/components/Navbar.tsx`: Main Navbar component (Desktop + Mobile)
+- `scripts/verify-navbar.ts`: E2E test runner (Tiers 1-4)
+- `tests/navbar-e2e.test.ts`: E2E test suite
+- `tests/challenger-tier5-hardening.test.ts`: Tier 5 Adversarial hardening suite
+- `PROJECT.md`: Project architecture & completed milestones
+- `TEST_INFRA.md`: E2E testing specification and tiers
+- `TEST_READY.md`: E2E test suite ready attestation
