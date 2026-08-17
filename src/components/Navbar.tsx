@@ -296,7 +296,7 @@ export default function Navbar() {
             aria-expanded={isMobileOpen}
             aria-controls="mobile-navigation-drawer"
             onClick={() => setIsMobileOpen((value) => !value)}
-            className="md:hidden button-icon-circular focus-ring"
+            className="md:!hidden button-icon-circular focus-ring"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               {isMobileOpen ? (
