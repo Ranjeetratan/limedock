@@ -55,3 +55,6 @@ next-env.d.ts
 
 # Ephemeral prospect presentations (24h local store)
 .data/
+
+# Locally published preview payloads — real business data, never committed
+/data/previews/
