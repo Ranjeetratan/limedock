@@ -46,12 +46,16 @@ export async function loadPreview(slug: string): Promise<PreviewPayload | null> 
 
   if (usingBlob()) {
     try {
-      const { head } = await import('@vercel/blob');
-      const meta = await head(blobKey(slug));
-      // Public blob URLs are cached at the edge; the TTL check below is what
-      // actually enforces expiry, so a stale cache cannot resurrect a preview.
-      const res = await fetch(meta.url, { cache: 'no-store' });
-      if (res.ok) raw = await res.text();
+      const { get } = await import('@vercel/blob');
+      // Private access: the payload is a business's audit and its path is
+      // predictable (previews/<slug>.json), so a public URL would let anyone
+      // fetch the raw data by guessing the firm's name. Reads go through the
+      // store token instead, server-side only.
+      // get() resolves null when the blob is absent, so a missing preview is a
+      // normal 404 rather than a thrown error.
+      const found = await get(blobKey(slug), { access: 'private', useCache: false });
+      if (!found) return null;
+      raw = await new Response(found.stream).text();
     } catch {
       return null;
     }
@@ -101,7 +105,7 @@ export async function savePreview(
   if (usingBlob()) {
     const { put } = await import('@vercel/blob');
     await put(blobKey(input.slug), body, {
-      access: 'public',
+      access: 'private',
       contentType: 'application/json',
       // Republishing the same lead replaces its payload rather than piling up.
       allowOverwrite: true,
@@ -126,14 +130,14 @@ export async function purgeExpired(): Promise<string[]> {
   const removed: string[] = [];
 
   if (usingBlob()) {
-    const { list, del } = await import('@vercel/blob');
+    const { list, del, get } = await import('@vercel/blob');
     const { blobs } = await list({ prefix: 'previews/' });
 
     for (const blob of blobs) {
       try {
-        const res = await fetch(blob.url, { cache: 'no-store' });
-        if (!res.ok) continue;
-        const payload = (await res.json()) as PreviewPayload;
+        const found = await get(blob.pathname, { access: 'private', useCache: false });
+        if (!found) continue;
+        const payload = JSON.parse(await new Response(found.stream).text()) as PreviewPayload;
         if (payload.expiresAt && new Date(payload.expiresAt).getTime() < Date.now()) {
           await del(blob.url);
           removed.push(payload.slug);

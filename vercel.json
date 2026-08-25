@@ -5,5 +5,11 @@
       "src": "package.json",
       "use": "@vercel/next"
     }
+  ],
+  "crons": [
+    {
+      "path": "/api/preview/purge",
+      "schedule": "0 4 * * *"
+    }
   ]
 }
