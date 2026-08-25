@@ -37,7 +37,12 @@
   font-feature-settings: "cv01", "cv05", "cv09", "cv11", "ss03", "ss07";
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
-  overflow-x: hidden;
+  /* clip, not hidden: `overflow-x: hidden` forces overflow-y to compute to auto,
+     which makes this element the scrollport for every position:sticky inside it.
+     It never scrolls itself, so the pinned sections silently stopped pinning and
+     scrolled away, leaving the rest of their scroll distance blank. `clip` still
+     hides the off-screen horizontal track without creating a scroll container. */
+  overflow-x: clip;
 }
 
 .lp-root *, .lp-root *::before, .lp-root *::after { box-sizing: border-box; }
